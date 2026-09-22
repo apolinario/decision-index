@@ -1,6 +1,6 @@
 # Decision Index
 
-Reproduction kit for the **Decision Index**, a benchmark for *typed decision engines*: models that take a `state` and a set of typed `questions` (multiple-choice `choice` primitives with explicit `criteria`) and return one answer per question with a full probability distribution over the supplied options. The frozen suite has **132,422 requests** (117,764 source cases, 775,202 answer fields) over **37 benchmarks** spanning knowledge, language, retrieval, tool use and human judgment. Nineteen of them form the scored panel: every benchmark is scored with its native metric, converted to a *skill* score above its random baseline, averaged into five equal-weight areas, and the Decision Index is the mean of those five areas on a 0-100 scale. Unanswered requests count as wrong, so a model that refuses long or wide inputs pays for it in the score rather than in a footnote.
+Reproduction kit for the **Decision Index**, a benchmark for *typed decision engines*: models that take a `state` and a set of typed `questions` (multiple-choice `choice` primitives with explicit `criteria`) and return one answer per question with a full probability distribution over the supplied options. The frozen suite has **132,422 requests** (117,764 source cases, 775,202 answer fields) over **37 benchmarks** spanning knowledge, language, retrieval, tool use and human judgment. Nineteen of them form the scored panel: every benchmark is scored with its native metric, averaged into five equal-weight areas, and the Decision Index is the mean of those five areas on a 0-100 scale (chance-normalized *skill* and *breadth* variants are computed alongside but the headline number is the plain one). Unanswered requests count as wrong, so a model that refuses long or wide inputs pays for it in the score rather than in a footnote.
 
 This repository lets a stranger obtain the frozen suite, run any engine through it with checkpoint/resume, score every benchmark with the same metrics the leaderboard uses, compute the index, and do all of it either on a laptop or as one Hugging Face Job on an RTX PRO 6000.
 
@@ -120,8 +120,8 @@ These are encoded in the runner and engines, not left to the reader:
 
 `index.json` follows the frozen panel: per benchmark, tracks are scored with the index metric (subject/song/user/perturbation macro where the panel says so, conservative F1 with a fixed label universe and the missing-label penalty `2TP/(2TP+FP+FN+M)`), `skill = clip((raw - random)/(1 - random))`, tracks averaged with equal weight, iSarcasmEval headlined by track A English. Areas are equal-weight means of their benchmarks; the three formulas are
 
-- `balanced_raw = 100 * mean_area(raw)`
-- `balanced_skill = 100 * mean_area(skill)` (the Decision Index)
+- `balanced_raw = 100 * mean_area(raw)` (the Decision Index)
+- `balanced_skill = 100 * mean_area(skill)`
 - `breadth_skill = 100 * (prod_area((0.1 + 0.9 * skill)^(1/5)) - 0.1) / 0.9`
 
 The 25-benchmark frozen panel with interactive benchmarks at zero is also reported (`frozen_panel`) as the provisional lower bound the lab tracks, but it is not the headline number.

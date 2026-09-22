@@ -38,5 +38,5 @@ Alongside: `status.json` (last event: loading, ready, progress, complete, failed
 ## Scores
 
 - `benchmark-summary.json`: per benchmark `requests`, `answered`, `unsupported`, `errors`, `abstained`, `pending`, `scored_requests` (complete supported case groups), `metric`, `score`, `median_ms`, optional `tracks` and `detail`.
-- `index.json`: `index` (balanced_skill), `scores` (three formulas), `areas` (five areas: raw, skill, coverage, pending, n, benchmark ids), `benchmarks` (per panel benchmark: raw, skill, coverage, pending, random, tracks, in_index), `frozen_panel` (25-benchmark lower bound), `formulas`.
+- `index.json`: `index` (balanced_raw, the Decision Index), `scores` (three formulas), `areas` (five areas: raw, skill, coverage, pending, n, benchmark ids), `benchmarks` (per panel benchmark: raw, skill, coverage, pending, random, tracks, in_index), `frozen_panel` (25-benchmark lower bound), `formulas`.
 - `scores.json`: everything above plus counts, latency, completion flag and the headline iSarcasmEval override; this is the file a submission points at.

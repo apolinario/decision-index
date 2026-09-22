@@ -213,7 +213,7 @@ def index_entry(scored, precision=4):
         benchmarks[str(n)] = {"raw": rnd(b["raw"], precision), "skill": rnd(b["skill"], precision), "coverage": rnd(b["coverage"], precision), "pending": rnd(b.get("pending"), precision), "random": rnd(random, precision), "tracks": track_list(b), "in_index": n not in C.INTERACTIVE}
     return {
         "panel_id": C.PANEL_ID,
-        "index": rnd(scores["balanced_skill"], 2),
+        "index": rnd(scores["balanced_raw"], 2),
         "scores": {k: rnd(v, 2) for k, v in scores.items()},
         "areas": [{"id": c["id"], "label": c["label"], "raw": rnd(c["raw"], precision), "skill": rnd(c["skill"], precision), "coverage": rnd(c["coverage"], precision), "pending": rnd(c["pending"], precision), "n": c["n"], "benchmarks": c["benchmarks"]} for c in cats],
         "benchmarks": benchmarks,
