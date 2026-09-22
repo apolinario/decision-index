@@ -2,10 +2,11 @@ __pycache__/
 *.pyc
 .venv/
 *.egg-info/
-build/
-dist/
-suite/
-runs/
-work/
+/build/
+/dist/
+/suite/
+/runs/
+/work/
+/hub-upload/
 .pytest_cache/
 .DS_Store
