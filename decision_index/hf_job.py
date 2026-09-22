@@ -29,8 +29,9 @@ def job_command(results_repo, engine, engine_args, suite_dataset, run_name, extr
 
 def submit(results_repo, engine, engine_args, suite_dataset, run_name, extra_run_args=(), flavor=DEFAULT_FLAVOR, image=DEFAULT_IMAGE, timeout=DEFAULT_TIMEOUT, git_url=None, namespace=None, private=True, token=None, dry_run=False, source_root=None):
     os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
-    from huggingface_hub import HfApi
+    from huggingface_hub import HfApi, get_token
 
+    token = token or os.environ.get("HF_TOKEN") or get_token()
     api = HfApi(token=token)
     command = job_command(results_repo, engine, list(engine_args), suite_dataset, run_name, list(extra_run_args), git_url)
     if dry_run:
@@ -40,8 +41,8 @@ def submit(results_repo, engine, engine_args, suite_dataset, run_name, extra_run
         root = Path(source_root) if source_root else Path(__file__).resolve().parents[1]
         tarball = package_source(root)
         api.upload_file(path_or_fileobj=str(tarball), path_in_repo="code/decision-index-src.tar.gz", repo_id=results_repo, repo_type="dataset", commit_message="decision-index source snapshot")
-    job = api.run_job(image=image, command=["bash", "-lc", command], flavor=flavor, timeout=timeout, secrets={"HF_TOKEN": token or os.environ.get("HF_TOKEN") or True}, env={"HF_HUB_DISABLE_XET": "1", "PYTHONUNBUFFERED": "1"}, namespace=namespace, labels={"decision-index": run_name})
-    return {"job_id": job.id, "url": getattr(job, "url", None), "flavor": flavor, "image": image, "timeout": timeout, "results_repo": results_repo, "command": command}
+    job = api.run_job(image=image, command=["bash", "-lc", command], flavor=flavor, timeout=timeout, secrets={"HF_TOKEN": token}, env={"HF_HUB_DISABLE_XET": "1", "PYTHONUNBUFFERED": "1"}, namespace=namespace, labels={"decision-index": run_name})
+    return {"job_id": getattr(job, "id", None), "url": getattr(job, "url", None), "flavor": flavor, "image": image, "timeout": timeout, "results_repo": results_repo, "command": command}
 
 
 def logs(job_id, namespace=None, token=None):
