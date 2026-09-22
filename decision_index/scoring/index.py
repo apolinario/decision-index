@@ -200,7 +200,7 @@ def recompute(scored):
 
 
 def rnd(x, n=4):
-    return None if x is None else round(x, n)
+    return None if x is None else round(x, n) + 0.0
 
 
 def index_entry(scored, precision=4):

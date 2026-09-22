@@ -1,4 +1,4 @@
-from decision_index.engines.base import Engine, NativeAbstention, Unsupported, validate
+from decision_index.engines.base import Engine, NativeAbstention, RandomEngine, Unsupported, validate
 
 REGISTRY = {
     "http": "decision_index.engines.http:HttpSystemOne",
@@ -17,4 +17,4 @@ def load_engine(name, **options):
     return getattr(importlib.import_module(module), cls)(**options)
 
 
-__all__ = ["Engine", "Unsupported", "NativeAbstention", "validate", "load_engine", "REGISTRY"]
+__all__ = ["Engine", "RandomEngine", "Unsupported", "NativeAbstention", "validate", "load_engine", "REGISTRY"]
