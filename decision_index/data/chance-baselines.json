@@ -1,0 +1,895 @@
+{
+  "seed": 20260918,
+  "f1_trials": 1000,
+  "policy": "Uniform random choices conditional on actual options; exact expectations when possible. Scorer-specific reference values are not interchangeable chance percentages. No model/API calls.",
+  "benchmarks": {
+    "1": {
+      "primary": {
+        "value": 0.25923526048695894,
+        "label": "Random whole-case guesses",
+        "kind": "random_exact_case",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.25923526048695894,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Mean probability that every field in a case is correct under independent uniform guesses; multiply field probabilities within each case, then average cases. This is not the per-field chance rate."
+      },
+      "tracks": {}
+    },
+    "2": {
+      "primary": {
+        "value": 0.09374650115709289,
+        "label": "Random ranking",
+        "kind": "random_ranking",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "candidate_pool_ceiling": 0.6075430566261968,
+        "secondary_reference": {
+          "label": "BM25 ranking",
+          "value": 0.3717016435513589
+        },
+        "explanation": "Expected nDCG@10 under a uniform random permutation of the same scored candidate pool. Uses the original full relevance judgments for the denominator. Missing relevant candidates constrain the best achievable score."
+      },
+      "tracks": {}
+    },
+    "3": {
+      "primary": {
+        "value": 0.018867924528301886,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.018867924528301886,
+        "whole_case_reference": 0.018867924528301883,
+        "options_min": 53,
+        "options_max": 53,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "4": {
+      "primary": {
+        "value": 0.012722374657338137,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260922,
+        "monte_carlo_standard_error": 6.553631493316842e-05,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.012987012987012988
+      },
+      "tracks": {}
+    },
+    "5": {
+      "primary": {
+        "value": 0.005988359736167206,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260923,
+        "monte_carlo_standard_error": 3.3404003459188327e-05,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.006622516556291391
+      },
+      "tracks": {}
+    },
+    "6": {
+      "primary": {
+        "value": 0.5734790909090909,
+        "label": "Random model selection",
+        "kind": "random_routing",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "explanation": "Expected realized quality from selecting uniformly among the available models on each request. This is outcome quality, not the probability of matching one correct answer."
+      },
+      "tracks": {
+        "RouterBench-0shot": {
+          "value": 0.5244734977195501,
+          "label": "Random model selection",
+          "kind": "random_routing",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "method": "Exact expectation",
+          "explanation": "Expected realized quality from selecting uniformly among the available models on each request. This is outcome quality, not the probability of matching one correct answer."
+        },
+        "RouterBench-5shot": {
+          "value": 0.6225435261156694,
+          "label": "Random model selection",
+          "kind": "random_routing",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "method": "Exact expectation",
+          "explanation": "Expected realized quality from selecting uniformly among the available models on each request. This is outcome quality, not the probability of matching one correct answer."
+        }
+      }
+    },
+    "9": {
+      "primary": {
+        "value": 2.103054637935099e-07,
+        "label": "Random whole-case guesses",
+        "kind": "random_exact_case",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.44624448282479373,
+        "whole_case_reference": 2.103054637935099e-07,
+        "options_min": 2,
+        "options_max": 9,
+        "explanation": "Mean probability that every field in a case is correct under independent uniform guesses; multiply field probabilities within each case, then average cases. This is not the per-field chance rate."
+      },
+      "tracks": {}
+    },
+    "10": {
+      "primary": {
+        "value": 0.3989510457818999,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260928,
+        "monte_carlo_standard_error": 0.00035975194546888087,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.35416666666666663
+      },
+      "tracks": {}
+    },
+    "11": {
+      "primary": {
+        "value": 0.30851893087083776,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260929,
+        "monte_carlo_standard_error": 0.0003006296372985436,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.3333333333333333
+      },
+      "tracks": {}
+    },
+    "12": {
+      "primary": {
+        "value": 0.3324341336670552,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260930,
+        "monte_carlo_standard_error": 0.0002542630067887871,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.3333333333333333
+      },
+      "tracks": {}
+    },
+    "20": {
+      "primary": {
+        "value": 0.5,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.2715901393479346,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "21": {
+      "primary": {
+        "value": 0.5,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.5,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "22": {
+      "primary": {
+        "value": 0.007751937984496124,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.007751937984496124,
+        "whole_case_reference": 0.007751937984496126,
+        "options_min": 129,
+        "options_max": 129,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case.",
+        "secondary_reference": {
+          "label": "Always predict GM (sample majority)",
+          "value": 0.051,
+          "uses_evaluation_labels": true,
+          "explanation": "Descriptive class-imbalance reference selected using this evaluation sample; not a independently chosen predictive baseline."
+        }
+      },
+      "tracks": {}
+    },
+    "23": {
+      "primary": {
+        "value": 0.5,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.5,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "24": {
+      "primary": {
+        "value": 0.25,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.25,
+        "whole_case_reference": 0.25,
+        "options_min": 4,
+        "options_max": 4,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "25": {
+      "primary": {
+        "value": 0.25,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.25,
+        "whole_case_reference": 0.25,
+        "options_min": 4,
+        "options_max": 4,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "26": {
+      "primary": {
+        "value": 0.25016133557800224,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.25016133557800224,
+        "whole_case_reference": 0.25016133557800224,
+        "options_min": 3,
+        "options_max": 5,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "27": {
+      "primary": {
+        "value": 0.25015642775881686,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.25015642775881686,
+        "whole_case_reference": 0.25015642775881686,
+        "options_min": 3,
+        "options_max": 5,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "28": {
+      "primary": {
+        "value": 0.5,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.5,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "29": {
+      "primary": {
+        "value": 0.25,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.25,
+        "whole_case_reference": 0.25,
+        "options_min": 4,
+        "options_max": 4,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "30": {
+      "primary": {
+        "value": 0.175,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.175,
+        "whole_case_reference": 0.025000000000000012,
+        "options_min": 4,
+        "options_max": 10,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {
+        "GSM8K-10choice": {
+          "value": 0.1,
+          "label": "Uniform random choice",
+          "kind": "random_accuracy",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "method": "Exact expectation",
+          "field_accuracy_reference": 0.1,
+          "whole_case_reference": 0.10000000000000002,
+          "options_min": 10,
+          "options_max": 10,
+          "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+        },
+        "GSM8K-4choice": {
+          "value": 0.25,
+          "label": "Uniform random choice",
+          "kind": "random_accuracy",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "method": "Exact expectation",
+          "field_accuracy_reference": 0.25,
+          "whole_case_reference": 0.25,
+          "options_min": 4,
+          "options_max": 4,
+          "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+        }
+      }
+    },
+    "31": {
+      "primary": {
+        "value": 0.0818556110623024,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.0818556110623024,
+        "whole_case_reference": 0.0818556110623024,
+        "options_min": 2,
+        "options_max": 81,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "32": {
+      "primary": {
+        "value": 0.3709876543209876,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.3709876543209876,
+        "whole_case_reference": 0.3709876543209876,
+        "options_min": 2,
+        "options_max": 5,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "33": {
+      "primary": {
+        "value": 0.013128985780658147,
+        "label": "Random whole-case guesses",
+        "kind": "random_exact_case",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.013128985780658147,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Mean probability that every field in a case is correct under independent uniform guesses; multiply field probabilities within each case, then average cases. This is not the per-field chance rate."
+      },
+      "tracks": {}
+    },
+    "34": {
+      "primary": {
+        "value": 0.16666666666666666,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.16666666666666666,
+        "whole_case_reference": 0.16666666666666669,
+        "options_min": 6,
+        "options_max": 6,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "36": {
+      "primary": {
+        "value": 0.044756746703943445,
+        "label": "Random ranking",
+        "kind": "random_ranking",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "candidate_pool_ceiling": 0.2615146052615381,
+        "secondary_reference": {
+          "label": "BM25 ranking",
+          "value": 0.11128803860572203
+        },
+        "explanation": "Expected nDCG@10 under a uniform random permutation of the same scored candidate pool. Uses the original full relevance judgments for the denominator. Missing relevant candidates constrain the best achievable score."
+      },
+      "tracks": {}
+    },
+    "37": {
+      "primary": {
+        "value": 0.20273782411694521,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260955,
+        "monte_carlo_standard_error": 0.0001697516805187213,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.25
+      },
+      "tracks": {}
+    },
+    "38": {
+      "primary": {
+        "value": 7.580206020495088e-13,
+        "label": "Random whole-case guesses",
+        "kind": "random_exact_case",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 7.580206020495088e-13,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Mean probability that every field in a case is correct under independent uniform guesses; multiply field probabilities within each case, then average cases. This is not the per-field chance rate."
+      },
+      "tracks": {}
+    },
+    "39": {
+      "primary": {
+        "value": 0.32012819115496455,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260957,
+        "monte_carlo_standard_error": 0.000313998011642001,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.3333333333333333
+      },
+      "tracks": {}
+    },
+    "40": {
+      "primary": {
+        "value": null,
+        "label": "See each subtask",
+        "kind": "separate_tracks",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "explanation": "Sarcasm detection, category F1 and pairwise accuracy have different baselines."
+      },
+      "tracks": {
+        "iSarcasmEval-A-Ar": {
+          "value": 0.22250656045660705,
+          "method": "Monte Carlo",
+          "trials": 1000,
+          "seed": 20260958,
+          "monte_carlo_standard_error": 0.0004878306199252692,
+          "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+          "label": "Random choices \u00b7 F1",
+          "kind": "random_f1",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "field_accuracy_reference": 0.5
+        },
+        "iSarcasmEval-A-En": {
+          "value": 0.2226862339379383,
+          "method": "Monte Carlo",
+          "trials": 1000,
+          "seed": 20260958,
+          "monte_carlo_standard_error": 0.00047031772760617067,
+          "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+          "label": "Random choices \u00b7 F1",
+          "kind": "random_f1",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "field_accuracy_reference": 0.5
+        },
+        "iSarcasmEval-B-En": {
+          "value": 0.05465056471832193,
+          "method": "Monte Carlo",
+          "trials": 1000,
+          "seed": 20260958,
+          "monte_carlo_standard_error": 0.00010249781416401369,
+          "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+          "label": "Random choices \u00b7 F1",
+          "kind": "random_f1",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "field_accuracy_reference": 0.5
+        },
+        "iSarcasmEval-C-Ar": {
+          "value": 0.5,
+          "label": "Uniform random choice",
+          "kind": "random_accuracy",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "method": "Exact expectation",
+          "field_accuracy_reference": 0.5,
+          "whole_case_reference": 0.5,
+          "options_min": 2,
+          "options_max": 2,
+          "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+        },
+        "iSarcasmEval-C-En": {
+          "value": 0.5,
+          "label": "Uniform random choice",
+          "kind": "random_accuracy",
+          "direction": "higher",
+          "unit": "fraction",
+          "range": [
+            0,
+            1
+          ],
+          "method": "Exact expectation",
+          "field_accuracy_reference": 0.5,
+          "whole_case_reference": 0.5,
+          "options_min": 2,
+          "options_max": 2,
+          "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+        }
+      }
+    },
+    "41": {
+      "primary": {
+        "value": 0.3333245556439576,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260959,
+        "monte_carlo_standard_error": 0.0002727530780684031,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.3333333333333333
+      },
+      "tracks": {}
+    },
+    "42": {
+      "primary": {
+        "value": 0.485964500661008,
+        "method": "Monte Carlo",
+        "trials": 1000,
+        "seed": 20260960,
+        "monte_carlo_standard_error": 0.00020894115913823772,
+        "explanation": "Uniform independent choice among each field's actual options, scored with the same F1 definition and observed/predicted label union as the model. F1 is nonlinear and class-frequency dependent; 1/K is not its expected value. This simulation error is not uncertainty in model quality.",
+        "label": "Random choices \u00b7 F1",
+        "kind": "random_f1",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "field_accuracy_reference": 0.5
+      },
+      "tracks": {}
+    },
+    "43": {
+      "primary": {
+        "value": 0.36971874129768867,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.36971874129768867,
+        "whole_case_reference": 0.36971874129768867,
+        "options_min": 2,
+        "options_max": 10,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "44": {
+      "primary": {
+        "value": 0.5,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.5,
+        "whole_case_reference": 0.5,
+        "options_min": 2,
+        "options_max": 2,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "45": {
+      "primary": {
+        "value": 0.16408713622749183,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.16408713622749183,
+        "whole_case_reference": 0.16408713622749183,
+        "options_min": 5,
+        "options_max": 26,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    },
+    "48": {
+      "primary": {
+        "value": 0.25,
+        "label": "Always predict p = 0.5",
+        "kind": "uninformative_forecast",
+        "direction": "lower",
+        "unit": "loss",
+        "range": [
+          0,
+          1
+        ],
+        "perfect": 0,
+        "method": "Exact",
+        "explanation": "Binary Brier loss: 0 is perfect and 1 is maximally wrong. Reporting probability0.5 for every event always scores0.25. This is an uninformative probability forecast, not a random hard yes/no guess (whose expected Brier loss is0.5).",
+        "secondary_reference": {
+          "label": "Always p=0.5 log loss",
+          "value": 0.6931471805599453
+        }
+      },
+      "tracks": {}
+    },
+    "50": {
+      "primary": {
+        "value": 0.31097852028639617,
+        "label": "Uniform random choice",
+        "kind": "random_accuracy",
+        "direction": "higher",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "method": "Exact expectation",
+        "field_accuracy_reference": 0.31097852028639617,
+        "whole_case_reference": 0.31097852028639617,
+        "options_min": 2,
+        "options_max": 5,
+        "explanation": "Average accepted-answer count / option count across the actual sampled fields. Includes all tied correct moves/statements where the scorer accepts ties; variable option counts are averaged case by case."
+      },
+      "tracks": {}
+    }
+  }
+}

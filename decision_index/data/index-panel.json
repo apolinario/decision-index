@@ -1,0 +1,416 @@
+{
+  "schema_version": 1,
+  "status": "proposal_not_implemented",
+  "research_date_local": "2026-09-19",
+  "timezone": "America/Los_Angeles",
+  "name": "Jev Capability Index",
+  "panel_id": "proposed-core25-v1",
+  "recommended": "balanced_skill",
+  "score_range": [
+    0,
+    100
+  ],
+  "static_source_manifest": "artifacts/benchmark-suite/jev-release-v1/manifest.json",
+  "static_source_rows_sha256": "288d37207a9581187bdf83eada1983aa63de6fc50b0108e2badb229547a57f99",
+  "category_source": "evaluation/category-groups.json",
+  "categories": [
+    {
+      "id": "knowledge",
+      "label": "Knowledge & Reasoning",
+      "weight": 0.2,
+      "benchmarks": [
+        {
+          "catalog_id": 24,
+          "dataset": "MMLU",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "subject_macro_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "equal subject weights"
+        },
+        {
+          "catalog_id": 25,
+          "dataset": "GPQA Diamond",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "all frozen Diamond questions"
+        },
+        {
+          "catalog_id": 30,
+          "dataset": "GSM8K",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "adapted_mc_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "4-choice and 10-choice tracks weighted 0.5 each after normalization"
+        },
+        {
+          "catalog_id": 43,
+          "dataset": "CRUXEval",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "adapted_mc_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "input/output tracks weighted 0.5 each after normalization"
+        },
+        {
+          "catalog_id": 44,
+          "dataset": "CLadder",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "full frozen source-case population"
+        }
+      ]
+    },
+    {
+      "id": "language",
+      "label": "Language & Retrieval",
+      "weight": 0.2,
+      "benchmarks": [
+        {
+          "catalog_id": 11,
+          "dataset": "ContractNLI",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "macro_f1",
+          "baseline_recipe": "uniform_random_f1",
+          "within_benchmark_rule": "fixed source label universe"
+        },
+        {
+          "catalog_id": 36,
+          "dataset": "BRIGHT",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "ndcg_at_10",
+          "baseline_recipe": "uniform_candidate_permutation",
+          "within_benchmark_rule": "query macro, frozen candidates and source IDCG"
+        },
+        {
+          "catalog_id": 37,
+          "dataset": "Amazon ESCI",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "macro_f1",
+          "baseline_recipe": "uniform_random_f1",
+          "within_benchmark_rule": "fixed source label universe"
+        },
+        {
+          "catalog_id": 40,
+          "dataset": "iSarcasmEval",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "mixed",
+          "baseline_recipe": "per_track",
+          "within_benchmark_rule": "A-Ar/A-En positive F1 and C-Ar/C-En accuracy, each weight 0.25; B diagnostic only"
+        },
+        {
+          "catalog_id": 41,
+          "dataset": "VAST",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "macro_f1",
+          "baseline_recipe": "uniform_random_f1",
+          "within_benchmark_rule": "fixed source label universe"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "label": "Tools & Automation",
+      "weight": 0.2,
+      "benchmarks": [
+        {
+          "catalog_id": 1,
+          "dataset": "BFCL",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "case_exact_accuracy",
+          "baseline_recipe": "uniform_whole_case",
+          "within_benchmark_rule": "complete linked tool-selection case"
+        },
+        {
+          "catalog_id": 2,
+          "dataset": "ToolRet",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "ndcg_at_10",
+          "baseline_recipe": "uniform_candidate_permutation",
+          "within_benchmark_rule": "query macro, frozen candidates and source IDCG"
+        },
+        {
+          "catalog_id": 6,
+          "dataset": "RouterBench",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "quality_quality",
+          "baseline_recipe": "uniform_model_selection",
+          "within_benchmark_rule": "0-shot/5-shot tracks weighted 0.5 each; exclude cost-aware utility"
+        },
+        {
+          "catalog_id": 7,
+          "dataset": "MiniWoB++",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "native_terminal_success",
+          "baseline_recipe": "task_floor_zero",
+          "within_benchmark_rule": "task family macro then episode mean"
+        },
+        {
+          "catalog_id": 16,
+          "dataset": "ScienceWorld",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "native_completion_score_div_100",
+          "baseline_recipe": "task_floor_zero",
+          "within_benchmark_rule": "task family macro then episode mean"
+        }
+      ]
+    },
+    {
+      "id": "games",
+      "label": "Games & strategy",
+      "weight": 0.2,
+      "benchmarks": [
+        {
+          "catalog_id": 31,
+          "dataset": "ChessBench",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "accepted_best_move_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "all reference ties accepted"
+        },
+        {
+          "catalog_id": 13,
+          "dataset": "Boxoban",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "level_completion",
+          "baseline_recipe": "task_floor_zero",
+          "within_benchmark_rule": "level mean; no best partial-progress credit"
+        },
+        {
+          "catalog_id": 15,
+          "dataset": "RTFM",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "episode_win",
+          "baseline_recipe": "task_floor_zero",
+          "within_benchmark_rule": "episode mean"
+        },
+        {
+          "catalog_id": 17,
+          "dataset": "Hanabi",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "team_score_div_25",
+          "baseline_recipe": "task_floor_zero",
+          "within_benchmark_rule": "standard 25-point game and frozen partner"
+        },
+        {
+          "catalog_id": 19,
+          "dataset": "Codenames",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "episode_win",
+          "baseline_recipe": "task_floor_zero",
+          "within_benchmark_rule": "frozen lexical partner; all 66 eligible boards, ordinary attempt win rate"
+        }
+      ]
+    },
+    {
+      "id": "arts",
+      "label": "Arts & Human Judgment",
+      "weight": 0.2,
+      "benchmarks": [
+        {
+          "catalog_id": 20,
+          "dataset": "BPoMP",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "perturbation_macro_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "equal perturbation weights; poem clusters"
+        },
+        {
+          "catalog_id": 21,
+          "dataset": "Humicroedit",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "pair_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "source ties excluded by frozen release"
+        },
+        {
+          "catalog_id": 22,
+          "dataset": "POP909-CL",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "song_macro_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "song macro"
+        },
+        {
+          "catalog_id": 23,
+          "dataset": "cfcolor",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "user_macro_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "user macro"
+        },
+        {
+          "catalog_id": 50,
+          "dataset": "Habermas Machine",
+          "category_weight": 0.2,
+          "global_weight": 0.04,
+          "metric": "accepted_group_preference_accuracy",
+          "baseline_recipe": "uniform_valid_choice",
+          "within_benchmark_rule": "accept reference ties"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "clip": "min(1,max(0,z))",
+    "raw_fraction": "clip(x)",
+    "raw_brier": "clip(1-x)",
+    "raw_bounded_score": "clip((x-L)/(U-L))",
+    "skill": "clip((raw-reference)/(1-reference))",
+    "benchmark": "sum_t(track_weight[t]*normalized_track[t])",
+    "category": "sum_b(0.2*benchmark[b])"
+  },
+  "proposals": [
+    {
+      "id": "balanced_raw",
+      "normalization": "raw",
+      "formula": "100*sum_c(0.2*category[c])"
+    },
+    {
+      "id": "balanced_skill",
+      "normalization": "skill",
+      "formula": "100*sum_c(0.2*category[c])"
+    },
+    {
+      "id": "breadth_skill",
+      "normalization": "skill",
+      "shift": 0.1,
+      "formula": "100*(product_c((0.1+0.9*category[c])**0.2)-0.1)/0.9"
+    }
+  ],
+  "baseline_policy": {
+    "versioned": true,
+    "empirical_baselines_status": "must_freeze_before_ranking",
+    "uniform_f1_monte_carlo_se_max": 0.001,
+    "uniform_f1_fixed_label_universe": true,
+    "raw_maximum": 1,
+    "selected_interactive_reference": 0,
+    "selected_interactive_reference_label": "task floor, not measured random policy"
+  },
+  "coverage": {
+    "denominator": "all frozen source cases or episodes, preserving fixed subtrack and category weights",
+    "formula": "sum_c(0.2*mean_b(sum_t(w_bt*valid_bt/planned_bt)))",
+    "multiply_score_by_coverage": false,
+    "official_requires": "all scheduled cases terminal valid or certified model failure; no pending evaluator defects or unrun results"
+  },
+  "failures": {
+    "accuracy": 0,
+    "ndcg_incomplete_query": 0,
+    "quality": 0,
+    "game": "minimum terminal utility; zero for selected games",
+    "brier": 1,
+    "f1_per_class": "2*TP/(2*TP+FP+FN+M); denominator zero maps to zero",
+    "transient_retry_count": 2,
+    "valid_wrong_answer_retries": 0,
+    "unsupported": "full-denominator failure; never omit",
+    "infrastructure_bug": "repair; pending until fixed",
+    "unrun": "zero only in labeled provisional lower bound; final rank withheld"
+  },
+  "interactive_protocol": {
+    "status": "must_pin_before_official_index",
+    "target_independent_source_clusters_per_benchmark": 100,
+    "codenames_source_clusters": 66,
+    "stochastic_repeats_per_source_cluster": 3,
+    "deterministic_duplicate_repeats_required": false,
+    "fixed_partners_and_seeds": true,
+    "success_metric": "mean first attempt; not pass at k"
+  },
+  "uncertainty": {
+    "method": "paired hierarchical cluster bootstrap through complete index formula",
+    "replicates": 2000,
+    "confidence_level": 0.95,
+    "weights": "fixed",
+    "difference_intervals": true,
+    "boundary_binary_diagnostics": "exact binomial or Wilson interval"
+  },
+  "supplementary": {
+    "forecastbench": {
+      "catalog_id": 48,
+      "reason": "retrospective resolved events and uncertified model cutoffs",
+      "raw": "clip(1-Brier)",
+      "skill": "clip(1-Brier/0.25)",
+      "index_weight": 0
+    },
+    "leduc": {
+      "catalog_id": 18,
+      "reason": "freeze terminal utility anchors/opponent panel before inclusion",
+      "index_weight": 0
+    }
+  },
+  "exclusions_existing_user_decisions": [
+    8,
+    46,
+    47,
+    49
+  ],
+  "efficiency_in_score": false,
+  "sources": [
+    {
+      "name": "Artificial Analysis detailed methodology v4.3.2",
+      "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "category_weights": {
+        "agents": 0.3,
+        "general": 0.3,
+        "coding": 0.2,
+        "scientific_reasoning": 0.2
+      }
+    },
+    {
+      "name": "Artificial Analysis index page",
+      "url": "https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index",
+      "note": "FAQ says equal quarters, conflicting with detailed methodology; use detailed methodology"
+    },
+    {
+      "name": "Open LLM normalization",
+      "url": "https://huggingface.co/docs/leaderboards/open_llm_leaderboard/normalization"
+    },
+    {
+      "name": "HELM Capabilities v1.0.0 primary description",
+      "url": "https://crfm.stanford.edu/2025/03/20/helm-capabilities.html"
+    }
+  ],
+  "hypothetical_examples": {
+    "uniform_categories": [
+      0.6,
+      0.6,
+      0.6,
+      0.6,
+      0.6
+    ],
+    "uniform_skill": 60,
+    "uneven_categories": [
+      0.9,
+      0.9,
+      0.9,
+      0.2,
+      0.1
+    ],
+    "uneven_skill": 60,
+    "uneven_breadth": 47.28240846043158
+  },
+  "report": "artifacts/jev-reproductions/index-proposals.md"
+}
