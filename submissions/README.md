@@ -1,0 +1,6 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine and exact code | Hardware | Declared capacity limits |
+|---|---:|---|---|---|---|
+| Decider chat readout on Gemma-4-31B-it (`google/gemma-4-31B-it` @ `842da379`, bf16), option-count temperature T(n) = 10.124 − 1.633 ln n | **59.84** | [full run and scores](https://huggingface.co/datasets/Mapika/decision-index-results/blob/main/runs/full-chat-gemma4-31b-it-adaptiveT/scores.json) | kit `http` engine, kit `52a6989`; server [decider](https://github.com/Mapika/decider) `7557fe0` + `serve_chat_adaptive.py` over `serve_chat.py` (in the results dataset under `runs/full-chat-gemma4-31b-it-adaptiveT/code/`) | 1 x NVIDIA B300; one server, 8 HTTP runners | None. Nothing was truncated and no options were removed. |
+| Decider chat readout on Qwen3.6-27B (`Qwen/Qwen3.6-27B` @ `6a9e13bd`, bf16), temperature 1.943 | **55.73** | [full run and scores](https://huggingface.co/datasets/Mapika/decision-index-results/blob/main/runs/full-chat-qwen3.6-27b-T1.943/scores.json) | kit `http` engine, kit `52a6989`; server [decider](https://github.com/Mapika/decider) `7557fe0` + `serve_chat_lowmem.py` (in the results dataset under `runs/full-chat-qwen3.6-27b-T1.943/code/`) | 1 x NVIDIA B300; one server, 8 HTTP runners | None. Nothing was truncated and no options were removed. |
