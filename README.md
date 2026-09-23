@@ -31,13 +31,19 @@ python -m decision_index score --results runs/qwen-0.5b-sample/results.jsonl --s
 
 `score` writes `benchmark-summary.json` (native metric per benchmark on complete, supported case groups), `index.json` (coverage-adjusted panel scores, areas and the index) and `scores.json` (both combined, the file you would submit).
 
-The full suite in one command, scored at the end:
+The full suite in one command, scored at the end, entirely on your own machine (it reads the imported `suite/` and uploads nothing unless you pass `--upload`):
 
 ```sh
 python -m decision_index pipeline --engine transformers --model Qwen/Qwen2.5-7B-Instruct --out runs/qwen-7b
 ```
 
-`run`/`pipeline` resume from an existing `results.jsonl`; rows whose status is `error` are retried, everything else is kept.
+To evaluate a model served by your own local server instead (anything that answers TypeSafe's `/v1/systemone` wire format, e.g. a decision model's own server), use the `http` engine:
+
+```sh
+python -m decision_index pipeline --engine http --option base_url=http://127.0.0.1:8000 --option model=my-model --out runs/my-model
+```
+
+`run`/`pipeline` resume from an existing `results.jsonl`; rows whose status is `error` are retried, everything else is kept. Nothing in the local path needs a Hugging Face account except the one-time HLE download during the rebuild; engines and custom `module:Class` engines are described in `docs/engines.md`.
 
 ## Quickstart (Hugging Face Jobs)
 
