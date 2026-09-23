@@ -8,11 +8,21 @@ Not affiliated with TypeSafe AI.
 
 ## Quickstart (local)
 
+The frozen suite is not redistributed: several sources don't grant republishing rights, so this repository ships the recipe instead. Build it once locally (about 4 GB of downloads; accept the [HLE](https://huggingface.co/datasets/cais/hle) terms on the Hub and be logged in first):
+
 ```sh
-pip install -e ".[transformers]"
+pip install -e ".[transformers,rebuild]"
 export HF_HUB_DISABLE_XET=1
 
-python -m decision_index suite download --dir suite
+python -m decision_index suite rebuild --work work
+python -m decision_index suite import --dir suite \
+    --rows work/artifacts/benchmark-suite/release-v1-rebuilt/selected-rows.jsonl.gz \
+    --exclusions hub/excluded-questions.json --manifest hub/manifest.json
+```
+
+The rebuild pins every source and reproduces the frozen file byte for byte; `suite import` refuses the file if its hash does not match. Then:
+
+```sh
 python -m decision_index suite sample --dir suite --n 100 --out sample-100.jsonl.gz
 python -m decision_index run --engine transformers --model Qwen/Qwen2.5-0.5B-Instruct \
     --rows sample-100.jsonl.gz --out runs/qwen-0.5b-sample
@@ -31,11 +41,16 @@ python -m decision_index pipeline --engine transformers --model Qwen/Qwen2.5-7B-
 
 ## Quickstart (Hugging Face Jobs)
 
-One job runs steps 1-4 end to end on a single RTX PRO 6000 (96 GB) and uploads `results.jsonl.gz`, `benchmark-summary.json`, `index.json`, `scores.json`, `environment.json` and `status.json` to a dataset repo you own:
+One job runs steps 1-4 end to end on a single RTX PRO 6000 (96 GB) and uploads `results.jsonl.gz`, `benchmark-summary.json`, `index.json`, `scores.json`, `environment.json` and `status.json` to a dataset repo you own. The job downloads the suite from a Hub dataset, so first put your locally built copy in a **private** dataset under your own account (keep it private: the sources' terms apply):
 
 ```sh
 hf auth login
+python scripts/prepare_hub_upload.py --rows work/artifacts/benchmark-suite/release-v1-rebuilt/selected-rows.jsonl.gz --out hub-upload
+hf repo create <you>/decision-index-suite --repo-type dataset --private
+hf upload <you>/decision-index-suite hub-upload . --repo-type dataset
+
 python -m decision_index hf-job --engine transformers --model Qwen/Qwen2.5-7B-Instruct \
+    --suite-dataset <you>/decision-index-suite \
     --results-repo <you>/decision-index-results --run-name qwen-7b
 ```
 
@@ -43,7 +58,7 @@ What it does: creates `<you>/decision-index-results` (private, `--public` to cha
 
 ## The frozen suite
 
-The suite is distributed as a Hub dataset (default id `multimodalart/decision-index-suite`, constant `SUITE_DATASET` in `decision_index/constants.py`) with three files:
+The suite is three files. It is not published as a public dataset, because not every source allows republishing; you build it with `suite rebuild` (below) and stage it with `suite import`. The code can also read it from a Hub dataset you control (`--suite-dataset`, default `SUITE_DATASET` in `decision_index/constants.py`, which is not public):
 
 | File | Purpose | sha256 |
 |---|---|---|
@@ -51,11 +66,11 @@ The suite is distributed as a Hub dataset (default id `multimodalart/decision-in
 | `excluded-questions.json` | 442 request ids dropped at scoring time for every engine (duplicate options, duplicated gold, 380 ToolRet/BRIGHT rows beyond nearly every context window, and their sibling chunks) | `331df32d4b719c7db43214d0e5d85859d39c3b2eb7d0b3812214cce150155e81` |
 | `manifest.json` | per-benchmark counts, caps, selected group ids, seeds and file hashes | (any) |
 
-`suite download` verifies the rows file against the pinned hash and refuses to proceed on mismatch. `suite import --rows ... --exclusions ... --manifest ...` stages local copies instead. To publish the dataset, `scripts/prepare_hub_upload.py --rows /path/to/selected-rows.jsonl.gz` stages exactly these three files (copies of `hub/excluded-questions.json` and `hub/manifest.json` are in this repo) and prints the `hf upload` command.
+`suite import --rows ... --exclusions ... --manifest ...` stages local copies and verifies the rows against the pinned hash (the gzip hash, or the uncompressed one when the file was recompressed), refusing to proceed on mismatch. `suite download --dataset <you>/<repo>` does the same from a private Hub copy. `scripts/prepare_hub_upload.py --rows /path/to/selected-rows.jsonl.gz` stages exactly these three files for such a copy (copies of `hub/excluded-questions.json` and `hub/manifest.json` are in this repo).
 
 ### Rebuilding from public sources
 
-`python -m decision_index suite rebuild --work work` downloads every pinned source (git commits, Hub dataset revisions, direct URLs with sha256), normalizes each benchmark, applies the frozen sampling rules (seed 20260919, hash-ordered case selection, ESCI proportional strata, request budgets that keep linked cases intact) and writes `work/artifacts/benchmark-suite/release-v1-rebuilt/selected-rows.jsonl(.gz)`. The freeze step and all 37 normalizers were checked against the lab's raw sources: every normalized file and the final frozen file are byte-identical to the originals (uncompressed sha256 `288d372…`). `--compare path/to/reference.jsonl.gz` reports run-id and payload-hash differences if upstream data drifts. Per-benchmark sources, revisions, sampling rules and licence notes are in `docs/suite.md`; `pip install -e ".[rebuild]"` adds the extra dependencies (pyarrow, pandas, scipy, mido, python-chess, tiktoken). HLE is a gated dataset (accept its terms on the Hub and be logged in). The download path is primary; the rebuild is there so the frozen file is auditable.
+`python -m decision_index suite rebuild --work work` downloads every pinned source (git commits, Hub dataset revisions, direct URLs with sha256), normalizes each benchmark, applies the frozen sampling rules (seed 20260919, hash-ordered case selection, ESCI proportional strata, request budgets that keep linked cases intact) and writes `work/artifacts/benchmark-suite/release-v1-rebuilt/selected-rows.jsonl(.gz)`. The freeze step and all 37 normalizers were checked against the lab's raw sources: every normalized file and the final frozen file are byte-identical to the originals (uncompressed sha256 `288d372…`). `--compare path/to/reference.jsonl.gz` reports run-id and payload-hash differences if upstream data drifts. Per-benchmark sources, revisions, sampling rules and licence notes are in `docs/suite.md`; `pip install -e ".[rebuild]"` adds the extra dependencies (pyarrow, pandas, scipy, mido, python-chess, tiktoken). HLE is a gated dataset (accept its terms on the Hub and be logged in). The rebuild is the supported way to obtain the suite.
 
 ## Benchmarks
 
