@@ -1,0 +1,442 @@
+{
+ "edition": "0.2",
+ "name": "release-v2",
+ "label": "Decision Index 0.2",
+ "panel_id": "decision-index-0.2",
+ "headline": "balanced_skill",
+ "secondary": "balanced_raw",
+ "areas": [
+  {
+   "id": "knowledge",
+   "label": "Knowledge & Reasoning",
+   "benchmarks": [
+    25,
+    30,
+    31,
+    32,
+    33,
+    43,
+    44,
+    45,
+    57,
+    58
+   ]
+  },
+  {
+   "id": "language",
+   "label": "Language Understanding",
+   "benchmarks": [
+    11,
+    12,
+    28,
+    29,
+    38,
+    39,
+    40,
+    41,
+    42,
+    59
+   ]
+  },
+  {
+   "id": "retrieval",
+   "label": "Retrieval & Classification",
+   "benchmarks": [
+    4,
+    5,
+    10,
+    36,
+    37,
+    56,
+    61
+   ]
+  },
+  {
+   "id": "tools",
+   "label": "Tools & Automation",
+   "benchmarks": [
+    1,
+    2,
+    3,
+    6,
+    9,
+    62
+   ]
+  },
+  {
+   "id": "arts",
+   "label": "Arts & Human Taste",
+   "benchmarks": [
+    20,
+    21,
+    22,
+    23,
+    48,
+    50,
+    64
+   ]
+  }
+ ],
+ "track_scored": [
+  25,
+  30,
+  43,
+  44,
+  31,
+  11,
+  40,
+  41,
+  36,
+  37,
+  1,
+  2,
+  6,
+  20,
+  21,
+  22,
+  23,
+  50
+ ],
+ "added": {
+  "56": {
+   "short": "PhishNChips"
+  },
+  "57": {
+   "short": "MMLU-Pro"
+  },
+  "58": {
+   "short": "BBH"
+  },
+  "59": {
+   "short": "RAGTruth"
+  },
+  "61": {
+   "short": "HoVer"
+  },
+  "62": {
+   "short": "When2Call"
+  },
+  "64": {
+   "short": "New Yorker"
+  }
+ },
+ "loss_rules": {
+  "48": {
+   "name": "ForecastBench",
+   "baseline": 0.25,
+   "best": 0.0,
+   "metric": "Brier loss",
+   "baseline_label": "always predict p = 0.5",
+   "rule": "clip((0.25 - Brier) / (0.25 - 0)) x coverage"
+  }
+ },
+ "not_in_index": [
+  {
+   "id": 24,
+   "name": "MMLU"
+  },
+  {
+   "id": 26,
+   "name": "ARC-Easy"
+  },
+  {
+   "id": 27,
+   "name": "ARC-Challenge"
+  },
+  {
+   "id": 34,
+   "name": "SimpleBench"
+  }
+ ],
+ "chance": {
+  "25": {
+   "name": "GPQA Diamond",
+   "area": "knowledge",
+   "chance": 0.25,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "30": {
+   "name": "GSM8K",
+   "area": "knowledge",
+   "chance": 0.175,
+   "label": "Uniform random choice",
+   "method": "per track: 4-choice and 10-choice versions corrected separately, then averaged"
+  },
+  "31": {
+   "name": "ChessBench",
+   "area": "knowledge",
+   "chance": 0.0819,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "32": {
+   "name": "MuSR",
+   "area": "knowledge",
+   "chance": 0.371,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "33": {
+   "name": "SATA-Bench",
+   "area": "knowledge",
+   "chance": 0.0131,
+   "label": "Random whole-case guesses",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "43": {
+   "name": "CRUXEval",
+   "area": "knowledge",
+   "chance": 0.3697,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "44": {
+   "name": "CLadder",
+   "area": "knowledge",
+   "chance": 0.5,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "45": {
+   "name": "HLE",
+   "area": "knowledge",
+   "chance": 0.1641,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "57": {
+   "name": "MMLU-Pro",
+   "area": "knowledge",
+   "chance": 0.1109,
+   "label": "uniform random choice, mean of 1/options",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "58": {
+   "name": "BBH",
+   "area": "knowledge",
+   "chance": 0.3101,
+   "label": "uniform random choice, mean of 1/options",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "11": {
+   "name": "ContractNLI",
+   "area": "language",
+   "chance": 0.3085,
+   "label": "Random choices · F1",
+   "method": "F1 of random guessing over the fixed label set"
+  },
+  "12": {
+   "name": "ANLI",
+   "area": "language",
+   "chance": 0.3324,
+   "label": "Random choices · F1",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "28": {
+   "name": "WinoGrande",
+   "area": "language",
+   "chance": 0.5,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "29": {
+   "name": "HellaSwag",
+   "area": "language",
+   "chance": 0.25,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "38": {
+   "name": "ACOS",
+   "area": "language",
+   "chance": 0.0,
+   "label": "Random whole-case guesses",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "39": {
+   "name": "FinEntity",
+   "area": "language",
+   "chance": 0.3201,
+   "label": "Random choices · F1",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "40": {
+   "name": "iSarcasmEval",
+   "area": "language",
+   "chance": 0.2227,
+   "label": "Random choices · F1",
+   "method": "track A English: F1 of random guessing on the sarcastic class"
+  },
+  "41": {
+   "name": "VAST",
+   "area": "language",
+   "chance": 0.3333,
+   "label": "Random choices · F1",
+   "method": "F1 of random guessing over the fixed label set"
+  },
+  "42": {
+   "name": "NLI4CT",
+   "area": "language",
+   "chance": 0.486,
+   "label": "Random choices · F1",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "59": {
+   "name": "RAGTruth",
+   "area": "language",
+   "chance": 0.4113,
+   "label": "F1 of a fair coin; accuracy chance 0.5; always-hallucinated F1 0.518; majority-class accuracy 0.651",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "4": {
+   "name": "BANKING77",
+   "area": "retrieval",
+   "chance": 0.0127,
+   "label": "Random choices · F1",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "5": {
+   "name": "CLINC150",
+   "area": "retrieval",
+   "chance": 0.006,
+   "label": "Random choices · F1",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "10": {
+   "name": "SGD",
+   "area": "retrieval",
+   "chance": 0.399,
+   "label": "Random choices · F1",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "36": {
+   "name": "BRIGHT",
+   "area": "retrieval",
+   "chance": 0.0448,
+   "label": "Random ranking",
+   "method": "per query: expected nDCG@10 of a random ranking of that query's candidates"
+  },
+  "37": {
+   "name": "Amazon ESCI",
+   "area": "retrieval",
+   "chance": 0.2027,
+   "label": "Random choices · F1",
+   "method": "F1 of random guessing over the fixed label set"
+  },
+  "56": {
+   "name": "PhishNChips",
+   "area": "retrieval",
+   "chance": 0.5,
+   "label": "uniform random choice, mean of 1/options",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "61": {
+   "name": "HoVer",
+   "area": "retrieval",
+   "chance": 0.5,
+   "label": "uniform random choice, mean of 1/options",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "1": {
+   "name": "BFCL",
+   "area": "tools",
+   "chance": 0.2592,
+   "label": "Random whole-case guesses",
+   "method": "all fields of a case right by chance"
+  },
+  "2": {
+   "name": "ToolRet",
+   "area": "tools",
+   "chance": 0.0937,
+   "label": "Random ranking",
+   "method": "per query: expected nDCG@10 of a random ranking of that query's candidates"
+  },
+  "3": {
+   "name": "API-Bank",
+   "area": "tools",
+   "chance": 0.0189,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "6": {
+   "name": "RouterBench",
+   "area": "tools",
+   "chance": 0.5735,
+   "label": "Random model selection",
+   "method": "per track: 0-shot and 5-shot corrected separately, then averaged"
+  },
+  "9": {
+   "name": "Home appliances",
+   "area": "tools",
+   "chance": 0.0,
+   "label": "Random whole-case guesses",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "62": {
+   "name": "When2Call",
+   "area": "tools",
+   "chance": 0.25,
+   "label": "uniform random choice, mean of 1/options",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "20": {
+   "name": "BPoMP",
+   "area": "arts",
+   "chance": 0.5,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "21": {
+   "name": "Humicroedit",
+   "area": "arts",
+   "chance": 0.5,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "22": {
+   "name": "POP909",
+   "area": "arts",
+   "chance": 0.0078,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "23": {
+   "name": "cfcolor",
+   "area": "arts",
+   "chance": 0.5,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "48": {
+   "name": "ForecastBench",
+   "area": "arts",
+   "chance": 0.0,
+   "label": "Always predict p = 0.5",
+   "method": "baseline Brier 0.25 (always predict 0.5); the baseline-converted value is already 0 there"
+  },
+  "50": {
+   "name": "Habermas",
+   "area": "arts",
+   "chance": 0.311,
+   "label": "Uniform random choice",
+   "method": "expected score of uniform random choice over each question's options"
+  },
+  "64": {
+   "name": "New Yorker",
+   "area": "arts",
+   "chance": 0.2,
+   "label": "uniform random choice, mean of 1/options",
+   "method": "expected score of uniform random choice over each question's options"
+  }
+ },
+ "tie": 0.25,
+ "changes": [
+  "Scores are now chance-corrected: 0 means random guessing and 100 means perfect, so yes/no questions no longer give free points.",
+  "15 new models on the board, plus newer versions of 14 existing ones.",
+  "The index now counts 40 benchmarks, up from 19: 7 brand-new ones (MMLU-Pro, BBH, When2Call, RAGTruth, HoVer, New Yorker caption matching, PhishNChips), plus 15 we already ran that now count, such as HLE, ANLI, WinoGrande, HellaSwag, BANKING77 and CLINC150.",
+  "MMLU left the index: top models have nearly maxed it out, and MMLU-Pro takes its place. ARC-Easy, ARC-Challenge and SimpleBench are still shown but don't count.",
+  "ToolRet and BRIGHT are run on a subset of their data that doesn't skew results but is faster and cheaper to run."
+ ],
+ "index_note": "Decision Index 0.2 averages 40 benchmarks in five equal-weight areas: each area is the plain mean of its benchmarks and the index is 100 x the mean of the five areas. Each benchmark is chance-corrected first, (score - chance) / (1 - chance) clipped to 0-1, so 0 means random guessing and 100 means perfect. Every score is coverage-adjusted, so an unanswered or unsupported request counts as wrong. ForecastBench enters against its baseline: clip((0.25 - Brier) / 0.25) x coverage, so always predicting 0.5 scores zero. MMLU, ARC-Easy, ARC-Challenge, SimpleBench stay on the board as non-index benchmarks. The six interactive environments are still unrun and stay out. Every entrant on the board has results on all 40 index benchmarks. Point estimates only, no uncertainty intervals yet."
+}

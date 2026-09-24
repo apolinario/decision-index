@@ -14,6 +14,8 @@ def score_run(suite, results_path, engine, out_dir, reference_results=None):
     out.mkdir(parents=True, exist_ok=True)
     results = load_results(results_path)
     reference = load_results(reference_results) if reference_results else None
+    if suite.edition["id"] == "0.2":
+        return score_run_v02(suite, results, engine, out, reference)
     summary = benchmark_summary(suite, results, engine, reference)
     atomic_json(out / "benchmark-summary.json", summary)
     scored = score_panel(suite, results)
@@ -46,6 +48,70 @@ def score_run(suite, results_path, engine, out_dir, reference_results=None):
         "frozen_panel": index["frozen_panel"],
         "formulas": index["formulas"],
         "panel_id": index["panel_id"],
+    }
+    atomic_json(out / "scores.json", scores)
+    return scores
+
+
+def score_run_v02(suite, results, engine, out, reference=None):
+    import collections
+
+    from decision_index.scoring import added, index02
+
+    spec = index02.spec()
+    added_ids = {int(n) for n in spec["added"]}
+    base, extra = [], collections.defaultdict(list)
+    for r in suite.rows(apply_exclusions=True):
+        n = r["_evaluation"]["catalog_id"]
+        (extra[n] if n in added_ids else base).append(r)
+    summary = benchmark_summary(suite, results, engine, reference, rows=base)
+    added_reports = {n: added.report(n, rows, results) for n, rows in sorted(extra.items())}
+    for n, rep in added_reports.items():
+        entry = {k: rep[k] for k in ("catalog_id", "dataset", "requests", "answered", "unsupported", "errors", "abstained", "pending", "metric", "score", "median_ms")}
+        entry.update(scored_requests=rep["answered"], detail={"field_accuracy": rep["field_accuracy"], "scored_fields": rep["scored_fields"], "chance_on_rows": rep["chance"]})
+        if reference:
+            entry["reference_same_cases"] = added.report(n, [row for row in extra[n] if results.get(row["_evaluation"]["run_id"], {}).get("status") == "ok"], reference)["score"]
+        summary["benchmarks"].append(entry)
+    summary["edition"] = "0.2"
+    atomic_json(out / "benchmark-summary.json", summary)
+    index = index02.index_entry(suite, results, summary, added_reports)
+    atomic_json(out / "index.json", index)
+    benchmarks = {}
+    for b in summary["benchmarks"]:
+        n = str(b["catalog_id"])
+        entry = {k: (rnd(v) if isinstance(v, float) else v) for k, v in b.items() if k != "detail"}
+        entry["median_ms"] = rnd(b.get("median_ms"), 1)
+        if n in index["benchmarks"]:
+            v = index["benchmarks"][n]
+            entry.update(index_raw=v["raw"], index_skill=v["skill"], coverage=v["coverage"], chance=v["random"], in_index=v["in_index"])
+            if v.get("tracks"):
+                entry["tracks"] = v["tracks"]
+            if int(n) in C.HEADLINE:
+                entry.update(score=v["raw"], metric=C.HEADLINE_METRIC)
+        else:
+            entry["in_index"] = False
+        benchmarks[n] = entry
+    e = suite.edition
+    completed = sum(1 for r in suite.rows(apply_exclusions=True) if r["_evaluation"]["run_id"] in results)
+    counts = collections.Counter(results[r["_evaluation"]["run_id"]]["status"] for r in suite.rows(apply_exclusions=True) if r["_evaluation"]["run_id"] in results)
+    expected = e["scoreable"] + e["added_requests"]
+    scores = {
+        "engine": engine,
+        "edition": e["id"],
+        "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "suite": {"edition": e["name"], "requests": e["requests"], "scoreable": e["scoreable"], "excluded": e["excluded"], "added_requests": e["added_requests"], "benchmarks": e["benchmarks"], "rows_sha256": e["rows_sha256"], "added_sha256": e["added_sha256"]},
+        "completed": completed,
+        "complete": completed >= expected,
+        "counts": dict(counts),
+        "latency_ms": {k: rnd(v, 1) for k, v in summary["successful_request_latency_ms"].items()},
+        "decision_index": index["index"],
+        "raw_index": index["raw_index"],
+        "scores": index["scores"],
+        "areas": index["areas"],
+        "index_benchmarks": index["benchmarks"],
+        "benchmarks": benchmarks,
+        "panel_id": index["panel_id"],
+        "note": index["note"],
     }
     atomic_json(out / "scores.json", scores)
     return scores

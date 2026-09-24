@@ -163,9 +163,9 @@ def score(rows, results):
     return report
 
 
-def benchmark_summary(suite, results, engine, reference=None):
+def benchmark_summary(suite, results, engine, reference=None, rows=None):
     groups = collections.defaultdict(list)
-    for r in suite.rows(apply_exclusions=True):
+    for r in rows if rows is not None else suite.rows(apply_exclusions=True):
         groups[r["_evaluation"]["catalog_id"]].append(r)
     reports = []
     for n, rows in groups.items():
