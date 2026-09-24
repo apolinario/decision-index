@@ -32,7 +32,6 @@ GIT_FLAT = {
     "vast": ("https://github.com/emilyallaway/zero-shot-stance.git", "e7c4775182b184730f350995f8260579c9e066fe", ["data/VAST"]),
 }
 HF = {
-    "raw/banking77": ("PolyAI/banking77", "90d4e2ee5521c04fc1488f065b8b083658768c57", ["test.csv", "categories.json"]),
     "raw/routerbench": ("withmartian/routerbench", "784021482c3f320c6619ed4b3bb3b41a21424fcb", ["routerbench_0shot.pkl", "routerbench_5shot.pkl"]),
     "raw/bright": ("xlangai/BRIGHT", "3066d29c9651a576c8aba4832d249807b181ecae", ["examples/*.parquet", "documents/*.parquet"]),
     "raw/toolret_queries": ("mangopy/ToolRet-Queries", "b8c76ad3349ff17497b6bdb28bb5b8f61a0f6445", ["*/*.parquet"]),
@@ -52,6 +51,9 @@ HTTP = {
     "raw/downloads/cfcolor.zip": ("https://www.dgp.toronto.edu/~donovan/cfcolor/cfcolor.zip", "47c07095642cfab3c2eeab366a5d152b07783cbb5af390cbfda7d7c13db4b54c"),
     "raw/downloads/chessbench-test-action-value.bag": ("https://storage.googleapis.com/searchless_chess/data/test/action_value_data.bag", "5f73aac8f60e31734cdbf276ba3fca8d5ba5cb6171ba600e31af4f36327986b0"),
     "raw/downloads/humicroedit-full.zip": ("https://cs.rochester.edu/u/nhossain/semeval-2020-task-7-dataset.zip", "12a6cbf28c8b698ad80be42a65ac867b57e4c71662eedab607805e167ba791ab"),
+    "raw/banking77/test.csv": ("https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/test.csv", "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d"),
+    "raw/banking77/categories.json": ("https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/categories.json", "53261da888122daf2d120d925458631d9619e15d82e56052e7a42e535ce32b63"),
+    "raw/repos/habermas_machine/hm_all_candidate_comparisons.parquet": ("https://storage.googleapis.com/habermas_machine/datasets/hm_all_candidate_comparisons.parquet", "7cf8d5ce3fce8853b36f0ffe1158424f7813867e422e313db4df0a5f9e03e4a4"),
     "raw/clinc150/data_full.json": ("https://raw.githubusercontent.com/clinc/oos-eval/master/data/data_full.json", "36923c3705a59e08fe9c3883d8bc2dd966ef93e22cb78ac41171782a698d56e0"),
     "data/sources/gpqa/dataset.zip": ("https://github.com/idavidrein/gpqa/raw/main/dataset.zip", "461ae7329f15a3e35f8184d2dac24b990f34fdf12f366ca4062d8e6638cd08dc"),
 }
@@ -60,7 +62,7 @@ ESCI_LFS = {
     "shopping_queries_dataset/shopping_queries_dataset_products.parquet": "25124442d064d64b26f74082d6fa09438d679efc0c18",
 }
 NEEDS = {
-    1: ["git:bfcl"], 2: ["git:toolret", "hf:raw/toolret_queries", "hf:raw/toolret_tools"], 3: ["git:apibank"], 4: ["hf:raw/banking77"],
+    1: ["git:bfcl"], 2: ["git:toolret", "hf:raw/toolret_queries", "hf:raw/toolret_tools"], 3: ["git:apibank"], 4: ["http:raw/banking77/test.csv", "http:raw/banking77/categories.json"],
     5: ["http:raw/clinc150/data_full.json"], 6: ["hf:raw/routerbench"], 9: [], 10: ["git:sgd"], 11: ["git:contractnli"], 12: ["hf:raw/anli"],
     20: ["http:raw/downloads/BPoMP_p1.json", "http:raw/downloads/BPoMP_p2.json", "http:raw/downloads/BPoMP_p3.json"],
     21: ["http:raw/downloads/humicroedit-full.zip"], 22: ["git:pop909cl"], 23: ["http:raw/downloads/cfcolor.zip"],
@@ -69,7 +71,7 @@ NEEDS = {
     31: ["git:searchless_chess", "http:raw/downloads/chessbench-test-action-value.bag"], 32: ["gitflat:musr"], 33: ["git:sata"],
     34: ["gitflat:simplebench"], 36: ["hf:raw/bright"], 37: ["git:esci"], 38: ["git:acos"], 39: ["git:finentity"], 40: ["git:isarcasm"],
     41: ["gitflat:vast"], 42: ["git:nli4ct"], 43: ["git:cruxeval"], 44: ["gitflat:cladder"], 45: ["hf:raw/hle"],
-    48: ["git:forecastbench-datasets"], 50: ["git:habermas_machine"],
+    48: ["git:forecastbench-datasets"], 50: ["git:habermas_machine", "http:raw/repos/habermas_machine/hm_all_candidate_comparisons.parquet"],
 }
 
 
@@ -113,6 +115,10 @@ def hf_fetch(dest, repo, revision, patterns, log=print):
     snapshot_download(repo, repo_type="dataset", revision=revision, allow_patterns=patterns, local_dir=str(dest))
 
 
+def destination(layout, key):
+    return layout.suite / key if key.startswith("raw/") else layout.root / key
+
+
 def acquire(layout, numbers=None, log=print):
     numbers = sorted(NEEDS) if numbers is None else numbers
     done = set()
@@ -136,10 +142,10 @@ def acquire(layout, numbers=None, log=print):
                 git_fetch(layout.raw / key, url, rev, sparse, log)
             elif kind == "hf":
                 repo, rev, patterns = HF[key]
-                hf_fetch(layout.root / key, repo, rev, patterns, log)
+                hf_fetch(destination(layout, key), repo, rev, patterns, log)
             elif kind == "http":
                 url, sha = HTTP[key]
-                http_fetch(layout.root / key, url, sha, log)
+                http_fetch(destination(layout, key), url, sha, log)
     if 23 in numbers:
         release = layout.repos / "cfcolor/release"
         if not (release / "themeData.mat").exists():
