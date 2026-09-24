@@ -55,3 +55,21 @@ class MyEngine(Engine):
 ```
 
 Run it with `--engine my_package.my_module:MyEngine`. Do not truncate, do not drop options, do not adapt the prompt per benchmark; refuse instead.
+
+## The 0.2 board and this kit
+
+Every entrant on the 0.2 board was run with its author's own inference code, pinned by the lab. This kit does not vendor those harnesses. What it can reproduce directly:
+
+| Entrant | How the lab ran it | With this kit |
+|---|---|---|
+| Jev (reference) | TypeSafe hosted API, `POST /v1/systemone` | `http` with the API's base URL and key |
+| decider-2b-fp8-http, decider-4b, decider-chat-qwen3.6-27b | author's `decider.serve`, `POST /v1/systemone` | `http`, after starting the author's server |
+| xor | author's `server.py`, `POST /v1/systemone` | `http`, after starting the author's server |
+| vllm-pr57250 | the PR's `structured_server.py` over vLLM | `http --option model=jev-latest` |
+| razorback-one-read-3e296f08 | vendored openjev 0.4 server | `http --option model=openjev-latest --option extra='{"samples":1,"steps":1,"think":0,"sequential":false}'` |
+| reflex-27b | author's reflex frontend over SGLang | `http --option model=reflex-27b --option extra='{"permutations":2}'` |
+| winnow-12b-q8 | author's winnow-server (label cap raised to 255 for the board) | `http --option model=Winnow-12B --option extra='{"winnow":{"diagnostics":true}}'` on the lifted server |
+
+Starting each server at the lab's pinned revision and settings is up to you; the lab's refusal markers for these servers differ slightly from the `http` engine's list, which only changes whether a refused row is recorded as `unsupported` or `error` (both count as unanswered; errors are retried on resume).
+
+Not covered: rune-26b-a4b (its server speaks `POST /v1/decisions`, a different wire format), and the 40 entrants run in-process through the authors' Python packages (akash-gemma, autojev-27b, the bosun, decision, gliner, kev and lfm families, clm-v0.1-8b, decider-35b-nvfp4, djev, harsha, hopper, jeff-uncapped, jevfire-uncapped, jevk5, jobe, joshua-diffusion, laya, metask-jev-4b, mini-jev, mojev, nimble-v2, openvons, pngwn-space, semif, solomon, tev1-4b, this-that-1.2, verdict). For those, wrap the author's scoring call in an `Engine` subclass and pass `--engine module:Class`; the scoring side of the kit does not depend on the engine.
