@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "decision-index"
-version = "0.1.0"
+version = "0.2.0"
 description = "Reproduction kit for the Decision Index benchmark: frozen suite, engines, scorers and index math."
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -22,7 +22,7 @@ transformers = [
   "safetensors>=0.4",
 ]
 rebuild = [
-  "pyarrow>=15",
+  "pyarrow>=20",
   "pandas>=2.0",
   "numpy>=1.26",
   "scipy>=1.11",
@@ -39,4 +39,4 @@ decision-index = "decision_index.cli:main"
 include = ["decision_index*"]
 
 [tool.setuptools.package-data]
-decision_index = ["data/*.json"]
+decision_index = ["data/*.json", "data/*/*.json"]

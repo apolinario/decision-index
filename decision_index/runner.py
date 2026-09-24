@@ -15,7 +15,15 @@ def stamp():
     return datetime.now(timezone.utc).isoformat()
 
 
-def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=False, resume=True, warm=True, seed=C.RUN_SEED, corpus_sha256=None, halt_on_device_error=True, log=print):
+def iter_rows(rows_path, keep=None):
+    paths = rows_path if isinstance(rows_path, (list, tuple)) else [rows_path]
+    for path in paths:
+        for row in read_jsonl(path):
+            if keep is None or keep(row["_evaluation"]):
+                yield row
+
+
+def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=False, resume=True, warm=True, seed=C.RUN_SEED, corpus_sha256=None, halt_on_device_error=True, log=print, keep=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
@@ -34,7 +42,7 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
     event(event="loading", engine=engine_name)
     engine = load_engine(engine_name, **engine_options)
     engine.synchronize()
-    atomic_json(out / "environment.json", {"engine": engine_name, "engine_options": engine_options, "model_source": engine.provenance, **engine.runtime(), "loaded_seconds": time.perf_counter() - t, "frozen_corpus_sha256": corpus_sha256, "rows_path": str(rows_path), "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "latency": engine.latency})
+    atomic_json(out / "environment.json", {"engine": engine_name, "engine_options": engine_options, "model_source": engine.provenance, **engine.runtime(), "loaded_seconds": time.perf_counter() - t, "frozen_corpus_sha256": corpus_sha256, "rows_path": [str(p) for p in rows_path] if isinstance(rows_path, (list, tuple)) else str(rows_path), "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "latency": engine.latency})
     if warm:
         engine.warmup()
         engine.synchronize()
@@ -53,7 +61,7 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
     finished = 0
     completed = set(previous)
     with results_path.open("a", encoding="utf-8") as logf:
-        for row in read_jsonl(rows_path):
+        for row in iter_rows(rows_path, keep):
             e = row["_evaluation"]
             rid = e["run_id"]
             if rid in previous and previous[rid] != "error":

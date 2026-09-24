@@ -36,16 +36,39 @@ def atomic_json(path, data, indent=2):
     tmp.replace(path)
 
 
+def detect_edition(directory):
+    from decision_index import editions
+
+    directory = Path(directory)
+    manifest = directory / editions.MANIFEST_FILE
+    if manifest.exists():
+        name = json.loads(manifest.read_text()).get("edition")
+        if name:
+            return editions.get(name)["id"]
+    return "0.2" if (directory / editions.ADDED_FILE).exists() else "0.1"
+
+
 class Suite:
-    def __init__(self, directory):
-        from decision_index import constants as C
+    def __init__(self, directory, edition=None):
+        from decision_index import editions
 
         self.directory = Path(directory)
-        self.rows_path = self.directory / C.SUITE_ROWS_FILE
-        self.exclusions_path = self.directory / C.SUITE_EXCLUSIONS_FILE
-        self.manifest_path = self.directory / C.SUITE_MANIFEST_FILE
-        if not self.rows_path.exists():
-            raise FileNotFoundError(f"missing {self.rows_path}; run `decision-index suite download` first")
+        self.edition = editions.get(edition or detect_edition(self.directory))
+        self.rows_path = self.directory / editions.ROWS_FILE
+        self.added_path = self.directory / editions.ADDED_FILE if self.edition["added_sha256"] else None
+        self.exclusions_path = self.directory / editions.EXCLUSIONS_FILE
+        self.manifest_path = self.directory / editions.MANIFEST_FILE
+        self.in_edition = editions.in_edition(self.edition["id"])
+        missing = [p for p in (self.rows_path, self.added_path) if p is not None and not p.exists()]
+        if missing:
+            raise FileNotFoundError(f"missing {', '.join(map(str, missing))}; build it with `decision-index suite rebuild --edition {self.edition['id']}` and `suite import`")
+        found = self.manifest().get("edition")
+        if found and editions.get(found)["id"] != self.edition["id"]:
+            raise ValueError(f"{self.directory} holds edition {found}, not {self.edition['name']}")
+
+    @property
+    def row_paths(self):
+        return [self.rows_path] + ([self.added_path] if self.added_path else [])
 
     def manifest(self):
         return json.loads(self.manifest_path.read_text()) if self.manifest_path.exists() else {}
@@ -57,23 +80,28 @@ class Suite:
 
     def rows(self, apply_exclusions=False):
         excluded = self.excluded() if apply_exclusions else set()
-        for r in read_jsonl(self.rows_path):
-            if r["_evaluation"]["run_id"] in excluded:
-                continue
-            yield r
+        for path in self.row_paths:
+            for r in read_jsonl(path):
+                e = r["_evaluation"]
+                if e["run_id"] in excluded or not self.in_edition(e):
+                    continue
+                yield r
 
     def verify(self, strict=True):
-        from decision_index import constants as C
-
+        e = self.edition
         actual = sha256_file(self.rows_path)
-        report = {"rows_file": str(self.rows_path), "sha256": actual, "expected_sha256": C.SUITE_ROWS_GZ_SHA256, "match": actual == C.SUITE_ROWS_GZ_SHA256}
+        report = {"edition": e["id"], "rows_file": str(self.rows_path), "sha256": actual, "expected_sha256": e["rows_gz_sha256"], "match": actual == e["rows_gz_sha256"]}
         if not report["match"]:
             inner = sha256_file(self.rows_path, gunzip=True)
-            report.update(uncompressed_sha256=inner, uncompressed_match=inner == C.SUITE_ROWS_SHA256)
+            report.update(uncompressed_sha256=inner, uncompressed_match=inner == e["rows_sha256"])
             report["match"] = report["uncompressed_match"]
+        if self.added_path:
+            added = sha256_file(self.added_path, gunzip=self.added_path.suffix == ".gz")
+            report.update(added_file=str(self.added_path), added_sha256=added, added_match=added == e["added_sha256"])
+            report["match"] = report["match"] and report["added_match"]
         if self.exclusions_path.exists():
             ex = sha256_file(self.exclusions_path)
-            report.update(exclusions_sha256=ex, exclusions_match=ex == C.SUITE_EXCLUSIONS_SHA256)
+            report.update(exclusions_sha256=ex, exclusions_match=ex == e["exclusions_sha256"])
         if strict and not report["match"]:
             raise ValueError(f"frozen suite hash mismatch: {report}")
         return report
