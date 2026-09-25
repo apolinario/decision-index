@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine and exact code | Hardware | Declared capacity limits |
+|---|---:|---|---|---|---|
+| Surogate Rune 26B-A4B v3 (`surogate/rune-26b-a4b-GGUF` @ `bd4a7cb`, bf16 safetensors) | **53.39** | [full run and scores](https://huggingface.co/datasets/surogate/decision-index-results-rune-v3/blob/main/runs/rune-26b-a4b-v3/scores.json) | `decision_index_surogate_engine_v1:SurogateEngine` (in the results dataset under `runs/rune-26b-a4b-v3/harness/`); kit `52a6989` runner, scored with `19ad28e` (0.2); [surogate](https://github.com/invergent-ai/surogate) `30b07e85` (release v1.5.3) with the serving fix `db4818d9` ([#217](https://github.com/invergent-ai/surogate/pull/217)), decisions endpoint | 8 x NVIDIA RTX PRO 6000 Blackwell Server Edition, one surogate server per GPU; 32 runner processes (4 per server) | Choice questions up to 255 options; context 32,768 tokens. Nothing was truncated and no options were removed. One HLE request was refused by the endpoint's template-boundary guard; it is recorded as an error and scored wrong. |
