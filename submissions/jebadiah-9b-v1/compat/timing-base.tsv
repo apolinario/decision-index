@@ -1,0 +1,85 @@
+catalog_id	dataset	track	run_id	status	questions	prompt_tokens	total_wall_ms	ms_per_1k_tokens
+1	BFCL	BFCL-tool-selection	1:BFCL-tool-selection:BFCL-tool-selection:live_multiple:live_multiple_623-160-3	ok	2	923	1072	1161
+1	BFCL	BFCL-tool-selection	1:BFCL-tool-selection:BFCL-tool-selection:live_simple:live_simple_233-123-0	ok	1	369	446	1208
+2	ToolRet	ToolRet-retrieval	2:ToolRet-retrieval:ToolRet-retrieval:toolbench:toolbench_query_1073:chunk0	ok	32	13305	14853	1116
+2	ToolRet	ToolRet-retrieval	2:ToolRet-retrieval:ToolRet-retrieval:toolink:toolink_query_269:chunk0	ok	32	13827	15523	1123
+3	API-Bank	API-Bank-tool-selection	3:API-Bank-tool-selection:API-Bank-tool-selection:ModifyReminder-level-1-2:api-3	ok	1	5873	6045	1029
+3	API-Bank	API-Bank-tool-selection	3:API-Bank-tool-selection:API-Bank-tool-selection:ModifyAlarm-level-1-2:api-6	ok	1	5910	6073	1028
+4	BANKING77	BANKING77	4:BANKING77:BANKING77:test:1398	ok	1	983	1106	1125
+4	BANKING77	BANKING77	4:BANKING77:BANKING77:test:2052	ok	1	984	1044	1061
+5	CLINC150+OOS	CLINC150+OOS	5:CLINC150+OOS:CLINC150+OOS:test:1092	ok	1	1647	1518	922
+5	CLINC150+OOS	CLINC150+OOS	5:CLINC150+OOS:CLINC150+OOS:oos_test:549	ok	1	1652	1511	914
+6	RouterBench	RouterBench-0shot	6:RouterBench-0shot:RouterBench-0shot:5240	ok	2	4377	3831	875
+6	RouterBench	RouterBench-0shot	6:RouterBench-0shot:RouterBench-0shot:29364	ok	2	3845	3462	900
+6	RouterBench	RouterBench-5shot	6:RouterBench-5shot:RouterBench-5shot:25532	ok	2	5431	4983	918
+6	RouterBench	RouterBench-5shot	6:RouterBench-5shot:RouterBench-5shot:33018	ok	2	7251	7525	1038
+9	Home appliance simulator	Home-Appliance	9:Home-Appliance:home-appliance:test:juniper:02	ok	18	15570	14958	961
+9	Home appliance simulator	Home-Appliance	9:Home-Appliance:home-appliance:test:kestrel:00	ok	18	15625	15053	963
+10	SGD/SGD-X	SGD-service-given-intent	10:SGD-service-given-intent:SGD-service-given-intent:test:1_00114:0:0	ok	1	976	1199	1229
+10	SGD/SGD-X	SGD-service-given-intent	10:SGD-service-given-intent:SGD-service-given-intent:test:8_00121:4:0	ok	1	964	1072	1112
+11	ContractNLI	ContractNLI	11:ContractNLI:ContractNLI:test:127	ok	17	21668	19414	896
+11	ContractNLI	ContractNLI	11:ContractNLI:ContractNLI:test:585	ok	17	36509	34742	952
+12	ANLI	ANLI	12:ANLI:ANLI:test_r1:7f118576-d10d-435a-8ffd-89a3701ff991	ok	1	221	370	1674
+12	ANLI	ANLI	12:ANLI:ANLI:test_r3:80d0ecfe-7ea8-42a0-9f77-f7b28bbca9ab	ok	1	143	264	1844
+20	BPoMP	BPoMP-original-limerick	20:BPoMP-original-limerick:BPoMP:original-limerick:BPoMP_p1:shuffled rhyming lines:2728	ok	1	180	290	1611
+20	BPoMP	BPoMP-original-limerick	20:BPoMP-original-limerick:BPoMP:original-limerick:BPoMP_p3:delete any 1 nonrhyming word:333	ok	1	185	349	1886
+21	Humicroedit	Humicroedit	21:Humicroedit:Humicroedit:test:14007-588	ok	1	102	286	2800
+21	Humicroedit	Humicroedit	21:Humicroedit:Humicroedit:test:2170-12284	ok	1	126	327	2595
+22	POP909-CL	POP909-chord-pitch-class	22:POP909-chord-pitch-class:POP909:606:beat-230	ok	1	5040	4788	950
+22	POP909-CL	POP909-chord-pitch-class	22:POP909-chord-pitch-class:POP909:472:beat-274	ok	1	5452	5111	937
+23	cfcolor	CFColor-preference	23:CFColor-preference:cfcolor:862:6662:12019	ok	1	490	604	1232
+23	cfcolor	CFColor-preference	23:CFColor-preference:cfcolor:581:9925:8356	ok	1	471	506	1074
+24	MMLU	MMLU	24:MMLU:MMLU:test:11798	ok	1	342	441	1291
+24	MMLU	MMLU	24:MMLU:MMLU:test:6188	ok	1	124	247	1991
+25	GPQA Diamond	GPQA-Diamond	25:GPQA-Diamond:GPQA-Diamond:test:169	ok	1	172	329	1914
+25	GPQA Diamond	GPQA-Diamond	25:GPQA-Diamond:GPQA-Diamond:test:153	ok	1	265	362	1365
+26	ARC-Easy	ARC-Easy	26:ARC-Easy:ARC-Easy:test:Mercury_7085873	ok	1	101	288	2849
+26	ARC-Easy	ARC-Easy	26:ARC-Easy:ARC-Easy:test:MDSA_2007_5_51	ok	1	142	309	2178
+27	ARC-Challenge	ARC-Challenge	27:ARC-Challenge:ARC-Challenge:test:NYSEDREGENTS_2008_8_42	ok	1	114	231	2022
+27	ARC-Challenge	ARC-Challenge	27:ARC-Challenge:ARC-Challenge:test:Mercury_7160563	ok	1	156	313	2005
+28	WinoGrande	WinoGrande	28:WinoGrande:WinoGrande:validation:517	ok	1	102	222	2177
+28	WinoGrande	WinoGrande	28:WinoGrande:WinoGrande:validation:1213	ok	1	112	357	3185
+29	HellaSwag	HellaSwag	29:HellaSwag:HellaSwag:validation:9149:43637	ok	1	272	429	1577
+29	HellaSwag	HellaSwag	29:HellaSwag:HellaSwag:validation:7385:30786	ok	1	291	372	1280
+30	GSM8K	GSM8K-10choice	30:GSM8K-10choice:GSM8K-10:test:179	ok	1	255	410	1606
+30	GSM8K	GSM8K-10choice	30:GSM8K-10choice:GSM8K-10:test:419	ok	1	336	467	1389
+30	GSM8K	GSM8K-4choice	30:GSM8K-4choice:GSM8K-4:test:711	ok	1	196	298	1521
+30	GSM8K	GSM8K-4choice	30:GSM8K-4choice:GSM8K-4:test:1069	ok	1	251	399	1591
+31	ChessBench	ChessBench-legal-move	31:ChessBench-legal-move:ChessBench:test:5fdae57e7bbf110e061ac38e65f83c88412fded1d647c929e1b89a2f251a89a1	ok	1	684	700	1024
+31	ChessBench	ChessBench-legal-move	31:ChessBench-legal-move:ChessBench:test:b605df9f24d7431a690ebdd10e9536db45132eac7bce5a26e69af83920a2acc9	ok	1	689	728	1056
+32	MuSR	MuSR	32:MuSR:MuSR:test:team_allocation:155:0	ok	1	705	836	1186
+32	MuSR	MuSR	32:MuSR:MuSR:test:object_placements:63:1	ok	1	1204	1210	1005
+33	SATA-Bench	SATA-Bench	33:SATA-Bench:SATA-Bench:test:1401	ok	15	53885	50853	944
+33	SATA-Bench	SATA-Bench	33:SATA-Bench:SATA-Bench:test:1551	ok	15	14801	14323	968
+34	SimpleBench	SimpleBench	34:SimpleBench:SimpleBench:public:3	ok	1	279	419	1503
+34	SimpleBench	SimpleBench	34:SimpleBench:SimpleBench:public:10	ok	1	280	370	1320
+36	BRIGHT	BRIGHT-retrieval	36:BRIGHT-retrieval:BRIGHT-retrieval:stackoverflow:77:chunk0	ok	32	34359	34858	1015
+36	BRIGHT	BRIGHT-retrieval	36:BRIGHT-retrieval:BRIGHT-retrieval:aops:math_train_counting_and_probability_5035:chunk0	ok	32	16103	16098	1000
+37	Amazon ESCI	Amazon-ESCI	37:Amazon-ESCI:Amazon-ESCI:test:2196716	ok	1	477	574	1203
+37	Amazon ESCI	Amazon-ESCI	37:Amazon-ESCI:Amazon-ESCI:test:1145223	ok	1	915	997	1090
+38	ACOS	ACOS-category-sentiment	38:ACOS-category-sentiment:ACOS:category-sentiment:Laptop-ACOS:laptop_quad_test:line-634:group-5	ok	64	11758	11465	975
+38	ACOS	ACOS-category-sentiment	38:ACOS-category-sentiment:ACOS:category-sentiment:Laptop-ACOS:laptop_quad_test:line-783:group-4	ok	64	12002	11660	971
+39	FinEntity	FinEntity-entity-given	39:FinEntity-entity-given:FinEntity:entity-given:0016	ok	2	420	537	1278
+39	FinEntity	FinEntity-entity-given	39:FinEntity-entity-given:FinEntity:entity-given:0309	ok	1	198	367	1855
+40	iSarcasmEval	iSarcasmEval-A-Ar	40:iSarcasmEval-A-Ar:iSarcasmEval-A-Ar:test:590	ok	1	85	275	3240
+40	iSarcasmEval	iSarcasmEval-A-Ar	40:iSarcasmEval-A-Ar:iSarcasmEval-A-Ar:test:595	ok	1	86	216	2514
+40	iSarcasmEval	iSarcasmEval-A-En	40:iSarcasmEval-A-En:iSarcasmEval-A-En:test:245	ok	1	86	197	2285
+40	iSarcasmEval	iSarcasmEval-A-En	40:iSarcasmEval-A-En:iSarcasmEval-A-En:test:1067	ok	1	103	234	2269
+40	iSarcasmEval	iSarcasmEval-B-En	40:iSarcasmEval-B-En:iSarcasmEval-B-En:test:815	ok	6	646	823	1273
+40	iSarcasmEval	iSarcasmEval-B-En	40:iSarcasmEval-B-En:iSarcasmEval-B-En:test:1269	ok	6	580	710	1224
+40	iSarcasmEval	iSarcasmEval-C-Ar	40:iSarcasmEval-C-Ar:iSarcasmEval-C-Ar:test:78	ok	1	93	238	2564
+40	iSarcasmEval	iSarcasmEval-C-Ar	40:iSarcasmEval-C-Ar:iSarcasmEval-C-Ar:test:14	ok	1	96	278	2899
+40	iSarcasmEval	iSarcasmEval-C-En	40:iSarcasmEval-C-En:iSarcasmEval-C-En:test:40	ok	1	124	229	1846
+40	iSarcasmEval	iSarcasmEval-C-En	40:iSarcasmEval-C-En:iSarcasmEval-C-En:test:52	ok	1	129	264	2043
+41	VAST	VAST	41:VAST:VAST:test:23204	ok	1	195	369	1892
+41	VAST	VAST	41:VAST:VAST:test:22857	ok	1	257	372	1449
+42	NLI4CT	NLI4CT-2024	42:NLI4CT-2024:NLI4CT-2024:test:7aef8aaf-9fc3-49b2-95e7-ed9b227cdd27	ok	1	489	626	1279
+42	NLI4CT	NLI4CT-2024	42:NLI4CT-2024:NLI4CT-2024:test:4c42491a-5ff2-41f8-bb40-6c7fe4dd5c99	ok	1	658	715	1086
+43	CRUXEval	CRUXEval-output-choice	43:CRUXEval-output-choice:CRUXEval-output-choice:test:sample_723	ok	1	192	368	1915
+43	CRUXEval	CRUXEval-output-choice	43:CRUXEval-output-choice:CRUXEval-output-choice:test:sample_395	ok	1	172	259	1507
+44	CLadder	CLadder	44:CLadder:CLadder:balanced:19800	ok	1	212	369	1739
+44	CLadder	CLadder	44:CLadder:CLadder:balanced:21647	ok	1	185	280	1512
+48	ForecastBench	ForecastBench-binary	48:ForecastBench-binary:ForecastBench:2026-02-01_resolution_set:621	ok	1	493	563	1142
+48	ForecastBench	ForecastBench-binary	48:ForecastBench-binary:ForecastBench:2025-08-31_resolution_set:1876	ok	1	813	846	1040
+50	Habermas Machine	Habermas-consensus	50:Habermas-consensus:Habermas-consensus:10366b84791d2128fc9213b08f077b45	ok	1	765	814	1064
+50	Habermas Machine	Habermas-consensus	50:Habermas-consensus:Habermas-consensus:7a7c1d112af4a6c7a7cf7e196052f388	ok	1	925	880	952

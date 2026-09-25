@@ -1,0 +1,10 @@
+catalog_id	dataset	track	run_id	status	questions	prompt_tokens	total_wall_ms	ms_per_1k_tokens
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:672536736bc3970bc3e12ca5	ok	1	436	521	1195
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:6723ec50479384d8942cca75	ok	1	866	879	1015
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:66fded1fbc6d46a25c41ee8d	ok	1	278	395	1420
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:671fe6ee8ff35abcfbaac4f8	ok	1	1346	1383	1028
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:673a5f9b329d98c7d4b69d5f	ok	1	796	881	1107
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:6725b1b58255543498bdcbd1	ok	1	1095	1132	1034
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:67238a4a22fbf3820373cb44	ok	1	230	350	1521
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:66f2dee46721a56e35d20300	ok	1	216	321	1485
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:6702bc770065c2f50235a34e	ok	1	543	602	1108

@@ -1,0 +1,3 @@
+catalog_id	dataset	track	run_id	status	questions	prompt_tokens	total_wall_ms	ms_per_1k_tokens
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:6720cd0acf47ec0733864dd8	ok	1	335	446	1332
+45	HLE	HLE-text-MC	45:HLE-text-MC:HLE-text-MC:test:6720fcd2198910fd26b01218	ok	1	253	358	1413
