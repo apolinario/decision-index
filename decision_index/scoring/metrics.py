@@ -4,10 +4,12 @@ import statistics
 
 
 def mean(xs):
+    xs = list(xs) if not isinstance(xs, (list, tuple)) else xs
     return statistics.mean(xs) if xs else None
 
 
 def avg(xs):
+    xs = list(xs) if not isinstance(xs, (list, tuple)) else xs
     return statistics.mean(xs) if xs else 0.0
 
 
