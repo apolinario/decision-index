@@ -24,7 +24,7 @@
     "temperatures": {
       "choice": 1.2321,
       "noul": 1.297,
-      "score": 1.1423
+      "score": 0.7558
     },
     "fp32_candidate_logits": true,
     "declared_context_tokens": 262144,
@@ -54,10 +54,10 @@
   "torch": "2.14.0",
   "platform": "macOS-26.3.1-arm64-arm-64bit",
   "machine": "arm64",
-  "loaded_seconds": 8.92323908302933,
+  "loaded_seconds": 9.439682208001614,
   "frozen_corpus_sha256": null,
-  "rows_path": "added96.jsonl.gz (local; holds suite text)",
+  "rows_path": "stress59.jsonl.gz (local; holds suite text)",
   "runner_sha256": "f4c9f36c4c557f537f1d8184db7bf00c5a84d9f4f0aa67f8c06198cead25818d",
   "latency": "In-process wall time of one request: AINode rendering, tokenization and one label-token logit read per question (questions batched by padded token budget, no prefix cache), device-synchronized; excludes model loading.",
-  "engine_options_note": "model= pointed at a local copy of frontier-infra/jebadiah-27b at a5d7c80a (sha256 per LFS file, bytes otherwise). The pinned revision 1c0d794f changes only temperatures.json (score 1.1423 -> 0.7558), jebadiah.json and the card; weights, scripts and the choice and noul temperatures used here are identical, so these results hold for 1c0d794f"
+  "engine_options_note": "model= pointed at a local directory: weights, config, tokenizer and scripts from a copy verified byte-identical to the Hub (sha256 per LFS file, bytes otherwise), with temperatures.json, jebadiah.json and README.md from frontier-infra/jebadiah-27b at 1c0d794f, the pinned revision"
 }

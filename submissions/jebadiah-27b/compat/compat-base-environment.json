@@ -59,5 +59,5 @@
   "rows_path": "base86.jsonl.gz (local; holds suite text)",
   "runner_sha256": "f4c9f36c4c557f537f1d8184db7bf00c5a84d9f4f0aa67f8c06198cead25818d",
   "latency": "In-process wall time of one request: AINode rendering, tokenization and one label-token logit read per question (questions batched by padded token budget, no prefix cache), device-synchronized; excludes model loading.",
-  "engine_options_note": "model= pointed at a local copy of frontier-infra/jebadiah-27b; its 64 weight, config, tokenizer and script files are byte-identical to the Hub at a5d7c80a (sha256 per LFS file, bytes otherwise)"
+  "engine_options_note": "model= pointed at a local copy of frontier-infra/jebadiah-27b at a5d7c80a (sha256 per LFS file, bytes otherwise). The pinned revision 1c0d794f changes only temperatures.json (score 1.1423 -> 0.7558), jebadiah.json and the card; weights, scripts and the choice and noul temperatures used here are identical, so these results hold for 1c0d794f"
 }

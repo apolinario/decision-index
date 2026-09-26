@@ -17,15 +17,15 @@
     "Qwen/Qwen3.8-27B"
   ],
   "weights_repo": "frontier-infra/jebadiah-27b",
-  "weights_revision": "a5d7c80a084ba470da5b16fbff72907d76a7a075",
+  "weights_revision": "1c0d794fc24b24b15175c6a912654fa5cd76e1bb",
   "served_checkpoint": "frontier-infra/jebadiah-27b",
   "model_url": "https://huggingface.co/frontier-infra/jebadiah-27b",
-  "code_url": "https://huggingface.co/frontier-infra/jebadiah-27b/tree/a5d7c80a084ba470da5b16fbff72907d76a7a075/scripts",
+  "code_url": "https://huggingface.co/frontier-infra/jebadiah-27b/tree/1c0d794fc24b24b15175c6a912654fa5cd76e1bb/scripts",
   "training_code_url": "https://github.com/getainode/jebadiah",
   "serving_code_url": "https://github.com/getainode/ainode",
   "org_url": "https://huggingface.co/frontier-infra",
   "license": "Apache-2.0 (weights and base)",
-  "readout": "One forward pass per question over AINode's decide prompt (Qwen chat template, thinking off); the answer is the softmax over the option-label token logits at the answer position, read in fp32 from the last hidden state, divided by the model's per-type temperature (choice 1.2321, noul 1.297; temperatures.json, the 'train' fit). No generation, no abstention outcome.",
+  "readout": "One forward pass per question over AINode's decide prompt (Qwen chat template, thinking off); the answer is the softmax over the option-label token logits at the answer position, read in fp32 from the last hidden state, divided by the model's per-type temperature (choice 1.2321 and noul 1.297, the 'train' fit; score 0.7558, the 'hard' fit, is not used by this suite; temperatures.json). No generation, no abstention outcome.",
   "declared_capacity": {
     "context_tokens": 262144,
     "max_options": 588,

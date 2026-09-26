@@ -43,7 +43,7 @@ import sys
 from decision_index.engines import Engine, Unsupported
 
 MODEL_REPO = "frontier-infra/jebadiah-27b"
-MODEL_REVISION = "a5d7c80a084ba470da5b16fbff72907d76a7a075"
+MODEL_REVISION = "1c0d794fc24b24b15175c6a912654fa5cd76e1bb"
 SCRIPTS = ("ainode_prompt_verbatim.py", "jebadiah_prompt.py", "jebadiah_model.py")
 
 
