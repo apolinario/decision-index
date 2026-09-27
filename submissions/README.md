@@ -1,0 +1,7 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine / code | Hardware | Declared capacity limits |
+|---|---|---|---|---|---|
+| zev-latest | 42.15 | [bkhubbard/decision-index-results](https://huggingface.co/datasets/bkhubbard/decision-index-results) · `runs/zev-latest/scores.json` (complete: true) | `http` engine, kit `87d4650` · pure Rust decision engine [zev-rs](https://github.com/bhubbard/zev-rs) @ `8d41d48`, `/v1/systemone` | Apple M3 Pro (12-core CPU) | `max_state_bytes`: 2MB, `max_questions`: 64, `max_slots`: dynamic (all candidate criteria scored, nothing truncated) |
+| zev-apfel | 46.80 | [bkhubbard/decision-index-results](https://huggingface.co/datasets/bkhubbard/decision-index-results) · `runs/zev-apfel/scores.json` (complete: true) | `http` engine, kit `87d4650` · [zev-rs](https://github.com/bhubbard/zev-rs) @ `8d41d48` + [apfel-rs](https://github.com/bhubbard/apfel-rs) @ `6eaef8c` (`features = ["neural"]`) | Apple M3 Pro (Apple Neural Engine + Unified Memory) | `max_state_bytes`: 2MB, `max_questions`: 64, `max_slots`: dynamic (all candidate criteria scored, nothing truncated) |
+| zev-clm | 44.50 | [bkhubbard/decision-index-results](https://huggingface.co/datasets/bkhubbard/decision-index-results) · `runs/zev-clm/scores.json` (complete: true) | `http` engine, kit `87d4650` · [zev-rs](https://github.com/bhubbard/zev-rs) @ `8d41d48` (`ZEV_FALLBACK=clm`) | Apple M3 Pro (12-core CPU) | `max_state_bytes`: 2MB, `max_questions`: 64, `max_slots`: dynamic (all candidate criteria scored, nothing truncated) |
