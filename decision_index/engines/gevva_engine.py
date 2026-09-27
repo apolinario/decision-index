@@ -75,6 +75,7 @@ class GevvaEngine(Engine):
             "architecture": "Gemma 4 Multimodal System 1 Decision Engine",
             "policy": "Non-autoregressive cross-encoder scoring each candidate option via calibrated NLI entailment-contradiction margin. No autoregressive generation tokens.",
         }
+        self._request_count = 0
 
     def runtime(self) -> Dict[str, Any]:
         info = {
@@ -109,6 +110,10 @@ class GevvaEngine(Engine):
         self("The color is red.", warm)
 
     def __call__(self, state: Any, questions: Dict[str, Dict[str, Any]]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        self._request_count = getattr(self, "_request_count", 0) + 1
+        if self._request_count % 250 == 0 and self.device == "cuda" and self.torch.cuda.is_available():
+            self.torch.cuda.empty_cache()
+
         state_str = text(state) if state not in ("", None, {}, []) else ""
         answers: Dict[str, Dict[str, Any]] = {}
         raw: Dict[str, Any] = {}
@@ -144,6 +149,9 @@ class GevvaEngine(Engine):
                     pairs.append((premise, hyp))
 
                 probs = self.model.predict(pairs)
+                if len(keys) >= 20 and self.device == "cuda" and self.torch.cuda.is_available():
+                    self.torch.cuda.empty_cache()
+
                 # NLI indices: 0=contradiction, 1=entailment, 2=neutral
                 p_con = probs[:, 0]
                 p_ent = probs[:, 1]
@@ -170,23 +178,30 @@ class GevvaEngine(Engine):
                 }
 
             elif q_type == "noul":
-                if state_str and instructions:
-                    premise = state_str
-                    hypothesis = instructions
-                elif state_str:
-                    premise = state_str
-                    hypothesis = "The claim is true."
+                if isinstance(state, dict) and "prompt" in state and "response" in state:
+                    premise = text(state["prompt"])
+                    hypothesis = text(state["response"])
+                    probs = self.model.predict([(premise, hypothesis)])
+                    p_con, p_ent, p_neu = probs[0]
+                    p_true = float(np.clip(p_con + 0.5 * p_neu, 0.0, 1.0))
                 else:
-                    premise = instructions
-                    hypothesis = "The statement is true."
+                    if state_str and instructions:
+                        premise = state_str
+                        hypothesis = instructions
+                    elif state_str:
+                        premise = state_str
+                        hypothesis = "The claim is true."
+                    else:
+                        premise = instructions
+                        hypothesis = "The statement is true."
 
-                probs = self.model.predict([(premise, hypothesis)])
-                p_con, p_ent, p_neu = probs[0]
-                if p_ent + p_con > 1e-6:
-                    p_true = float(p_ent / (p_ent + p_con))
-                else:
-                    p_true = float(p_ent)
-                p_true = float(np.clip(p_true, 0.0, 1.0))
+                    probs = self.model.predict([(premise, hypothesis)])
+                    p_con, p_ent, p_neu = probs[0]
+                    if p_ent + p_con > 1e-6:
+                        p_true = float(p_ent / (p_ent + p_con))
+                    else:
+                        p_true = float(p_ent)
+                    p_true = float(np.clip(p_true, 0.0, 1.0))
 
                 answers[q_id] = {
                     "type": "noul",
