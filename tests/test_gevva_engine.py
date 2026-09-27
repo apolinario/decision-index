@@ -112,3 +112,30 @@ def test_gevva_warmup_and_runtime(mock_load):
     assert "torch" in rt
     assert "device" in rt
     assert rt["model"] == "davidburhans/gevva-e2b"
+
+
+@patch("gevva.load")
+def test_gevva_ragtruth_noul(mock_load):
+    mock_model = MagicMock()
+    # High contradiction / neutral (unsupported hallucination): p_con=0.8, p_ent=0.1, p_neu=0.1
+    mock_model.predict.return_value = np.array([[0.8, 0.1, 0.1]])
+    mock_load.return_value = mock_model
+
+    engine = GevvaEngine(model="davidburhans/gevva-e4b", device="cpu")
+    state = {
+        "prompt": "The patient was prescribed Aspirin 100mg.",
+        "response": "The patient took Ibuprofen 400mg daily.",
+    }
+    questions = {
+        "ragtruth": {
+            "type": "noul",
+            "instructions": "Does the response contain unsupported hallucinated content?",
+            "criteria": {"false": "No", "true": "Yes"},
+        }
+    }
+    response, raw = engine(state, questions)
+    validate(questions, response)
+    ans = response["answers"]["ragtruth"]
+    assert ans["type"] == "noul"
+    # p_true = 1.0 - p_ent = 1.0 - 0.1 = 0.9 (correctly flagged as hallucination)
+    assert abs(ans["noul"] - 0.9) < 1e-4

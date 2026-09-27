@@ -183,7 +183,8 @@ class GevvaEngine(Engine):
                     hypothesis = text(state["response"])
                     probs = self.model.predict([(premise, hypothesis)])
                     p_con, p_ent, p_neu = probs[0]
-                    p_true = float(np.clip(p_con + 0.5 * p_neu, 0.0, 1.0))
+                    # In RAGTruth, unsupported content is any claim not entailed (contradiction or unverified neutral)
+                    p_true = float(np.clip(1.0 - p_ent, 0.0, 1.0))
                 else:
                     if state_str and instructions:
                         premise = state_str
