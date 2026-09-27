@@ -10,3 +10,4 @@ __pycache__/
 /hub-upload/
 .pytest_cache/
 .DS_Store
+uv.lock
