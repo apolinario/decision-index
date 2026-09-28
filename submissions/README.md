@@ -16,4 +16,6 @@ As described in [README.md](../README.md#submitting-a-model-to-the-leaderboard):
 | Model | Edition | Decision Index (0.2) | Raw Index | Hardware | Engine / Commit | Results Link | Notes |
 |---|---|---:|---:|---|---|---|---|
 | **Gevva e2b** | 0.2 | **26.79** | 44.83 | 1x NVIDIA RTX 5090 | `gevva` (`add-gevva-engine`) | [runs/gevva-e2b-0.2](https://huggingface.co/datasets/davidburhans/decision-index-results/tree/main/runs/gevva-e2b-0.2) | 100% complete (151,034 requests). Non-autoregressive System 1 decision engine based on Gemma 4 E2B-it. |
-| **Gevva e4b** | 0.2 | *Pending run completion* | *Pending* | 1x NVIDIA RTX 5090 | `gevva` (`add-gevva-engine`) | [runs/gevva-e4b-0.2](https://huggingface.co/datasets/davidburhans/decision-index-results/tree/main/runs/gevva-e4b-0.2) | Flagship 4.5B model. Full 40-benchmark suite with Shared Prefix KV Cache acceleration. |
+| **Gevva e4b** | 0.2 | **29.88** | 47.50 | 1x NVIDIA RTX 5090 | `gevva` (`add-gevva-engine`) | [runs/gevva-e4b-0.2](https://huggingface.co/datasets/davidburhans/decision-index-results/tree/main/runs/gevva-e4b-0.2) | 100% complete (151,034 requests). Flagship 4.5B model with Shared Prefix KV Cache acceleration. |
+
+| **Gevva e4b** | 0.2 | **29.88** | 47.50 | 1x NVIDIA RTX 5090 | `gevva` (`add-gevva-engine`) | [runs/gevva-e4b-0.2](https://huggingface.co/datasets/davidburhans/decision-index-results/tree/main/runs/gevva-e4b-0.2) | Flagship 4.5B model. Full 40-benchmark suite (151,034/151,034). Shared Prefix KV Cache accelerated. |
