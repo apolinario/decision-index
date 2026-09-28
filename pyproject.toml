@@ -21,6 +21,9 @@ transformers = [
   "accelerate>=1.0",
   "safetensors>=0.4",
 ]
+gevva = [
+  "gevva>=1.0.0",
+]
 rebuild = [
   "pyarrow>=20",
   "pandas>=2.0",

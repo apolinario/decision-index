@@ -4,6 +4,7 @@ REGISTRY = {
     "http": "decision_index.engines.http:HttpSystemOne",
     "transformers": "decision_index.engines.transformers_engine:TransformersEngine",
     "random": "decision_index.engines.base:RandomEngine",
+    "gevva": "decision_index.engines.gevva_engine:GevvaEngine",
 }
 
 
