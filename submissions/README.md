@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine and exact code | Hardware | Declared capacity limits |
+|---|---:|---|---|---|---|
+| Xor 1.2 (`juspay/xor`, tag `v1.2` @ `a286a461`, bf16 safetensors) | **52.24** | [full run and scores](https://huggingface.co/datasets/juspay/xor-1.2-decision-index/blob/1df03933f536a94f05768c89c38e9048c2fb9fcd/runs/xor-1.2/scores.json) | kit `http` engine, kit `87d4650` (edition 0.2.1), against the release's own `/v1/systemone` server (serving bundle `serving/xor-1.2-serving.tar.gz` as shipped; SGLang image `prakhar1611/xor-sglang@sha256:94c48d2a6cc98dc456cf93f723707ea7dd81dddfe1061e823b348d68bbe8158f`); sharding and merge scripts in the results dataset under `runs/xor-1.2/harness/` | 4 x NVIDIA H200 (141 GB), two SGLang servers (TP1/DP2, two GPUs each); 16 runner processes (8 per server) | Choice questions 2 to 255 options; context 262,144 tokens. Nothing was truncated and no options were removed. 150,759 of 150,759 requests returned `ok`; no unsupported, error or abstained rows. |
