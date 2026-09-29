@@ -1,0 +1,40 @@
+{
+  "_note": "Draft for the maintainer, in the shape of the Space's data/methodology.json entrants.entrants records. Values are what this run loaded.",
+  "engine": "jev-gemma4-26b-a4b",
+  "name": "JEV-Gemma4-26B-A4B",
+  "variant": null,
+  "kind": "trained LoRA + scoring head",
+  "technique": "scoring head",
+  "technique_name": "prefill-only 24-slot decision head",
+  "served_params": 26544198984,
+  "served_params_detail": "26,544,131,376 parameters of google/gemma-4-26B-A4B-it as loaded by Gemma4ForConditionalGeneration (25,971,339,264 language model incl. the tied 738,197,504-parameter embedding, 128 experts top-8, about 4 B active per token; plus the 572,792,112-parameter vision tower, which is loaded but not used for decisions) plus the 67,608-parameter fp32 decision head. The rank-32 LoRA (37,171,200 parameters) is merged into the backbone in memory at load time, so it adds none at serve time.",
+  "params_from_name": false,
+  "params_estimated": false,
+  "trained_params": 37238808,
+  "base_model": "google/gemma-4-26B-A4B-it",
+  "base_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "base_chain": [
+    "google/gemma-4-26B-A4B-it"
+  ],
+  "weights_repo": "autotrust/JEV-Gemma4-26B-A4B",
+  "weights_revision": "7d4f2f03ded433aa2806f21377eafce0693e9681",
+  "served_checkpoint": "autotrust/JEV-Gemma4-26B-A4B (bf16 base + adapter/ + head.safetensors + calibration.json; step 7,000 of 7,747)",
+  "model_url": "https://huggingface.co/autotrust/JEV-Gemma4-26B-A4B",
+  "code_url": "https://github.com/apolinario/decision-index/tree/main/submissions/jev",
+  "results_url": "https://huggingface.co/datasets/autotrust/jev-decision-index-results/tree/952ef59a632bfee1fe7321d226b75984f53067c2/runs/jev-gemma4-26b-a4b",
+  "org_url": "https://huggingface.co/autotrust",
+  "license": "Apache-2.0 (adapter, head, calibration); base model under the Gemma 4 terms (Apache-2.0)",
+  "readout": "One prefill pass per question over <bos> + the model's bare-v1 template ([kind]/[state]/[question]/[options] with A-P option letters, ending '[decision]:'); the final-norm hidden state of the last token goes through a linear fp32 head H -> 24 slots (noul 0-1, score 2-7, choice 8-23), soft-capped at 30 as Gemma's own logits, inactive slots masked, divided by the per-kind temperature from calibration.json (noul 1.0027, choice 1.0172), softmax. No generation, no abstention outcome.",
+  "declared_capacity": {
+    "context_tokens": 262143,
+    "options_per_pass": 16,
+    "max_options": 255,
+    "over_16_options": "ceil(n/16) contiguous groups of <= 16 read whole, then a final of 16 (each group's top option, free places by in-group probability); finalists keep the final's distribution times P(answer among finalists), others get their group's final share times their in-group probability. Every option is read; none is pruned.",
+    "question_types": [
+      "choice",
+      "noul"
+    ],
+    "truncation": "none"
+  },
+  "training_data": "SargeDev/jev-distill-corpus-v3 (TypeSafe Jev 1.13 distributions, Open-Jev programmatic labels, down-weighted placeholder rows) plus gold_v1: 335,751 one-hot ground-truth rows from the TRAINING splits of 28 public datasets (dev/validation where the benchmark scores the test split), including the training splits of 12 datasets whose test splits the suite uses (BANKING77, CLINC150+OOS, WinoGrande, HellaSwag, GSM8K, ContractNLI, Amazon ESCI, HoVer, RAGTruth, When2Call, New Yorker caption matching, Habermas Machine), deduplicated against every suite 0.2 item before training (3,300+ items dropped). Test-only benchmarks (HLE, GPQA, MMLU-Pro, BBH, CRUXEval, MuSR) not used. No suite data used for training, checkpoint selection or temperature fitting."
+}

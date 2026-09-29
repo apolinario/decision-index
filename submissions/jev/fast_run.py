@@ -196,6 +196,7 @@ def main():
     ap.add_argument("--max-model-len", type=int, default=131072)
     ap.add_argument("--no-prefix-caching", action="store_true")
     ap.add_argument("--max-num-seqs", type=int, default=256)
+    ap.add_argument("--local-dir", default=None, help="load the bundle from this directory instead of the Hub")
     a = ap.parse_args()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -211,7 +212,7 @@ def main():
     if a.backend == "vllm":
         eng = VllmBackend(a.model, a.revision, a.gpu_mem, a.max_model_len, not a.no_prefix_caching, a.max_num_seqs)
     else:
-        eng = JevEngine(model=a.model, revision=a.revision, token_budget=a.token_budget, pad_mask=False)
+        eng = JevEngine(model=a.model, revision=a.revision, local_dir=a.local_dir, token_budget=a.token_budget, pad_mask=False)
     if a.rows:
         rows_path, keep, corpus = a.rows, None, None
     else:
