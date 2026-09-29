@@ -42,7 +42,6 @@ No truncation: a prompt longer than the backbone's context window is refused (`U
 
 from __future__ import annotations
 
-import contextlib
 import glob
 import hashlib
 import json
@@ -119,7 +118,6 @@ def combine(groups: list[list[int]], in_group: dict[int, float], finalists: list
 
 
 class JevEngine(Engine):
-    autocast = False  # True for unmerged fp32-LoRA bundles (judge_config.merge_adapter = false)
     name = "jev"
     latency = ("In-process request wall time, CUDA-synchronized: template rendering, tokenization, every backbone "
                "forward pass of the request (all questions batched) and the head read-out; excludes model loading.")
@@ -154,48 +152,6 @@ class JevEngine(Engine):
         text_cfg = getattr(cfg, "text_config", cfg)
         text_cfg._attn_implementation = attn
         self.max_len = int(getattr(text_cfg, "max_position_embeddings"))
-        jc = json.load(open(os.path.join(local_dir, "judge_config.json")))
-        ro = jc.get("readout") or {}
-        self.readout = ro.get("type", "last_token")
-        self.softcap = jc.get("softcap")
-        if self.readout == "diffusion_canvas":
-            # google/diffusiongemma-*: encoder reads [bos] + prompt (causal); the decoder denoises a fixed pad canvas
-            # bidirectionally over prompt + canvas; the head reads canvas position 0. The encoder and decoder share
-            # their base weights but carry separate LoRA adapters, so the adapter is kept UNMERGED.
-            from transformers.models.diffusion_gemma import DiffusionGemmaForBlockDiffusion
-            self.canvas_len, self.canvas_token = int(ro["canvas_len"]), int(ro["canvas_token"])
-            self.prefix_token = ro.get("prefix_token")
-            m = DiffusionGemmaForBlockDiffusion.from_pretrained(local_dir, dtype=torch.bfloat16, device_map=str(self.device))
-            m = PeftModel.from_pretrained(m, os.path.join(local_dir, jc.get("adapter_subfolder", "adapter")), is_trainable=False)
-            m.eval()
-            self.backbone = m.get_base_model().model
-            self.max_len -= self.canvas_len + 1
-            self._finish_init(local_dir, jc, model, sha, revision)
-            return
-        self.prefix_token = ro.get("prefix_token")
-        if getattr(cfg, "model_type", None) == "gemma4":
-            # google/gemma-4-*-it: autoregressive; the head reads the last real token of [bos] + prompt (softcap from
-            # judge_config). One causal pass, so the System 1 adapter is merged in memory like the Qwen bundles.
-            from transformers import Gemma4ForConditionalGeneration
-            m = Gemma4ForConditionalGeneration.from_pretrained(local_dir, dtype=torch.bfloat16, device_map=str(self.device),
-                                                               attn_implementation=attn)
-            m.lm_head = None
-            m = PeftModel.from_pretrained(m, os.path.join(local_dir, jc.get("adapter_subfolder", "adapter")), is_trainable=False)
-            if jc.get("merge_adapter", True):
-                m = m.merge_and_unload()
-                self.backbone = m.model
-            else:
-                # judge_config.merge_adapter = false: run exactly as trained -- adapter unmerged with fp32 LoRA weights,
-                # bf16 backbone under bf16 autocast (merging into bf16 weights would round the small LoRA deltas)
-                for n, p in m.named_parameters():
-                    if "lora_" in n:
-                        p.data = p.data.float()
-                self.backbone = m.get_base_model().model
-                self.autocast = True
-            m.eval()
-            self.max_len -= 1
-            self._finish_init(local_dir, jc, model, sha, revision)
-            return
         with init_empty_weights(include_buffers=False):
             lm = Qwen3_5ForCausalLM(text_cfg)
         expected = set(lm.state_dict())
@@ -215,15 +171,11 @@ class JevEngine(Engine):
             raise RuntimeError(f"{len(missing)} backbone weights missing, e.g. {sorted(missing)[:3]}")
         lm.lm_head = None
         lm.to(self.device)
+        jc = json.load(open(os.path.join(local_dir, "judge_config.json")))
         lm = PeftModel.from_pretrained(lm, os.path.join(local_dir, jc.get("adapter_subfolder", "adapter")),
                                        is_trainable=False).merge_and_unload()
         lm.eval()
         self.backbone = lm.model
-        self._finish_init(local_dir, jc, model, sha, revision)
-
-    def _finish_init(self, local_dir, jc, model, sha, revision):
-        from safetensors.torch import load_file
-
         head = load_file(os.path.join(local_dir, "head.safetensors"))
         self.W = head["proj.weight"].to(self.device, torch.float32)
         self.b = head["proj.bias"].to(self.device, torch.float32)
@@ -240,12 +192,7 @@ class JevEngine(Engine):
                 files[name] = hashlib.sha256(open(p, "rb").read()).hexdigest()
         self.provenance = {
             "kind": "trained", "repo": model, "revision": sha or revision, "local_dir": local_dir,
-            "path": ("System 1: bf16 block-diffusion model + adapter/ LoRA (unmerged) + 24-slot fp32 head (softcap) read at "
-                     f"canvas position 0 of a {getattr(self, 'canvas_len', 0)}-token pad canvas + calibration.json")
-                    if self.readout == "diffusion_canvas" else
-                    ("System 1: bf16 backbone + adapter/ LoRA merged in memory + 24-slot fp32 head"
-                     + (" (softcap)" if self.softcap else "") + (" read at the last token of [bos] + prompt" if self.prefix_token is not None else "")
-                     + " + calibration.json"),
+            "path": "System 1: bf16 backbone + adapter/ LoRA merged in memory + 24-slot fp32 head + calibration.json",
             "template": TEMPLATE_VERSION, "temperatures": self.T, "max_choice_options_per_pass": MAX_CHOICE,
             "over_16_options": "ceil(n/16) contiguous groups + one final of 16; every option read, none pruned",
             "truncation": "none; prompts over max_position_embeddings are refused", "max_position_embeddings": self.max_len,
@@ -279,8 +226,7 @@ class JevEngine(Engine):
         out: list[torch.Tensor | None] = [None] * len(ids)
         batches, cur = [], []
         for i in order:
-            extra = (self.canvas_len + 1) if self.readout == "diffusion_canvas" else 0
-            if cur and (len(cur) + 1) * (len(ids[i]) + extra) > self.token_budget:
+            if cur and (len(cur) + 1) * len(ids[i]) > self.token_budget:
                 batches.append(cur)
                 cur = []
             cur.append(i)
@@ -290,27 +236,17 @@ class JevEngine(Engine):
         while pending:
             batch = pending.pop(0)
             try:
-                if self.readout == "diffusion_canvas":
-                    z = self._diffusion_logits([ids[i] for i in batch])
-                    for r, i in enumerate(batch):
-                        out[i] = z[r]
-                    continue
-                pre = [self.prefix_token] if self.prefix_token is not None else []
-                seqs = [pre + list(ids[i]) for i in batch]
-                T = max(len(x) for x in seqs)
+                T = max(len(ids[i]) for i in batch)
                 inp = torch.full((len(batch), T), self.tok.pad_token_id, dtype=torch.long)
                 am = torch.zeros((len(batch), T), dtype=torch.long)
-                for r, x in enumerate(seqs):
-                    inp[r, : len(x)] = torch.tensor(x)
-                    am[r, : len(x)] = 1
-                mask = am.to(self.device) if (self.pad_mask or len(batch) == 1) else None  # causal backbones only
-                with (torch.autocast("cuda", dtype=torch.bfloat16) if self.autocast else contextlib.nullcontext()):
-                    hs = self.backbone(input_ids=inp.to(self.device), attention_mask=mask, use_cache=False).last_hidden_state
-                last = torch.tensor([len(x) - 1 for x in seqs], device=self.device)
+                for r, i in enumerate(batch):
+                    inp[r, : len(ids[i])] = torch.tensor(ids[i])
+                    am[r, : len(ids[i])] = 1
+                mask = am.to(self.device) if (self.pad_mask or len(batch) == 1) else None
+                hs = self.backbone(input_ids=inp.to(self.device), attention_mask=mask, use_cache=False).last_hidden_state
+                last = torch.tensor([len(ids[i]) - 1 for i in batch], device=self.device)
                 h = hs[torch.arange(len(batch), device=self.device), last].to(torch.float32)
                 z = h @ self.W.T + self.b
-                if self.softcap:
-                    z = self.softcap * torch.tanh(z / self.softcap)
                 for r, i in enumerate(batch):
                     out[i] = z[r]
             except torch.OutOfMemoryError:
@@ -319,28 +255,6 @@ class JevEngine(Engine):
                     raise Unsupported(f"a {len(ids[batch[0]])}-token prompt does not fit in GPU memory")
                 pending[:0] = [batch[: len(batch) // 2], batch[len(batch) // 2:]]
         return out  # type: ignore[return-value]
-
-    def _diffusion_logits(self, seqs: list[list[int]]) -> torch.Tensor:
-        pre = [self.prefix_token] if self.prefix_token is not None else []
-        seqs = [pre + list(x) for x in seqs]
-        B, T, C, dev = len(seqs), max(map(len, seqs)), self.canvas_len, self.device
-        inp = torch.full((B, T), self.tok.pad_token_id, dtype=torch.long)
-        am = torch.zeros((B, T), dtype=torch.long)
-        for r, x in enumerate(seqs):
-            inp[r, : len(x)] = torch.tensor(x)
-            am[r, : len(x)] = 1
-        lengths = am.sum(1).to(dev)
-        inp, am = inp.to(dev), am.to(dev)
-        canvas = torch.full((B, C), self.canvas_token, dtype=torch.long, device=dev)
-        pos = lengths.unsqueeze(1) + torch.arange(C, device=dev).unsqueeze(0)
-        dmask = torch.cat([am, torch.ones((B, C), dtype=am.dtype, device=dev)], 1)
-        with torch.autocast("cuda", dtype=torch.bfloat16):
-            hs = self.backbone(input_ids=inp, attention_mask=am, decoder_input_ids=canvas, decoder_attention_mask=dmask,
-                               decoder_position_ids=pos).last_hidden_state
-        z = hs[:, 0].to(torch.float32) @ self.W.T + self.b
-        if self.softcap:
-            z = self.softcap * torch.tanh(z / self.softcap)
-        return z
 
     def _probs(self, kind: str, z: torch.Tensor, n: int) -> list[float]:
         s = SLOTS[kind][0]
