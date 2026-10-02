@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine and exact code | Hardware | Declared capacity limits |
+|---|---:|---|---|---|---|
+| Blink v0.3 26B-A4B (`PixilabAI/Blink-v0.3-26B-A4B-NVFP4` @ `99adeba9`, NVFP4 ModelOpt safetensors) | **57.48** | [full run and scores](https://huggingface.co/datasets/PixilabAI/blink-v0.3-decision-index/blob/09bf8fea36c139344560d5e6caa2672a4200bc0c/runs/blink-v0.3-26B-A4B-NVFP4/scores.json) | kit `87d4650` (edition 0.2.1); requests served by vLLM (OpenAI-compatible) and read with the surogate decisions v1 protocol: one question per prompt, thinking off, the option labels' raw log-probabilities at the answer position (`logprob_token_ids`), softmax at decision temperature 1.0 | 1 x NVIDIA RTX PRO 5000 Blackwell (48 GB), one vLLM server; 28 requests in flight | Choice questions up to 679 option labels (A–Z, then two-letter codes); context 32,768 tokens. Nothing was truncated and no options were removed. 150,759 of 150,759 requests returned `ok`; no unsupported, error or abstained rows. |
