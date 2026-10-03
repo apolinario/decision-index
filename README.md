@@ -190,6 +190,8 @@ Subclass `decision_index.engines.Engine`, implement `__call__(state, questions) 
 - `http`: a client for any `POST /v1/systemone` server (`--option base_url=...`, `--option model=...`, extra request fields via `--option extra='{...}'`, token from `DECISION_INDEX_API_KEY`).
 - `transformers`: a stock causal LM scoring every option in one forward pass over a shared prompt.
 
+If your model pools a vector per option from a causal tower, check a run for drift to the option after the right one (`scripts/check_next_option_bias.py`; [docs/engines.md](docs/engines.md#option-pooling-in-causal-towers)).
+
 The board's entrants were run with their authors' own inference code. Entrants whose authors publish a `/v1/systemone` server can be driven by `http` once that server is up; the others need their own harness. [docs/engines.md](docs/engines.md) lists which is which.
 
 ## Submitting a model to the leaderboard
@@ -215,6 +217,7 @@ decision_index/
   data/                 panels, chance levels, benchmark catalog, release-v2 and release-v2.1 subset lists
 hub/                    exclusions and manifests to stage with the rows (hub/0.2, hub/0.2.1)
 scripts/prepare_hub_upload.py
+scripts/check_next_option_bias.py   next-option drift on long option lists
 docs/                   suite.md, format.md, engines.md, edition-0.1.md
 tests/                  metrics, index math (0.1, 0.2 and 0.2.1), editions, report, runner
 ```
