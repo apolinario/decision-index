@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine and exact code | Hardware | Declared capacity limits |
+|---|---:|---|---|---|---|
+| Kodiak-v0.2-1B accuracy mode (`cortex-agent-llc/kodiak-v0.2-1b-accuracy`: three Kodiak-v0.2-1B encoders on Ettin-encoder-1B, 1.04B each, calibrated outputs averaged; Apache-2.0) | **18.69** | [full run and scores](https://huggingface.co/datasets/cortex-agent-llc/decision-index-results/blob/7cd5f3b1e51e09ed649639fc58ffa9938540b340/runs/kodiak-v0.2-1b-accuracy/scores.json) | native in-process engine `kodiak_s1.decision_index_engine:KodiakEngine` from [grizzlypeaksoftware/kodiak](https://github.com/grizzlypeaksoftware/kodiak) @ `85d2f87`; kit `87d4650` (0.2.1 scoring) | 1 x NVIDIA GB10 (DGX Spark), PyTorch, one process, one request at a time | Position limit 7,999 per segment and 12,288 packed tokens, nothing truncated: 577 requests that do not fit are refused and recorded unsupported (174 scoreable; by dataset: ToolRet 383, BRIGHT 187, HLE 4, ContractNLI 2, POP909-CL 1). |
