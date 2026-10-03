@@ -1,0 +1,4 @@
+| Model | Results | Weights / engine | Kit | Hardware |
+|---|---|---|---|---|
+| EXAONE-4.0-1.2B-JEV v0.1 | [carrtesy/decision-index-results](https://huggingface.co/datasets/carrtesy/decision-index-results) `runs/exaone-jev-1.2b-v0.1/scores.json` | [carrtesy/EXAONE-4.0-1.2B-JEV](https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV) @ `v0.1` (4341b28); engine `http` against `serve/systemone_server.py` from [carrtesy/EXAONE-JEV](https://github.com/carrtesy/EXAONE-JEV) @ `v0.1` | 87d4650 (0.2.1) | 1 × NVIDIA A40 |
+| EXAONE-4.0-1.2B-JEV v0.2 | [carrtesy/decision-index-results](https://huggingface.co/datasets/carrtesy/decision-index-results) `runs/exaone-jev-1.2b-v0.2/scores.json` | [carrtesy/EXAONE-4.0-1.2B-JEV](https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV) @ `v0.2` (be1f064); engine `http` against `serve/systemone_server.py` from [carrtesy/EXAONE-JEV](https://github.com/carrtesy/EXAONE-JEV) @ `v0.2` | 87d4650 (0.2.1) | 1 × NVIDIA A40 |
