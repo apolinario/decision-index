@@ -1,6 +1,8 @@
 from decision_index.engines.base import Engine, NativeAbstention, RandomEngine, Unsupported, validate
 
 REGISTRY = {
+    "djepa": "decision_index.engines.djepa_engine:DJEPAEngine",
+    "dm-jepa": "decision_index.engines.djepa_engine:DJEPAEngine",
     "http": "decision_index.engines.http:HttpSystemOne",
     "transformers": "decision_index.engines.transformers_engine:TransformersEngine",
     "random": "decision_index.engines.base:RandomEngine",
