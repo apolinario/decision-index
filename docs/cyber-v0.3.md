@@ -86,17 +86,3 @@ python3 scripts/esdb_compare_v3.py \
 native sev inference also requires the sev runtime in the sibling repository. the included modal scripts reproduce the author's setup; they are optional and require that repository and configured provider credentials. the scripts that record model settings and run the final test currently support sev. final-test support for other models remains integration work.
 
 shared runner changes reject resumes after input, settings, model or runtime changes. shared scorers reject mixed results and invalid probability responses. the suite verifier also requires the frozen exclusions file. these checks can reject old run directories that lack a recorded identity; start a new output directory in that case.
-
-## automated language review
-
-a local editorial audit checked all 4,138 blinded policy and investigation cases, covering 8,276 questions. it used part-of-speech tagging, sentence parsing, a local grammar checker and phrase comparisons with 15 retrieved enterprise documentation pages. gartner returned an access error and provided no phrase support for this run. no grammar-checker errors or broken event references were detected.
-
-the audit found repeated workplace messages, a long instruction sentence in the 414 investigation cases, and four cases with a placeholder process option. these are candidates for inspection; the audit does not certify the answer key. the frozen dataset is unchanged. see [the audit instructions](esdb-language-audit.md) and [aggregate audit results](esdb/language-audit-summary.json).
-
-## review and release requirements
-
-the current proposed esdb release gate requires two security reviewers to independently answer all 4,138 policy and investigation cases using the blinded packet. this is an esdb requirement in the proposed code, not a decision index submission rule. no independent reviews have been completed. disagreements require adjudication; changed answers require a new immutable edition. then freeze model and evaluation settings and record one final test attempt. the included runner and scorer require the review and test protocol. editable local code is not an access-control boundary.
-
-before inclusion in the index, complete independent review and obtain source-program permissions. provide download and build instructions that work from a clean checkout. agree the scoring and reporting with maintainers, and complete the final test.
-
-the wording review uses [google's writing guidance](https://developers.google.com/style/tone) and [anthropic's evaluation documentation](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests). technical terms were checked against [gartner's cybersecurity assessment terminology](https://www.gartner.com/en/articles/cybersecurity-roadmap) and [google's access-management documentation](https://docs.cloud.google.com/iam/docs/overview). the review also uses [google's event-search documentation](https://docs.cloud.google.com/chronicle/docs/investigation/udm-search) and [koch's privacy policy](https://privacypolicy.kochinc.com/). gartner was readable in the browser for this separate wording review, although the automated audit could not retrieve it. the review checks ordinary technical terms and removes promotional or vague language. it does not establish authorship or reproduce a company's private workplace conversations.
