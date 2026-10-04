@@ -8,7 +8,7 @@ from pathlib import Path
 
 from decision_index import constants as C
 from decision_index.engines import NativeAbstention, Unsupported, load_engine, validate
-from decision_index.suite.io import atomic_json, dumps, read_jsonl
+from decision_index.suite.io import atomic_json, dumps, read_jsonl, sha256_file
 
 
 def stamp():
@@ -25,6 +25,28 @@ def iter_rows(rows_path, keep=None):
 
 def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=False, resume=True, warm=True, seed=C.RUN_SEED, corpus_sha256=None, halt_on_device_error=True, log=print, keep=None):
     out = Path(out_dir)
+    results_path = out / "results.jsonl"
+    environment_path = out / "environment.json"
+    if not resume and (results_path.exists() or environment_path.exists()):
+        raise FileExistsError("Fresh runs require a new output directory")
+    paths = rows_path if isinstance(rows_path, (list, tuple)) else [rows_path]
+    selected = hashlib.sha256()
+    for row in iter_rows(rows_path, keep):
+        from decision_index.cyber.gate import require
+        require([row])
+        selected.update(dumps([row["_evaluation"]["run_id"], row["state"], row["questions"]]).encode())
+        selected.update(b"\n")
+    identity = {"schema": 1, "engine": engine_name, "engine_options": engine_options,
+                "seed": seed, "frozen_corpus_sha256": corpus_sha256,
+                "inputs": [{"path": str(Path(p).resolve()), "sha256": sha256_file(p)} for p in paths],
+                "selected_requests_sha256": selected.hexdigest(),
+                "runner_sha256": sha256_file(__file__),
+                "engine_code_sha256": {p.name: sha256_file(p) for p in sorted((Path(__file__).parent / "engines").glob("*.py"))}}
+    previous_environment = json.loads(environment_path.read_text()) if environment_path.exists() else None
+    if results_path.exists() and not previous_environment:
+        raise ValueError("Existing predictions lack a run identity; use a new output directory")
+    if previous_environment and {k: previous_environment.get("run_identity", {}).get(k) for k in identity} != identity:
+        raise ValueError("Resume model settings, input bytes, selection or evaluator changed; use a new output directory")
     out.mkdir(parents=True, exist_ok=True)
 
     def event(**kw):
@@ -39,18 +61,27 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
     except ImportError:
         pass
     t = time.perf_counter()
-    event(event="loading", engine=engine_name)
     engine = load_engine(engine_name, **engine_options)
     engine.synchronize()
-    atomic_json(out / "environment.json", {"engine": engine_name, "engine_options": engine_options, "model_source": engine.provenance, **engine.runtime(), "loaded_seconds": time.perf_counter() - t, "frozen_corpus_sha256": corpus_sha256, "rows_path": [str(p) for p in rows_path] if isinstance(rows_path, (list, tuple)) else str(rows_path), "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "latency": engine.latency})
+    identity["model_source"] = engine.provenance
+    runtime = engine.runtime()
+    identity["runtime"] = runtime
+    if previous_environment and previous_environment["run_identity"] != identity:
+        engine.close()
+        raise ValueError("Resolved model artifacts or runtime changed; use a new output directory")
+    identity_hash = hashlib.sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    if not previous_environment:
+        atomic_json(environment_path, {"engine": engine_name, "engine_options": engine_options, "model_source": engine.provenance, **runtime, "loaded_seconds": time.perf_counter() - t, "frozen_corpus_sha256": corpus_sha256, "rows_path": [str(p) for p in paths], "runner_sha256": identity["runner_sha256"], "run_identity": identity, "run_identity_sha256": identity_hash, "latency": engine.latency})
     if warm:
         engine.warmup()
         engine.synchronize()
     event(event="ready", engine=engine_name)
     previous = {}
-    results_path = out / "results.jsonl"
     if resume and results_path.exists():
         for r in read_jsonl(results_path, complete_lines_only=True):
+            if r.get("run_identity_sha256") != identity_hash:
+                engine.close()
+                raise ValueError("Stored prediction belongs to a different run")
             previous[r["run_id"]] = r["status"]
         if previous:
             text = results_path.read_text(encoding="utf-8")
@@ -69,7 +100,9 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
             payload = {"state": row["state"], "questions": row["questions"]}
             t = time.perf_counter()
             engine.synchronize()
-            result = {**e, "started_utc": stamp(), "engine": engine_name}
+            result = {**e, "started_utc": stamp(), "engine": engine_name,
+                      "run_identity_sha256": identity_hash,
+                      "request_sha256": hashlib.sha256(dumps(payload).encode()).hexdigest()}
             if not compact:
                 result["payload"] = payload
             try:

@@ -1,0 +1,281 @@
+{
+  "version": "esdb-v0.3",
+  "status": "proposal; independent security review and final testing pending",
+  "dataset_manifest_sha256": "ef91a4814756b9b4b005aace3bf9f65960a8c1729764bc99e3a3b9295f0054df",
+  "parent_manifest_sha256": "0bc06507c78b26deb0c2cc6bf5b603bc88841a00bf4e9976282e3f989e6ebfe2",
+  "staged_development_calibration_sha256": "efecbb4235eec9e552f79dee048c40e87755e0d55ef28d8fec5553427b6fe0cf",
+  "comparison_report_sha256": "e83c2c7ea0907395b7c8e27f87388b39999a4b8470d4f8af07e834995a4f8456",
+  "total_cases": 9143,
+  "total_questions": 13773,
+  "counts": {
+    "incident_triage": {
+      "records": 1487,
+      "questions": 1487,
+      "independent_groups": 271
+    },
+    "endpoint_investigation": {
+      "records": 669,
+      "questions": 1575,
+      "independent_groups": 50
+    },
+    "network_defense": {
+      "records": 3263,
+      "questions": 3263,
+      "independent_groups": 12
+    },
+    "authorization_policy": {
+      "records": 3724,
+      "questions": 7448,
+      "independent_groups": 133
+    }
+  },
+  "partition_counts": {
+    "development": {
+      "incident_triage": {
+        "records": 517,
+        "questions": 517,
+        "independent_groups": 94
+      },
+      "endpoint_investigation": {
+        "records": 225,
+        "questions": 535,
+        "independent_groups": 16
+      },
+      "network_defense": {
+        "records": 1012,
+        "questions": 1012,
+        "independent_groups": 4
+      },
+      "authorization_policy": {
+        "records": 1260,
+        "questions": 2520,
+        "independent_groups": 45
+      }
+    },
+    "calibration": {
+      "incident_triage": {
+        "records": 495,
+        "questions": 495,
+        "independent_groups": 91
+      },
+      "endpoint_investigation": {
+        "records": 227,
+        "questions": 526,
+        "independent_groups": 18
+      },
+      "network_defense": {
+        "records": 1076,
+        "questions": 1076,
+        "independent_groups": 4
+      },
+      "authorization_policy": {
+        "records": 1232,
+        "questions": 2464,
+        "independent_groups": 44
+      }
+    },
+    "test": {
+      "incident_triage": {
+        "records": 475,
+        "questions": 475,
+        "independent_groups": 86
+      },
+      "endpoint_investigation": {
+        "records": 217,
+        "questions": 514,
+        "independent_groups": 16
+      },
+      "network_defense": {
+        "records": 1175,
+        "questions": 1175,
+        "independent_groups": 4
+      },
+      "authorization_policy": {
+        "records": 1232,
+        "questions": 2464,
+        "independent_groups": 44
+      }
+    }
+  },
+  "endpoint_primary_cases": 414,
+  "endpoint_diagnostic_cases": 255,
+  "completed_independent_reviews": 0,
+  "required_reviewers": 2,
+  "cases_per_reviewer": 4138,
+  "final_test_evaluated": false,
+  "source_terms_recorded_locally": [
+    {
+      "source": "microsoft guide",
+      "terms": "CDLA-Permissive-2.0"
+    },
+    {
+      "source": "otrf security-datasets",
+      "terms": "MIT",
+      "revision": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87"
+    },
+    {
+      "source": "splunk attack_data",
+      "terms": "Apache-2.0"
+    },
+    {
+      "source": "ctu-13 and iot-23",
+      "terms": "publisher attribution and dataset terms; same laboratory"
+    },
+    {
+      "source": "cse-cic-ids2018",
+      "terms": "publisher redistribution terms and attribution; one test-only campaign"
+    },
+    {
+      "source": "recovered swarmtraces programs",
+      "terms": "redistribution permission unresolved; local research only"
+    },
+    {
+      "source": "vendored static analyzer",
+      "terms": "Apache-2.0; license and notice included; separate from program data"
+    }
+  ],
+  "models": {
+    "jev": {
+      "version": "jev-1.13.0",
+      "development_calibration_attempts": 6044,
+      "valid_responses": 6043,
+      "calibration": {
+        "incident_triage": {
+          "cases": 495,
+          "case_exact_accuracy": 0.21818181818181817,
+          "case_group_macro_accuracy": 0.17741147741147742,
+          "case_coverage": 1.0
+        },
+        "endpoint_investigation": {
+          "cases": 148,
+          "case_exact_accuracy": 0.6216216216216216,
+          "case_group_macro_accuracy": 0.6527777777777778,
+          "case_coverage": 1.0
+        },
+        "authorization_policy": {
+          "cases": 1232,
+          "case_exact_accuracy": 0.8441558441558441,
+          "case_group_macro_accuracy": 0.8441558441558442,
+          "case_coverage": 1.0
+        }
+      },
+      "prediction_sha256": "622de920d3f9b5f67ad413dfaef49321c5d6773762aaebcbd3e96c0fa9dc564d"
+    },
+    "sev": {
+      "version": "macmacmacmac/Sev-4B@7f9f3f53b9baae041c64a71d4b3867c6700fd524",
+      "development_calibration_attempts": 6044,
+      "valid_responses": 6036,
+      "calibration": {
+        "incident_triage": {
+          "cases": 495,
+          "case_exact_accuracy": 0.21414141414141413,
+          "case_group_macro_accuracy": 0.17594627594627596,
+          "case_coverage": 0.9919191919191919
+        },
+        "endpoint_investigation": {
+          "cases": 148,
+          "case_exact_accuracy": 0.30405405405405406,
+          "case_group_macro_accuracy": 0.30357142857142855,
+          "case_coverage": 1.0
+        },
+        "authorization_policy": {
+          "cases": 1232,
+          "case_exact_accuracy": 0.4797077922077922,
+          "case_group_macro_accuracy": 0.4797077922077922,
+          "case_coverage": 1.0
+        }
+      },
+      "prediction_sha256": "ae4eaabaede9da4abf38f99f464717f96b1b57da9082e0ad72ccfd5e7c980749"
+    }
+  },
+  "baselines": {
+    "development_majority": {
+      "incident_triage": {
+        "cases": 495,
+        "case_exact_accuracy": 0.5515151515151515,
+        "case_group_macro_accuracy": 0.6768009768009768
+      },
+      "endpoint_investigation": {
+        "cases": 148,
+        "case_exact_accuracy": 0.4594594594594595,
+        "case_group_macro_accuracy": 0.4662698412698413
+      },
+      "authorization_policy": {
+        "cases": 1232,
+        "case_exact_accuracy": 0.2857142857142857,
+        "case_group_macro_accuracy": 0.2857142857142857
+      }
+    },
+    "guide_logistic": {
+      "incident_triage": {
+        "cases": 495,
+        "case_exact_accuracy": 0.5878787878787879,
+        "case_group_macro_accuracy": 0.6663003663003663
+      }
+    },
+    "guide_random_forest": {
+      "incident_triage": {
+        "cases": 495,
+        "case_exact_accuracy": 0.593939393939394,
+        "case_group_macro_accuracy": 0.6565323565323565
+      }
+    },
+    "program_blind_policy": {
+      "authorization_policy": {
+        "cases": 1056,
+        "case_exact_accuracy": 0.5,
+        "case_group_macro_accuracy": 0.5
+      }
+    },
+    "visible_rule_reference": {
+      "endpoint_investigation": {
+        "cases": 148,
+        "case_exact_accuracy": 1.0,
+        "case_group_macro_accuracy": 1.0
+      },
+      "authorization_policy": {
+        "cases": 1232,
+        "case_exact_accuracy": 1.0,
+        "case_group_macro_accuracy": 1.0
+      }
+    }
+  },
+  "network_calibration": [
+    {
+      "source": "ctu-13",
+      "cases": 600,
+      "jev_accuracy": 0.4683333333333333,
+      "sev_accuracy": 0.37833333333333335,
+      "jev_malicious_missed": 198,
+      "judged_malicious": 200,
+      "background_cases": 200
+    },
+    {
+      "source": "iot-23",
+      "cases": 356,
+      "jev_accuracy": 0.800561797752809,
+      "sev_accuracy": 0.8455056179775281,
+      "jev_malicious_missed": 53,
+      "judged_malicious": 56,
+      "always_benign_accuracy": 0.8426966292134831
+    },
+    {
+      "source": "splunk authored firewall-rule decisions",
+      "cases": 120,
+      "jev_accuracy": 0.9583333333333334,
+      "sev_accuracy": 0.825,
+      "malicious_flow_detection_task": false
+    }
+  ],
+  "publication_scope": "aggregate metadata only; request payloads, source programs, answer keys and individual predictions excluded",
+  "limitations": [
+    "independent security review pending",
+    "full public rebuild unavailable without local collection and analysis records",
+    "source-program redistribution permission unresolved",
+    "final-test orchestration currently specific to sev",
+    "workplace requests authored for the assessment",
+    "limited independent network campaigns",
+    "public-source pretraining overlap unknown",
+    "guide task retrospective and detector-assisted"
+  ]
+}

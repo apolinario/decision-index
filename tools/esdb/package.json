@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Pinned parser for ESDB source replay",
+  "dependencies": {
+    "typescript": "5.9.3"
+  }
+}

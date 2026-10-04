@@ -12,7 +12,10 @@ def sha256_file(path, gunzip=False):
     path = Path(path)
     opener = gzip.open if gunzip else open
     with opener(path, "rb") as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()
+        h = hashlib.sha256()
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+        return h.hexdigest()
 
 
 def open_text(path):
@@ -75,7 +78,7 @@ class Suite:
 
     def excluded(self):
         if not self.exclusions_path.exists():
-            return set()
+            raise FileNotFoundError(f"Missing frozen exclusions: {self.exclusions_path}")
         return set(json.loads(self.exclusions_path.read_text())["rows"])
 
     def rows(self, apply_exclusions=False):
@@ -101,9 +104,11 @@ class Suite:
             added = sha256_file(self.added_path, gunzip=self.added_path.suffix == ".gz")
             report.update(added_file=str(self.added_path), added_sha256=added, added_match=added == e["added_sha256"])
             report["match"] = report["match"] and report["added_match"]
+        report["exclusions_match"] = False
         if self.exclusions_path.exists():
             ex = sha256_file(self.exclusions_path)
             report.update(exclusions_sha256=ex, exclusions_match=ex == e["exclusions_sha256"])
+        report["match"] = report["match"] and report["exclusions_match"]
         subsets = editions.subset_sha256(e["id"])
         if subsets:
             report["subsets_match"] = all(e.get(k) == v for k, v in subsets.items())

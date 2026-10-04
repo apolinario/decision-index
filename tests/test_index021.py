@@ -89,7 +89,7 @@ def acos_rows():
 def test_acos_per_review_f1():
     rows = acos_rows()
     preds = {"38:r1:0": "yes", "38:r1:1": "yes", "38:r1:2": "no", "38:r2:0": "no", "38:r2:1": "no"}
-    res = {k: {"status": "ok", "total_wall_ms": 1.0, "response": {"answers": {"q": {"choice": v, "probabilities": {"yes": float(v == "yes"), "no": float(v == "no")}}}}} for k, v in preds.items()}
+    res = {k: {"status": "ok", "total_wall_ms": 1.0, "response": {"answers": {"q": {"type": "choice", "choice": v, "probabilities": {"yes": float(v == "yes"), "no": float(v == "no")}}}}} for k, v in preds.items()}
     rep = score(rows, res)
     assert rep["review_f1"] == pytest.approx((2 / 3 + 1.0) / 2)
     assert rep["case_exact_accuracy"] == pytest.approx(0.5)

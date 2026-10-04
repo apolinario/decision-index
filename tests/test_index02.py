@@ -84,8 +84,8 @@ def rows(n, golds, criteria=None, qtype="choice"):
 
 def test_added_accuracy_and_coverage():
     rr = rows(57, ["A", "B", "A", "B"], {"A": "a", "B": "b", "C": "c", "D": "d"})
-    res = {rr[0]["_evaluation"]["run_id"]: {"status": "ok", "response": {"answers": {"q": {"choice": "A", "probabilities": {"A": 1.0, "B": 0, "C": 0, "D": 0}}}}},
-           rr[1]["_evaluation"]["run_id"]: {"status": "ok", "response": {"answers": {"q": {"choice": "A", "probabilities": {"A": 1.0, "B": 0, "C": 0, "D": 0}}}}},
+    res = {rr[0]["_evaluation"]["run_id"]: {"status": "ok", "response": {"answers": {"q": {"type": "choice", "choice": "A", "probabilities": {"A": 1.0, "B": 0, "C": 0, "D": 0}}}}},
+           rr[1]["_evaluation"]["run_id"]: {"status": "ok", "response": {"answers": {"q": {"type": "choice", "choice": "A", "probabilities": {"A": 1.0, "B": 0, "C": 0, "D": 0}}}}},
            rr[2]["_evaluation"]["run_id"]: {"status": "unsupported"}}
     rep = A.report(57, rr, res)
     assert rep["score"] == pytest.approx(0.5)
@@ -117,7 +117,7 @@ def test_ragtruth_f1_and_chance():
 
 def test_phishnchips_scores_verdict_only():
     row = {"_evaluation": {"run_id": "calibration-v1:56:1", "catalog_id": 56, "dataset": "x", "track": "t", "group_id": "g"}, "questions": {"verdict": {"type": "choice", "instructions": "", "criteria": {"phishing": "p", "legitimate": "l"}}, "is_phishing": {"type": "noul", "instructions": "", "criteria": {}}, "sig_urgency": {"type": "noul", "instructions": "", "criteria": {}}}, "expected": {"verdict": "phishing", "is_phishing": True, "sig_urgency": None}, "scoring": {"primary_field": "verdict", "unscored_fields": ["sig_urgency"]}}
-    res = {"calibration-v1:56:1": {"status": "ok", "response": {"answers": {"verdict": {"choice": "phishing", "probabilities": {"phishing": 0.7, "legitimate": 0.3}}, "is_phishing": {"noul": 0.1}, "sig_urgency": {"noul": 0.5}}}}}
+    res = {"calibration-v1:56:1": {"status": "ok", "response": {"answers": {"verdict": {"type": "choice", "choice": "phishing", "probabilities": {"phishing": 0.7, "legitimate": 0.3}}, "is_phishing": {"type": "noul", "noul": 0.1}, "sig_urgency": {"type": "noul", "noul": 0.5}}}}}
     rep = A.report(56, [row], res)
     assert rep["scored_fields"] == 1 and rep["score"] == 1.0
 

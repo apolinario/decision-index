@@ -5,6 +5,7 @@ import statistics
 from importlib import resources
 
 from decision_index import constants as C
+from decision_index.results import checked_results
 from decision_index.scoring.metrics import avg, conservative_f1, random_ndcg_baseline, score_query, semantic_label, skill
 
 
@@ -29,6 +30,8 @@ def pred(q, a):
 
 
 def static_score(n, rows, res, random_baselines):
+    validated = checked_results(rows, {rid: {**r, "response": r.get("response", {"answers": r.get("answers", {})})} for rid, r in res.items()})
+    res = {rid: {**r, "answers": r.get("response", {}).get("answers", {})} for rid, r in validated.items()}
     groups = collections.defaultdict(list)
     for r in rows:
         groups[r["_evaluation"]["group_id"]].append(r)
@@ -127,7 +130,7 @@ def score_panel(suite, results):
         n = r["_evaluation"]["catalog_id"]
         if n in ids:
             rows[n].append(r)
-    res = {rid: {"status": r["status"], "answers": (r.get("response") or {}).get("answers", {})} for rid, r in results.items() if r.get("catalog_id") in ids}
+    res = {rid: {**r, "answers": (r.get("response") or {}).get("answers", {})} for rid, r in results.items() if r.get("catalog_id") in ids}
     baselines = chance_baselines()
     scored = {n: static_score(n, rs, res, baselines) for n, rs in rows.items()}
     for n in C.INTERACTIVE:

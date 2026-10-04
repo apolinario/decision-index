@@ -1,6 +1,8 @@
 import collections
 import statistics
 
+from decision_index.results import checked_results
+
 from decision_index.scoring.metrics import binary_f1, chess_score, consensus_score, forecast_score, macro_f1, mean, percentile, prediction, router_score, score_query, semantic_label
 
 F1_BENCHMARKS = (4, 5, 10, 11, 12, 37, 39, 40, 41, 42)
@@ -10,19 +12,29 @@ ACCEPTED_BENCHMARKS = (31, 50)
 
 
 def compact(r):
-    return {k: r[k] for k in ("run_id", "catalog_id", "status", "response", "total_wall_ms", "model_request_wall_ms", "http_wall_ms") if k in r}
+    return {k: r[k] for k in ("run_id", "catalog_id", "status", "response", "payload_sha256", "request_sha256", "run_identity_sha256", "engine", "total_wall_ms", "model_request_wall_ms", "http_wall_ms") if k in r}
 
 
 def load_results(path):
     from decision_index.suite.io import read_jsonl
 
     out = {}
+    identities, engines = set(), set()
     for r in read_jsonl(path, complete_lines_only=True):
+        identities.add(r.get("run_identity_sha256"))
+        engines.add(r.get("engine"))
+        if len(identities) > 1 or len(engines) > 1:
+            raise ValueError("Imported results mix run identities or engines")
+        previous = out.get(r["run_id"])
+        if previous:
+            if previous["status"] != "error" or any(previous.get(k) != r.get(k) for k in ("payload_sha256", "request_sha256")):
+                raise ValueError(f"Repeated completed prediction or changed request: {r['run_id']}")
         out[r["run_id"]] = compact(r)
     return out
 
 
 def score(rows, results):
+    results = checked_results(rows, results)
     number = rows[0]["_evaluation"]["catalog_id"]
     groups = collections.defaultdict(list)
     for row in rows:
@@ -184,8 +196,11 @@ def primary(n, report, metrics=None):
 
 
 def benchmark_summary(suite, results, engine, reference=None, rows=None, metrics=None):
+    rows = list(rows if rows is not None else suite.rows(apply_exclusions=True))
+    results = checked_results(rows, results)
+    reference = checked_results(rows, reference) if reference is not None else None
     groups = collections.defaultdict(list)
-    for r in rows if rows is not None else suite.rows(apply_exclusions=True):
+    for r in rows:
         groups[r["_evaluation"]["catalog_id"]].append(r)
     reports = []
     for n, rows in groups.items():
@@ -206,7 +221,7 @@ def benchmark_summary(suite, results, engine, reference=None, rows=None, metrics
             requests=len(rows),
             answered=counts["ok"],
             unsupported=counts["unsupported"],
-            errors=counts["error"],
+            errors=counts["error"] + counts["invalid"],
             abstained=counts["abstained"],
             pending=counts["pending"],
             scored_requests=len(complete),
