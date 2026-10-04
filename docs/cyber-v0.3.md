@@ -85,6 +85,12 @@ native sev inference also requires the canonical sev runtime. the included modal
 
 shared runner changes reject resumes after input, settings, model or runtime changes. shared scorers reject mixed results and invalid probability responses. the suite verifier also requires the frozen exclusions file. these checks can reject old run directories that lack a recorded identity; start a new output directory in that case.
 
+## automated language review
+
+a local editorial audit checked all 4,138 blinded policy and investigation cases, covering 8,276 questions. it used part-of-speech tagging, sentence parsing, a local grammar checker and phrase comparisons with 15 retrieved enterprise documentation pages. gartner returned an access error and provided no phrase support for this run. no grammar-checker errors or broken event references were detected.
+
+the audit found repeated workplace messages, a long instruction sentence in the 414 investigation cases, and four cases with a placeholder process option. these are candidates for inspection; the audit does not certify the answer key. the frozen dataset is unchanged. see [the audit instructions](esdb-language-audit.md) and [aggregate audit results](esdb/language-audit-summary.json).
+
 ## review and release requirements
 
 two security reviewers must independently answer every policy and investigation case using the blinded packet. no independent reviews have been completed. disagreements require adjudication; changed answers require a new immutable edition. then freeze model and evaluation settings and record one final test attempt. the public runner and scorer require the review and test protocol. editable local code is not an access-control boundary.
