@@ -5,6 +5,7 @@ from pathlib import Path
 
 from decision_index import constants as C
 from decision_index import editions
+from decision_index.results import checked_results
 from decision_index.scoring.index import index_entry, rnd, score_panel
 from decision_index.scoring.report import benchmark_summary, load_results
 from decision_index.suite.io import Suite, atomic_json
@@ -13,8 +14,8 @@ from decision_index.suite.io import Suite, atomic_json
 def score_run(suite, results_path, engine, out_dir, reference_results=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    results = load_results(results_path)
-    reference = load_results(reference_results) if reference_results else None
+    results = checked_results(suite.rows(apply_exclusions=True), load_results(results_path))
+    reference = checked_results(suite.rows(apply_exclusions=True), load_results(reference_results)) if reference_results else None
     if editions.compatible(suite.edition["id"], "0.2"):
         return score_run_v02(suite, results, engine, out, reference)
     summary = benchmark_summary(suite, results, engine, reference)

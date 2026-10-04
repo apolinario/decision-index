@@ -6,6 +6,8 @@ The live board is **Decision Index 0.2.1** (2026-09-27), the default everywhere 
 
 Not affiliated with TypeSafe AI.
 
+an experimental cybersecurity benchmark is proposed separately: [esdb v0.3](docs/cyber-v0.3.md). it includes four assessments, build and verification code, and development/calibration results. independent security review, source permissions and final testing remain pending.
+
 ## What changed in 0.2.1
 
 These are the site's own summary lines for the scoring:

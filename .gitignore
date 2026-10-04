@@ -8,5 +8,7 @@ __pycache__/
 /runs/
 /work/
 /hub-upload/
+/benchmarks/
 .pytest_cache/
 .DS_Store
+/tools/esdb/node_modules/
