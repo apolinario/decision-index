@@ -6,7 +6,7 @@ This document records submitted candidate model evaluation runs for review and i
 
 | Model Name | Submitter | Results Dataset | Engine / Commit | Hardware | Latency (Median) | Declared Capacity Limits |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **DM-JEPA** | Danger Labs | [DangerLabs/decision-index-results](https://huggingface.co/datasets/DangerLabs/decision-index-results) (`runs/dm-jepa/scores.json`) | `dm-jepa` / [`HEAD`](https://github.com/DangerLabs/DM-JEPA) | 1x NVIDIA GeForce RTX 3060 (12GB) | **33.1 ms** | `max_state_length=2048`, `max_option_length=256` (no truncation, raises `Unsupported`) |
+| **DM-JEPA** | Danger Labs | [DangerLabs/decision-index-results](https://huggingface.co/datasets/DangerLabs/decision-index-results) (`runs/dm-jepa/scores.json`) | `dm-jepa` / `effc5c2` | 1x NVIDIA GeForce RTX 3060 (12GB) | **33.1 ms** | `max_state_length=2048`, `max_option_length=256` (no truncation, raises `Unsupported`) |
 
 ---
 
