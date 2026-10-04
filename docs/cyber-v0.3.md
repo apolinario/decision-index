@@ -1,6 +1,6 @@
 # esdb benchmark proposal
 
-esdb is the enterprise security decision benchmark. this proposal adds four experimental assessments for a future decision index edition. the current local dataset is v0.3: 9,143 cases and 13,773 questions. the published suite files, benchmark weights and index formula are unchanged.
+[esdb](https://github.com/tensor-ac/esdb) is the enterprise security decision benchmark. this proposal adds four experimental assessments for a future decision index edition. the current local dataset is v0.3: 9,143 cases and 13,773 questions. the published suite files, benchmark weights and index formula are unchanged.
 
 ## assessments and scoring
 
