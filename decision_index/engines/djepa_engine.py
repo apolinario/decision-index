@@ -18,8 +18,12 @@ if str(WORKSPACE_ROOT) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_ROOT))
 
 from decision_index.engines.base import Engine, Unsupported, validate
-from djepa.model.djepa import DJEPA
-from djepa.dataset.formatter import JevFormatter
+try:
+    from djepa.model.djepa import DJEPA
+    from djepa.dataset.formatter import JevFormatter
+except ImportError:
+    from decision_index.djepa.model.djepa import DJEPA
+    from decision_index.djepa.dataset.formatter import JevFormatter
 
 
 class DJEPAEngine(Engine):
