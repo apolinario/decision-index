@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Decision Index | Results | Engine and exact code | Hardware | Declared capacity limits |
+|---|---:|---|---|---|---|
+| DecisionTune 1.0 (`decision-tune/decisiontune-1.0` @ `27056cb`, ModernBERT-large encoder and a 4 KB head, 395M) | **29.57** | [full run and scores](https://huggingface.co/datasets/decision-tune/decisiontune-1.0-decision-index/blob/ad8d8c04766b2b2728cd969c3b42fdddac52efef/runs/decisiontune-1.0/score/scores.json) | `decisiontune_engine:DecisionTuneEngine` in `submissions/decisiontune-1.0/`, a thin adapter around `engine.py` in the model repository at `27056cb` (one encoder pass per question, softmax over the head score at each option marker, no temperature); code [decision-tune](https://github.com/decision-tune/decision-tune) `v1.0.0` (`5dc68d6`); kit `87d4650` (0.2.1 scoring) | 1 x Apple M5 Pro (MacBook Pro), MLX 0.32.3, fp32, one process, one request at a time | Context 8,192 tokens, nothing truncated: 324 requests that do not fit are unsupported (8 scoreable). |
