@@ -6,7 +6,7 @@ of the head score at each [MASK]; a noul question is scored as the options "yes"
 No calibration temperature, no option filtering, one fixed rendering. A sequence over the 8,192-token context is
 refused as Unsupported, never truncated.
 
-    python -m decision_index pipeline --engine decisiontune_engine:DecisionTuneEngine --edition 0.2.1 --out runs/decisiontune-1.0
+    python -m decision_index pipeline --engine decisiontune_engine:DecisionTuneEngine --edition 0.3 --out runs/decisiontune-1.0-0.3
     (run with PYTHONPATH=submissions/decisiontune-1.0; options: --option backend=auto|torch|mlx|onnx, --option path=<local model dir>)
 """
 import os
