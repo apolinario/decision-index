@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [RSI-Jev v6.0-VL 4B](https://huggingface.co/shgao/rsi-jev-v6.0-vl-4b) | 0.3 | 46.23 | [scores.json](https://huggingface.co/datasets/shgao/rsi-jev-benchmarks/blob/ac37145b6752daf902bbe0a3bf48bb675a117912/decision-index/runs/RSI-Jev-v6.0-VL-4B-0.3/scores.json) | `http` against `rsi-jev serve v6.0-vl-4b` from [Shanghua-Gao/RSI-Jev](https://github.com/Shanghua-Gao/RSI-Jev/tree/b61c5a3cc109132e16a84f229552cde2f85eaa37) @ `b61c5a3`, effort unset (default); runner `87d4650` (0.2.1 requests) and `62d2f51` (0.3 GSM8K requests), scorer `62d2f51` | 1× NVIDIA H200 (0.2.1 requests), 1× RTX PRO 6000 Blackwell (2,638 GSM8K requests); bf16 tower, fp32 scorer, one request at a time | 32,768 tokens per question (state + instructions + options); 5,120 options; no truncation (0 reached) |
