@@ -1,0 +1,3 @@
+| Model | Results | Weights / engine | Kit | Hardware | Inference settings |
+|---|---|---|---|---|---|
+| Matilda Jev (Maincode) | [Maincode/matilda-jev-decision-index](https://huggingface.co/datasets/Maincode/matilda-jev-decision-index) `runs/matilda-jev-v1.3/scores.json` | [Maincode/matilda-jev-v1](https://huggingface.co/Maincode/matilda-jev-v1) @ `c87f575` ; engine `maincode_jev_serve.engine:MaincodeJevEngine` (in the repo's `runtime/`) | 62d2f51 (0.3) | AMD MI355X (0.2.1 run on 32 GPUs, 0.3 GSM8K resume on 1) | bf16; one forward pass per question; 255-way answer readout; stored temperature 1.2834; thinking off |
