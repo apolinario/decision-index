@@ -1,0 +1,6 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [d1-3B](https://huggingface.co/LiquidAI/d1-3B/tree/da1fe36a861f24690f27f622dca1d8688503d113) | 0.3 | 48.99 | [scores.json](https://huggingface.co/datasets/LiquidAI/d1-decision-index/blob/9fcaa92417b9f80d9b2086371ecfb292e4f1d91a/runs/d1-3B/scores.json) | `d1_engine:D1` ([code](https://huggingface.co/datasets/LiquidAI/d1-decision-index/blob/9fcaa92417b9f80d9b2086371ecfb292e4f1d91a/code/d1_engine.py)), the model's own Hub code; kit `62d2f51` | 1× AMD Instinct MI325X; bf16, eager, one request at a time | none: every request read whole (0 unsupported) |
+| [d1-omni-600M](https://huggingface.co/LiquidAI/d1-omni-600M/tree/414f8d6438174f5b2133a9c21a478fc42625e308) | 0.3 | 14.64 | [scores.json](https://huggingface.co/datasets/LiquidAI/d1-decision-index/blob/9fcaa92417b9f80d9b2086371ecfb292e4f1d91a/runs/d1-omni-600M/scores.json) | `d1_engine:D1` (same code); kit `62d2f51` | 1× AMD Instinct MI325X; fp16, eager, one request at a time | 16,384 positions, and its encoder's token budgets for instructions and option texts: a request it would cut is unsupported (37,141 of 140,178), never truncated |
