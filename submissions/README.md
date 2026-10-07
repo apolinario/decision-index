@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Sieve-2B-Plus](https://huggingface.co/sthanika-ai/Sieve-2B-Plus/tree/ce762346cd0dd6581532b4e9bb19ca1bccd25b8c) | 0.3 | 37.26 | [scores.json](https://huggingface.co/datasets/sthanika-ai/Sieve-2B-Plus-decision-index-results/blob/f820b5f09bb4a9b4eec417447a9337c269e20efb/runs/Sieve-2B-Plus/scores.json) | [`sieve_engine:SieveEngine`](https://huggingface.co/sthanika-ai/Sieve-2B-Plus/blob/ce762346cd0dd6581532b4e9bb19ca1bccd25b8c/sieve_engine.py) @ `ce76234`, `max_batch_tokens=49152`, `mem_fraction=0.16`, bf16; runner `87d4650` (0.2.1 requests) and `62d2f51` (0.3 GSM8K requests), scorer `62d2f51` | 2× A100 80GB PCIe, 10 processes over 24 shards (0.2.1 requests); 1× A100 80GB PCIe (0.3 GSM8K requests) | 32,768 tokens for state + question + longest option; no option-count limit; no truncation (0 reached); duplicate option texts refused (2) |
