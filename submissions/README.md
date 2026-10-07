@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [KnowLine-4B-Gen1](https://huggingface.co/PelaAI/KnowLine-4B-Gen1) | 0.3 | 60.47 | [scores.json](https://huggingface.co/datasets/PelaAI/KnowLine-4B-Gen1-decision-index/blob/8d8de48096fb47f523ab26ddff1d15031202574f/runs/KnowLine-4B-Gen1/scores.json) | `http` against `knowline_server.py` from [PelaAI/KnowLine-4B-Gen1](https://huggingface.co/PelaAI/KnowLine-4B-Gen1/tree/6fad739c876f9d2a41d7cf14e76823bddcb4953e) @ `6fad739`, behind SGLang 0.5.21 (FP8 at load), `chat` style, temperature 1; runner `87d4650` (0.2.1 requests) and `62d2f51` (0.3 GSM8K requests), scorer `62d2f51` | NVIDIA H20 96 GB: the 0.2.1 requests on one server, then two identical servers (one per GPU) after the first minutes; the 2,638 GSM8K requests on one H20; 16 client shards in parallel | 64 questions per request, 255 options per question; no truncation; 0 unsupported |
