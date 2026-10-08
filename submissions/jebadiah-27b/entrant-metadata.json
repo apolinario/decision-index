@@ -1,0 +1,39 @@
+{
+  "_note": "Draft for the maintainer, in the shape of the Space's data/methodology.json entrants.entrants records (the lab's entrant_metadata.py is not public). Values are what this run loaded; the maintainer's own run on the RTX PRO 6000 is authoritative.",
+  "engine": "jebadiah-27b",
+  "name": "Jebadiah 27B",
+  "variant": null,
+  "kind": "merged LoRA",
+  "technique": "autoregressive",
+  "technique_name": "autoregressive",
+  "served_params": 26895998464,
+  "served_params_detail": "25,624,600,064 language-model parameters plus the 1,271,398,400-parameter untied lm_head, loaded as Qwen3_5ForCausalLM (the text-only class the published loader uses; the 460,730,096-parameter vision tower and the multi-token-prediction layers in the checkpoint are not loaded). The rank-16 LoRA (116,727,808 parameters) is merged into these weights, so it adds none at serve time.",
+  "params_from_name": false,
+  "params_estimated": false,
+  "trained_params": 116727808,
+  "base_model": "Qwen/Qwen3.8-27B",
+  "base_revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+  "base_chain": [
+    "Qwen/Qwen3.8-27B"
+  ],
+  "weights_repo": "frontier-infra/jebadiah-27b",
+  "weights_revision": "1c0d794fc24b24b15175c6a912654fa5cd76e1bb",
+  "served_checkpoint": "frontier-infra/jebadiah-27b",
+  "model_url": "https://huggingface.co/frontier-infra/jebadiah-27b",
+  "code_url": "https://huggingface.co/frontier-infra/jebadiah-27b/tree/1c0d794fc24b24b15175c6a912654fa5cd76e1bb/scripts",
+  "training_code_url": "https://github.com/getainode/jebadiah",
+  "serving_code_url": "https://github.com/getainode/ainode",
+  "org_url": "https://huggingface.co/frontier-infra",
+  "license": "Apache-2.0 (weights and base)",
+  "readout": "One forward pass per question over AINode's decide prompt (Qwen chat template, thinking off); the answer is the softmax over the option-label token logits at the answer position, read in fp32 from the last hidden state, divided by the model's per-type temperature (choice 1.2321 and noul 1.297, the 'train' fit; score 0.7558, the 'hard' fit, is not used by this suite; temperatures.json). No generation, no abstention outcome.",
+  "declared_capacity": {
+    "context_tokens": 262144,
+    "max_options": 588,
+    "question_types": [
+      "choice",
+      "noul"
+    ],
+    "max_options_detail": "the single-token label alphabet at the answer boundary of the Qwen3.8 tokenizer: A..Z, then the 562 two-letter uppercase strings that are one token there (AINode's own alphabet is 68 labels; wider questions use the published extended alphabet). The suite's widest question has 255 options, so no request is refused for width."
+  },
+  "engine_adapter": "submissions/jebadiah-27b/jebadiah_engine.py:JebadiahEngine (with mps_delta.py, used on Apple MPS only)"
+}

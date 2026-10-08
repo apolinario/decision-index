@@ -1,0 +1,97 @@
+catalog_id	dataset	track	run_id	status	questions	prompt_tokens	total_wall_ms	ms_per_1k_tokens
+56	PhishNChips phishing decisions	native-nine-question	calibration-v1:56:phish_0421	ok	9	2240	6541	2920
+56	PhishNChips phishing decisions	native-nine-question	calibration-v1:56:phish_0745	ok	9	2312	6659	2880
+57	MMLU-Pro	biology	candidates-v3:57:3152	ok	1	294	941	3200
+57	MMLU-Pro	biology	candidates-v3:57:3135	ok	1	224	792	3536
+57	MMLU-Pro	business	candidates-v3:57:584	ok	1	523	1510	2887
+57	MMLU-Pro	business	candidates-v3:57:77	ok	1	166	710	4280
+57	MMLU-Pro	chemistry	candidates-v3:57:4600	ok	1	231	833	3607
+57	MMLU-Pro	chemistry	candidates-v3:57:4089	ok	1	502	1460	2909
+57	MMLU-Pro	computer science	candidates-v3:57:10591	ok	1	328	1072	3269
+57	MMLU-Pro	computer science	candidates-v3:57:10741	ok	1	258	895	3470
+57	MMLU-Pro	economics	candidates-v3:57:7470	ok	1	221	795	3597
+57	MMLU-Pro	economics	candidates-v3:57:6919	ok	1	321	1030	3207
+57	MMLU-Pro	engineering	candidates-v3:57:11993	ok	1	529	1534	2900
+57	MMLU-Pro	engineering	candidates-v3:57:12083	ok	1	517	1537	2973
+57	MMLU-Pro	health	candidates-v3:57:6081	ok	1	284	974	3428
+57	MMLU-Pro	health	candidates-v3:57:6021	ok	1	155	627	4044
+57	MMLU-Pro	history	candidates-v3:57:4922	ok	1	540	1526	2826
+57	MMLU-Pro	history	candidates-v3:57:4982	ok	1	567	1634	2882
+57	MMLU-Pro	law	candidates-v3:57:1892	ok	1	480	1396	2909
+57	MMLU-Pro	law	candidates-v3:57:1436	ok	1	588	1706	2901
+57	MMLU-Pro	math	candidates-v3:57:8061	ok	1	164	698	4254
+57	MMLU-Pro	math	candidates-v3:57:8406	ok	1	205	771	3759
+57	MMLU-Pro	other	candidates-v3:57:5865	ok	1	305	978	3206
+57	MMLU-Pro	other	candidates-v3:57:5103	ok	1	138	604	4380
+57	MMLU-Pro	philosophy	candidates-v3:57:10828	ok	1	210	802	3819
+57	MMLU-Pro	philosophy	candidates-v3:57:10994	ok	1	256	854	3335
+57	MMLU-Pro	physics	candidates-v3:57:9421	ok	1	302	957	3168
+57	MMLU-Pro	physics	candidates-v3:57:9785	ok	1	238	813	3416
+57	MMLU-Pro	psychology	candidates-v3:57:2589	ok	1	170	662	3896
+57	MMLU-Pro	psychology	candidates-v3:57:2534	ok	1	159	637	4006
+58	BBH fixed-option tasks	boolean_expressions	candidates-v3:58:boolean_expressions:107	ok	1	85	477	5610
+58	BBH fixed-option tasks	boolean_expressions	candidates-v3:58:boolean_expressions:101	ok	1	85	462	5441
+58	BBH fixed-option tasks	causal_judgement	candidates-v3:58:causal_judgement:181	ok	1	297	943	3175
+58	BBH fixed-option tasks	causal_judgement	candidates-v3:58:causal_judgement:38	ok	1	265	880	3320
+58	BBH fixed-option tasks	date_understanding	candidates-v3:58:date_understanding:63	ok	1	285	902	3165
+58	BBH fixed-option tasks	date_understanding	candidates-v3:58:date_understanding:157	ok	1	288	900	3126
+58	BBH fixed-option tasks	disambiguation_qa	candidates-v3:58:disambiguation_qa:247	ok	1	163	661	4053
+58	BBH fixed-option tasks	disambiguation_qa	candidates-v3:58:disambiguation_qa:157	ok	1	165	656	3977
+58	BBH fixed-option tasks	formal_fallacies	candidates-v3:58:formal_fallacies:70	ok	1	168	670	3991
+58	BBH fixed-option tasks	formal_fallacies	candidates-v3:58:formal_fallacies:73	ok	1	175	660	3773
+58	BBH fixed-option tasks	geometric_shapes	candidates-v3:58:geometric_shapes:163	ok	1	319	980	3071
+58	BBH fixed-option tasks	geometric_shapes	candidates-v3:58:geometric_shapes:1	ok	1	263	889	3379
+58	BBH fixed-option tasks	hyperbaton	candidates-v3:58:hyperbaton:100	ok	1	113	550	4863
+58	BBH fixed-option tasks	hyperbaton	candidates-v3:58:hyperbaton:158	ok	1	141	589	4180
+58	BBH fixed-option tasks	logical_deduction_five_objects	candidates-v3:58:logical_deduction_five_objects:105	ok	1	292	941	3221
+58	BBH fixed-option tasks	logical_deduction_five_objects	candidates-v3:58:logical_deduction_five_objects:124	ok	1	212	799	3769
+58	BBH fixed-option tasks	logical_deduction_seven_objects	candidates-v3:58:logical_deduction_seven_objects:242	ok	1	391	1237	3164
+58	BBH fixed-option tasks	logical_deduction_seven_objects	candidates-v3:58:logical_deduction_seven_objects:115	ok	1	381	1159	3043
+58	BBH fixed-option tasks	logical_deduction_three_objects	candidates-v3:58:logical_deduction_three_objects:120	ok	1	165	691	4185
+58	BBH fixed-option tasks	logical_deduction_three_objects	candidates-v3:58:logical_deduction_three_objects:163	ok	1	202	757	3745
+58	BBH fixed-option tasks	movie_recommendation	candidates-v3:58:movie_recommendation:240	ok	1	164	647	3947
+58	BBH fixed-option tasks	movie_recommendation	candidates-v3:58:movie_recommendation:51	ok	1	167	665	3980
+58	BBH fixed-option tasks	navigate	candidates-v3:58:navigate:134	ok	1	116	550	4738
+58	BBH fixed-option tasks	navigate	candidates-v3:58:navigate:196	ok	1	147	629	4277
+58	BBH fixed-option tasks	penguins_in_a_table	candidates-v3:58:penguins_in_a_table:85	ok	1	290	950	3276
+58	BBH fixed-option tasks	penguins_in_a_table	candidates-v3:58:penguins_in_a_table:73	ok	1	244	856	3508
+58	BBH fixed-option tasks	reasoning_about_colored_objects	candidates-v3:58:reasoning_about_colored_objects:49	ok	1	335	1040	3103
+58	BBH fixed-option tasks	reasoning_about_colored_objects	candidates-v3:58:reasoning_about_colored_objects:6	ok	1	313	981	3135
+58	BBH fixed-option tasks	ruin_names	candidates-v3:58:ruin_names:49	ok	1	153	644	4210
+58	BBH fixed-option tasks	ruin_names	candidates-v3:58:ruin_names:224	ok	1	144	646	4485
+58	BBH fixed-option tasks	salient_translation_error_detection	candidates-v3:58:salient_translation_error_detection:8	ok	1	338	1054	3120
+58	BBH fixed-option tasks	salient_translation_error_detection	candidates-v3:58:salient_translation_error_detection:206	ok	1	344	1054	3064
+58	BBH fixed-option tasks	snarks	candidates-v3:58:snarks:19	ok	1	127	550	4331
+58	BBH fixed-option tasks	snarks	candidates-v3:58:snarks:151	ok	1	119	546	4590
+58	BBH fixed-option tasks	sports_understanding	candidates-v3:58:sports_understanding:141	ok	1	92	476	5172
+58	BBH fixed-option tasks	sports_understanding	candidates-v3:58:sports_understanding:166	ok	1	93	473	5084
+58	BBH fixed-option tasks	temporal_sequences	candidates-v3:58:temporal_sequences:45	ok	1	275	902	3279
+58	BBH fixed-option tasks	temporal_sequences	candidates-v3:58:temporal_sequences:64	ok	1	289	949	3284
+58	BBH fixed-option tasks	tracking_shuffled_objects_five_objects	candidates-v3:58:tracking_shuffled_objects_five_objects:153	ok	1	261	879	3367
+58	BBH fixed-option tasks	tracking_shuffled_objects_five_objects	candidates-v3:58:tracking_shuffled_objects_five_objects:195	ok	1	266	879	3306
+58	BBH fixed-option tasks	tracking_shuffled_objects_seven_objects	candidates-v3:58:tracking_shuffled_objects_seven_objects:189	ok	1	336	1037	3086
+58	BBH fixed-option tasks	tracking_shuffled_objects_seven_objects	candidates-v3:58:tracking_shuffled_objects_seven_objects:201	ok	1	347	1052	3033
+58	BBH fixed-option tasks	tracking_shuffled_objects_three_objects	candidates-v3:58:tracking_shuffled_objects_three_objects:35	ok	1	196	754	3848
+58	BBH fixed-option tasks	tracking_shuffled_objects_three_objects	candidates-v3:58:tracking_shuffled_objects_three_objects:131	ok	1	226	822	3636
+58	BBH fixed-option tasks	web_of_lies	candidates-v3:58:web_of_lies:2	ok	1	117	559	4782
+58	BBH fixed-option tasks	web_of_lies	candidates-v3:58:web_of_lies:82	ok	1	119	533	4481
+59	RAGTruth response-level hallucination	Data2txt	candidates-v3:59:10820	ok	1	1271	3206	2522
+59	RAGTruth response-level hallucination	Data2txt	candidates-v3:59:7142	ok	1	845	2269	2686
+59	RAGTruth response-level hallucination	QA	candidates-v3:59:16506	ok	1	462	1387	3002
+59	RAGTruth response-level hallucination	QA	candidates-v3:59:15462	ok	1	650	1819	2799
+59	RAGTruth response-level hallucination	Summary	candidates-v3:59:124	ok	1	505	1468	2907
+59	RAGTruth response-level hallucination	Summary	candidates-v3:59:1457	ok	1	2237	5543	2478
+61	HoVer claim verification	2-hop	candidates-v3:61:65441a27-843f-41e5-8d48-8d4cd6750ef7	ok	1	318	1019	3206
+61	HoVer claim verification	2-hop	candidates-v3:61:6e6a35df-75a9-4498-a552-6541a093351c	ok	1	342	1059	3096
+61	HoVer claim verification	3-hop	candidates-v3:61:8206cedf-8bf3-4eb2-b4ea-b291f0c63bce	ok	1	476	1427	2998
+61	HoVer claim verification	3-hop	candidates-v3:61:efc44d38-5666-4e01-92df-41fb788ff1b4	ok	1	373	1205	3230
+61	HoVer claim verification	4-hop	candidates-v3:61:d5749c55-4ad3-4e5a-adf8-d12643b44b86	ok	1	598	1682	2812
+61	HoVer claim verification	4-hop	candidates-v3:61:89fd401a-f704-495b-826f-faf2ee2831b7	ok	1	630	1765	2801
+62	When2Call MCQ	cannot_answer	candidates-v3:62:385b124b-8ca8-49e1-bff3-aad79e6ccd85	ok	1	650	1809	2782
+62	When2Call MCQ	cannot_answer	candidates-v3:62:0aab75b7-18f3-445a-9641-5c841d2c561a	ok	1	887	2357	2657
+62	When2Call MCQ	request_for_info	candidates-v3:62:09787f6d-fe4a-4897-8a05-26fc199e9880	ok	1	1146	2961	2584
+62	When2Call MCQ	request_for_info	candidates-v3:62:8c34095e-ae55-490e-b837-b8b188750caf	ok	1	627	1788	2852
+62	When2Call MCQ	tool_call	candidates-v3:62:519d7fa7-dbb2-4e9c-89e2-56b1a3acedcc	ok	1	1191	3098	2601
+62	When2Call MCQ	tool_call	candidates-v3:62:99749c6b-0671-444c-8750-85e0b77e9449	ok	1	2135	5362	2512
+64	New Yorker caption matching	matching-fold-0	candidates-v3:64:8a29361cfed60e6cc5ffe37fa89b53a6	ok	1	223	826	3702
+64	New Yorker caption matching	matching-fold-0	candidates-v3:64:31ee6599eb18f6b50a2e8b17c760283f	ok	1	256	845	3300

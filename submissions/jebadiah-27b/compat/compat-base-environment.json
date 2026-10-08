@@ -1,0 +1,63 @@
+{
+  "engine": "jebadiah_engine:JebadiahEngine",
+  "engine_options": {},
+  "model_source": {
+    "kind": "merged",
+    "model_repo": "frontier-infra/jebadiah-27b",
+    "model_revision": "a5d7c80a084ba470da5b16fbff72907d76a7a075",
+    "loaded_from": "local directory",
+    "inference_code": {
+      "ainode_prompt_verbatim.py": "61e81179cbe39fc02607cda64770e02a433356ff1ef0020bea893d610cb9e8f9",
+      "jebadiah_prompt.py": "35edd3fe1ec0b02c695f8b01efd6a0ed392f3ae4f726ade54861f8fa1eb77624",
+      "jebadiah_model.py": "2c5c90dcdb748064d7be855314772b4ab8bf9ac842b0f650554e23f20acfd360"
+    },
+    "inference_code_source": "https://huggingface.co/frontier-infra/jebadiah-27b/tree/a5d7c80a084ba470da5b16fbff72907d76a7a075/scripts",
+    "prompt_source_sha256": "d2660ebec28bd3f1704235bda88d24a397c1c62475e740519cb8ef2d08f25fdd",
+    "prompt_source_commit": "e5c089386e0239c9eb270eeb490d181722b8da5b",
+    "chat_template_sha256": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+    "chat_template_sha256_expected": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+    "chat_template_kwargs": {
+      "add_generation_prompt": true,
+      "enable_thinking": false,
+      "thinking": false
+    },
+    "temperatures": {
+      "choice": 1.2321,
+      "noul": 1.297,
+      "score": 1.1423
+    },
+    "fp32_candidate_logits": true,
+    "declared_context_tokens": 262144,
+    "declared_max_options": 588,
+    "ainode_label_alphabet": 68,
+    "device": "mps",
+    "dtype": "bfloat16",
+    "attn": "sdpa",
+    "batching": {
+      "max_batch": 8,
+      "batch_tokens": null,
+      "token_budget": 32768,
+      "prefix_cache": false,
+      "prefix_align": 64,
+      "pad_waste": 0.15,
+      "cuda_alloc_conf": null,
+      "mem_cap_gb": null
+    },
+    "delta_rule_kernel": "unit-lower-triangular inverse by block recursion (16x16 forward substitution) in place of solve_triangular (MPS only)",
+    "versions": {
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "python": "3.12.13"
+    }
+  },
+  "device": "mps",
+  "torch": "2.14.0",
+  "platform": "macOS-26.3.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "loaded_seconds": 13.58406487503089,
+  "frozen_corpus_sha256": null,
+  "rows_path": "base86.jsonl.gz (local; holds suite text)",
+  "runner_sha256": "f4c9f36c4c557f537f1d8184db7bf00c5a84d9f4f0aa67f8c06198cead25818d",
+  "latency": "In-process wall time of one request: AINode rendering, tokenization and one label-token logit read per question (questions batched by padded token budget, no prefix cache), device-synchronized; excludes model loading.",
+  "engine_options_note": "model= pointed at a local copy of frontier-infra/jebadiah-27b at a5d7c80a (sha256 per LFS file, bytes otherwise). The pinned revision 1c0d794f changes only temperatures.json (score 1.1423 -> 0.7558), jebadiah.json and the card; weights, scripts and the choice and noul temperatures used here are identical, so these results hold for 1c0d794f"
+}
