@@ -1,0 +1,6 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Shisa DE-2](https://huggingface.co/shisa-ai/shisa-de-2) | 0.3 | 59.01 | [scores.json](https://huggingface.co/datasets/shisa-ai/decision-index-0.3-shisa-de-2/blob/7b4db45ee5ce8b5413c323530e6cc095060fac58/runs/shisa-de-2-adaptive/scores.json) | `scripts.decision_index_engine:ShisaDE2Engine` from [shisa-ai/shisa-de](https://github.com/shisa-ai/shisa-de/tree/d172d49) @ `d172d49` (SDK v0.4.0), `policy=repeat-think` (question written twice; thinks up to 1,024 tokens when top probability < 0.7 and ≤ 26 options), behind vLLM 0.30.0 with no extra options, temperature 1, no calibration; runner and scorer `62d2f51` | 2× NVIDIA RTX PRO 6000 Blackwell 96 GB, one server per GPU; one sequential client shard per server | 256 options per question, 262,144-token context; no truncation; 0 unsupported |
+| [Shisa DE-2 (repeat)](https://huggingface.co/shisa-ai/shisa-de-2) | 0.3 | 57.57 | [scores.json](https://huggingface.co/datasets/shisa-ai/decision-index-0.3-shisa-de-2/blob/7b4db45ee5ce8b5413c323530e6cc095060fac58/runs/shisa-de-2-repeat/scores.json) | the same engine and commit, `policy=repeat` (question written twice; nothing generated) | the same | the same |
