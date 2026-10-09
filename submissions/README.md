@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [AnyJev L0 · Gemma-4-31B](https://github.com/MorrisZJ/anyjev-l0-gemma) | 0.3 | 59.79 | [scores.json](https://huggingface.co/datasets/morriszjm/decision-index-results/blob/7f4ce4f187d2bf212466c9283acbfd2dd8c6a12a/runs/anyjev-l0-gemma-4-31b/scores.json) | `anyjev_engine:AnyJevEngine` from [MorrisZJ/anyjev-l0-gemma](https://github.com/MorrisZJ/anyjev-l0-gemma/tree/50476e9915944d26bba628aca24d9bb46b78ea1e) @ `50476e9` (anyjev 0.3.0; `level=L0 max_rotations=2 big_rotations=2`), against vLLM 0.29.0 serving [google/gemma-4-31B-it](https://huggingface.co/google/gemma-4-31B-it) @ `842da37` (FP8 at load, prefix caching, processed logprobs); runner and scorer `9eb2dbe` | NVIDIA H100 NVL 94 GB: identical FP8 servers (three with tensor parallel 2, one on a single GPU), group-whole shards, several client processes per server | prompts over the server window (131,072 tokens; 32,768 on the single-GPU server) and choices over 260 options are refused; no truncation; 0 unsupported |
