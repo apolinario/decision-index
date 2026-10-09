@@ -1,14 +1,14 @@
-# CoCo-Decision-4B
+# CoCo-Decision-4B 2.0.0
 
-[corners-ai/CoCo-Decision-4B](https://huggingface.co/corners-ai/CoCo-Decision-4B) is a decision model built on `Qwen/Qwen3.5-4B` with two LoRA stages, both merged into the published text-only bf16 weights. The second stage was trained on public train splits of Decision Index source datasets. It is read out in one forward pass per question from the option-label logits, with no generation.
+[corners-ai/CoCo-Decision-4B](https://huggingface.co/corners-ai/CoCo-Decision-4B) is a decision model built on `Qwen/Qwen3.5-4B` with LoRA stages merged into the published text-only bf16 weights. The second stage was trained on public train splits of Decision Index source datasets. It is read out in one forward pass per question from the option-label logits, with no generation.
 
 | | |
 |---|---|
-| Decision Index 0.3 (public) | **47.80** (raw 60.78, breadth skill 45.92) |
-| Area skill | knowledge 28.6 · language 58.5 · retrieval 51.4 · tools 64.5 · arts 32.0 |
-| Requests | 140,178 scoreable, all `ok`; none unsupported, no errors |
-| Results | [corners-ai/CoCo-Decision-4B-decision-index](https://huggingface.co/datasets/corners-ai/CoCo-Decision-4B-decision-index/tree/64be2c17072cfd853f6f59cdc4448601cd921396/runs/CoCo-Decision-4B) (`--compact`, no suite text) |
-| Latency on the run hardware | median 26.1 ms, mean 92.1 ms, p95 302 ms (RTX 5090, one sequential client) |
+| Decision Index 0.3 (public) | **51.93** (raw 63.87, breadth skill 49.77) |
+| Area skill | knowledge 31.1 · language 61.5 · retrieval 58.4 · tools 71.1 · arts 32.9 |
+| Requests | 140,620 scoreable, all `ok`; none unsupported, no errors |
+| Results | [corners-ai/CoCo-Decision-4B-decision-index](https://huggingface.co/datasets/corners-ai/CoCo-Decision-4B-decision-index/tree/bf016abc576707bc5ab8a192f7684afe4879298c/runs/CoCo-Decision-4B-2.0.0) (`--compact`, no suite text) |
+| Latency on the run hardware | median 26.1 ms, mean 92.2 ms, p95 302.5 ms (RTX 5090, one sequential client) |
 
 ## Running it
 
@@ -21,7 +21,7 @@ cat > di.toml <<'TOML'
 [backend]
 name = "semif"
 model = "corners-ai/CoCo-Decision-4B"
-revision = "36a981d44065346b2732e057212bb5c3fc9c5029"
+revision = "949f1080f3aa58d61481e16456919c81b7b78207"
 quant = "bf16"
 max_state_tokens = 32768
 TOML
@@ -31,8 +31,6 @@ python -m decision_index pipeline --edition 0.3 --engine http --compact \
 ```
 
 That is the fastest path the code supports: one sequential client, no order ensembling, no prefix cache.
-
-During the submitted run the second-stage LoRA was applied at load on top of the merged first-stage weights. The Hub `v1.0.0` weights are that LoRA merged in (the 80 merged tensors are bit-identical to PEFT `merge_and_unload`), so outputs can differ only by bf16 rounding.
 
 ## Declared limits
 
