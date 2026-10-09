@@ -5,7 +5,7 @@ the predicted option's position in `criteria` with the gold option's: a model th
 the option listed right after the right one shows a gold+1 rate well above its gold-1 rate,
 which serves as the control. See docs/engines.md, "Option pooling in causal towers".
 
-  python scripts/check_next_option_bias.py runs/NAME/results.jsonl[.gz] [--suite-dir suite-0.2]
+  python scripts/check_next_option_bias.py runs/NAME/results.jsonl[.gz] [--suite-dir suite-0.3]
 
 Standard library only. Reads the suite rows for `expected`, joined on run_id.
 """
@@ -28,7 +28,7 @@ def lines(path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("results")
-    ap.add_argument("--suite-dir", default="suite-0.2")
+    ap.add_argument("--suite-dir", default="suite-0.3")
     ap.add_argument("--min-options", type=int, default=20)
     a = ap.parse_args()
 

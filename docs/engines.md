@@ -69,7 +69,7 @@ To check a run, compare how often the prediction is the option after the gold on
 it is the option before it (the control):
 
 ```bash
-python scripts/check_next_option_bias.py runs/NAME/results.jsonl.gz --suite-dir suite-0.2
+python scripts/check_next_option_bias.py runs/NAME/results.jsonl.gz --suite-dir suite-0.3
 ```
 
 We found this while running our own submission. On one early-exit Qwen3.5-4B model, the same
@@ -84,6 +84,9 @@ weights with the separator and key pooled in, then excluded:
 
 The fix is to pool only the option's own tokens (its text after the key). No retraining was
 needed for the gain above, though a head trained under the old pooling may be worth refitting.
+
+Our later 0.3 runs, which pool only the options' own tokens, pass the check: on CLINC150+OOS,
+gold+1 is 0.004 and gold-1 0.020 (RSI-Jev v6.1-VL 4B), and 0.003 and 0.007 (v6.1-VL 27B).
 
 ## The 0.2 board and this kit
 
