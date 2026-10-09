@@ -56,6 +56,38 @@ class MyEngine(Engine):
 
 Run it with `--engine my_package.my_module:MyEngine`. Do not truncate, do not drop options, do not adapt the prompt per benchmark; refuse instead.
 
+## Option pooling in causal towers
+
+Models that read the prompt with a causal (left-to-right) tower and then score each option from
+a vector pooled over that option's span have a trap on long numbered lists. If an option's span
+starts with the separator and key that open it (`"\n- option_N:"`), those tokens are computed
+right after the previous option's text and carry it. The pooled vector for option N then leans
+toward option N-1, and the model drifts to **the option listed right after the right one**. Short
+option lists hide it; CLINC150+OOS (151 options) and BANKING77 (77) show it.
+
+To check a run, compare how often the prediction is the option after the gold one with how often
+it is the option before it (the control):
+
+```bash
+python scripts/check_next_option_bias.py runs/NAME/results.jsonl.gz --suite-dir suite-0.3
+```
+
+We found this while running our own submission. On one early-exit Qwen3.5-4B model, the same
+weights with the separator and key pooled in, then excluded:
+
+| | accuracy | gold+1 | gold-1 |
+|---|---:|---:|---:|
+| CLINC150+OOS, separator and key pooled | 0.347 | 0.416 | 0.001 |
+| CLINC150+OOS, own tokens only | 0.769 | 0.006 | 0.037 |
+| BANKING77, separator and key pooled | 0.626 | 0.068 | 0.007 |
+| BANKING77, own tokens only | 0.676 | 0.001 | 0.017 |
+
+The fix is to pool only the option's own tokens (its text after the key). No retraining was
+needed for the gain above, though a head trained under the old pooling may be worth refitting.
+
+Our later 0.3 runs, which pool only the options' own tokens, pass the check: on CLINC150+OOS,
+gold+1 is 0.004 and gold-1 0.020 (RSI-Jev v6.1-VL 4B), and 0.003 and 0.007 (v6.1-VL 27B).
+
 ## The 0.2 board and this kit
 
 Every entrant on the 0.2 board was run with its author's own inference code, pinned by the lab. This kit does not vendor those harnesses. What it can reproduce directly:
