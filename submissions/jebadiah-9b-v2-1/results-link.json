@@ -1,0 +1,11 @@
+{
+  "repo": "frontier-infra/jebadiah-v2-1-decision-index-results",
+  "revision": "940df9b1de0be00c24ea9ad5d8ca0cb87227ca4c",
+  "path": "runs/jebadiah-9b-v2-1-v03",
+  "source_result_revision": "f92b3d7250a0f02f93b4cce1ce34967d0cf87296",
+  "source_weights_revision": "9e69926a007dd636e82d33485dcd48f9751c4248",
+  "public_index": 47.2,
+  "previous_public_index": 44.09,
+  "scored_ok": 140178,
+  "contains_question_text": false
+}

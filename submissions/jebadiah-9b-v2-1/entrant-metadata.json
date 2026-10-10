@@ -1,0 +1,39 @@
+{
+  "_note": "Draft for the maintainer, in the shape of the Space's data/methodology.json entrants.entrants records (the lab's entrant_metadata.py is not public). Values are what this run loaded; the maintainer's own run on the RTX PRO 6000 is authoritative.",
+  "engine": "jebadiah-9b-v2-1",
+  "name": "Jebadiah 9B v2.1",
+  "variant": null,
+  "kind": "merged LoRA",
+  "technique": "autoregressive",
+  "technique_name": "autoregressive",
+  "served_params": 8953803264,
+  "served_params_detail": "7,936,684,544 language-model parameters plus the 1,017,118,720-parameter untied lm_head, loaded as Qwen3_5ForCausalLM. The 456,010,480 vision parameters and 243,290,624 multi-token-prediction parameters in the checkpoint are not loaded. The rank-16 LoRA has 43,278,336 parameters in 248 merged linear pairs and adds none at serve time. Counts were read from pinned safetensors headers.",
+  "params_from_name": false,
+  "params_estimated": false,
+  "trained_params": 43278336,
+  "base_model": "Qwen/Qwen3.5-9B",
+  "base_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "base_chain": [
+    "Qwen/Qwen3.5-9B"
+  ],
+  "weights_repo": "frontier-infra/jebadiah-9b-v2-1",
+  "weights_revision": "de19e80e18aa23420be410d54fdee435587eaad3",
+  "served_checkpoint": "frontier-infra/jebadiah-9b-v2-1",
+  "model_url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1",
+  "code_url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1/tree/de19e80e18aa23420be410d54fdee435587eaad3/scripts",
+  "training_code_url": "https://github.com/getainode/jebadiah",
+  "serving_code_url": "https://github.com/getainode/ainode",
+  "org_url": "https://huggingface.co/frontier-infra",
+  "license": "Apache-2.0 (weights and base)",
+  "readout": "One forward pass per question, thinking off; fp32 candidate-label logits and the shipped v2.1 per-type temperatures. No generation and no abstention.",
+  "declared_capacity": {
+    "context_tokens": 262144,
+    "max_options": 588,
+    "question_types": [
+      "choice",
+      "noul"
+    ],
+    "max_options_detail": "the single-token label alphabet at the answer boundary of the Qwen3.8 tokenizer: A..Z, then the 562 two-letter uppercase strings that are one token there (AINode's own alphabet is 68 labels; wider questions use the published extended alphabet). The suite's widest question has 255 options, so no request is refused for width."
+  },
+  "engine_adapter": "submissions/jebadiah-9b-v2-1/jebadiah_engine.py:JebadiahEngine"
+}
