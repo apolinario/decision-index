@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Wald-26B-A4B](https://huggingface.co/org2ai/Wald-26B-A4B/tree/bc28ab1e074cdf963d1186e0f0956c96a7ee8b70) | 0.3 | 62.30 | [scores.json](https://huggingface.co/datasets/org2ai/Wald-26B-A4B-decision-index-results/blob/7629ef1d50aad82149d4df0786cc99d791da2dfb/runs/wald-26b-a4b-05901-c33-onepass/scores.json) | Kit `http` engine against the `/v1/systemone` reader `reference/eval/systemone_vllm.py` started by `run.sh` from [org2ai/Wald-26B-A4B](https://huggingface.co/org2ai/Wald-26B-A4B/tree/bc28ab1e074cdf963d1186e0f0956c96a7ee8b70) @ `bc28ab1` (option-letter logits through the Gemma chat template, one pass, T = 1, `--prompt-format plain`, > 26 options: knockout) against vLLM 0.30.0 BF16 (CUDA graphs, `--language-model-only`); runner and scorer `62d2f51` | 4 × NVIDIA RTX PRO 6000 96 GB, one replica per GPU, 40 concurrent requests each | 131,072-token context; any option count (> 26: knockout); no truncation; 0 unsupported |
