@@ -1,8 +1,8 @@
-"""Jebadiah 27B (merged bf16 chat checkpoint on Qwen3.8-27B, thinking off) as a Decision Index engine.
+"""Jebadiah 9B (merged bf16 chat checkpoint on Qwen3.5-9B, thinking off) as a Decision Index engine.
 
-The model ships merged weights (the LoRA folded into Qwen/Qwen3.8-27B), so it loads directly with no
+The model ships merged weights (the LoRA folded into Qwen/Qwen3.5-9B), so it loads directly with no
 base+LoRA step. It is read with its own published inference code: the `scripts/` directory of
-frontier-infra/jebadiah-27b-v2-1 at a pinned revision (jebadiah_model.py, jebadiah_prompt.py,
+frontier-infra/jebadiah-9b-v2-1 at a pinned revision (jebadiah_model.py, jebadiah_prompt.py,
 ainode_prompt_verbatim.py), imported from the Hub snapshot as-is. The engine refuses to load if the
 chat template, the prompt source or the chat template kwargs differ from the model's
 prompt_contract.json. Nothing in the prompt, the label alphabet, the logit read or the temperatures
@@ -42,8 +42,8 @@ import sys
 
 from decision_index.engines import Engine, Unsupported
 
-MODEL_REPO = "frontier-infra/jebadiah-27b-v2-1"
-MODEL_REVISION = "e38b48b82bcda8943d0958072c042c5867284838"
+MODEL_REPO = "frontier-infra/jebadiah-9b-v2-1"
+MODEL_REVISION = "de19e80e18aa23420be410d54fdee435587eaad3"
 SCRIPTS = ("ainode_prompt_verbatim.py", "jebadiah_prompt.py", "jebadiah_model.py")
 
 
@@ -116,7 +116,7 @@ class _PrefixLayer:
 
 
 class JebadiahEngine(Engine):
-    name = "jebadiah-27b"
+    name = "jebadiah-9b-v2-1"
 
     def __init__(self, model=MODEL_REPO, revision=MODEL_REVISION, device=None, dtype=None, attn="sdpa", temperatures=True,
                  max_tokens=None, token_budget=32768, max_batch=8, mps_fast_delta=True, prefix_cache=False,
@@ -172,7 +172,7 @@ class JebadiahEngine(Engine):
         if self.prefix_cache:
             self.latency = self.latency_prefix
 
-        # the 27B is a merged checkpoint: the LoRA is already folded into the weights, so the model's own loader
+        # the 9B is a merged checkpoint: the LoRA is already folded into the weights, so the model's own loader
         # reads it directly (as its scripts/decide_standalone.py does) and no adapter is applied
         tok = jm.load_tokenizer(model_dir)
         contract = {}
