@@ -1,18 +1,18 @@
-# CoCo-Decision-4B 2.1.0
+# CoCo-Decision-4B 2.2.0
 
-[corners-ai/CoCo-Decision-4B](https://huggingface.co/corners-ai/CoCo-Decision-4B) is a decision model built on `Qwen/Qwen3.5-4B` with LoRA stages merged into the published text-only bf16 weights. The later stages were trained on public train splits of Decision Index source datasets. Version 2.1.0 is read out in one forward pass per question from a readout head over the option-letter tokens, with bidirectional full attention and no generation.
+[corners-ai/CoCo-Decision-4B](https://huggingface.co/corners-ai/CoCo-Decision-4B) is a decision model built on `Qwen/Qwen3.5-4B` with LoRA stages merged into the published text-only bf16 weights. The later stages were trained on public train splits of Decision Index source datasets. Version 2.2.0 is read out in one forward pass per question from a readout head over the option-letter tokens, with bidirectional full attention and no generation.
 
 | | |
 |---|---|
-| Decision Index 0.3 (public) | **53.93** (raw 65.19, breadth skill 51.99) |
-| Area skill | knowledge 33.3 · language 63.2 · retrieval 57.1 · tools 75.0 · arts 38.8 |
+| Decision Index 0.3 (public) | **55.05** (raw 66.13, breadth skill 53.08) |
+| Area skill | knowledge 34.4 · language 63.0 · retrieval 59.0 · tools 77.5 · arts 39.0 |
 | Requests | 140,620 requests (140,178 scoreable, 442 excluded), all scoreable `ok`; none unsupported, no errors |
-| Results | [corners-ai/CoCo-Decision-4B-decision-index](https://huggingface.co/datasets/corners-ai/CoCo-Decision-4B-decision-index/tree/96c5635ccef0c986b451ef715e8ee34ebfb9efb0/runs/CoCo-Decision-4B-2.1.0) (`--compact`, no suite text) |
-| Latency on the run hardware | median 25.6 ms, mean 93.2 ms, p95 299.6 ms (RTX 5090, one sequential client) |
+| Results | [corners-ai/CoCo-Decision-4B-decision-index](https://huggingface.co/datasets/corners-ai/CoCo-Decision-4B-decision-index/tree/b8f14958afce3bb1a8e02f7d22a5ab3e53978b7a/runs/CoCo-Decision-4B-2.2.0) (`--compact`, no suite text) |
+| Latency on the run hardware | median 25.6 ms, mean 93.2 ms, p95 299.7 ms (RTX 5090, one sequential client) |
 
 ## Running it
 
-The server is `omj serve` from [iamupd/oh-my-jev](https://github.com/iamupd/oh-my-jev) at commit `292dc1b`, semif backend in bf16, no calibration file. The submitted run applied the 2.1.0 LoRA adapter to the public 1.0.0 weights at load time; the merged weights on the Hub gave the same top choice with a maximum logit difference of 0.05 on 3 inputs, and the full suite was not re-run on them.
+The server is `omj serve` from [iamupd/oh-my-jev](https://github.com/iamupd/oh-my-jev) at commit `292dc1b`, semif backend in bf16, no calibration file. The submitted run applied the 2.2.0 LoRA adapter to the public 1.0.0 weights at load time; the merged weights on the Hub gave the same top choice with a maximum logit difference of 0.04 on 3 inputs, and the full suite was not re-run on them.
 
 ```sh
 git clone https://github.com/iamupd/oh-my-jev && cd oh-my-jev && git checkout 292dc1b
@@ -21,7 +21,7 @@ cat > di.toml <<'TOML'
 [backend]
 name = "semif"
 model = "corners-ai/CoCo-Decision-4B"
-revision = "d17348beec75afbba9feb317163e7738a9c9439b"
+revision = "1289a0704a87abc1ed9e24d24cdcdbdaeb4f183a"
 quant = "bf16"
 max_state_tokens = 32768
 TOML
