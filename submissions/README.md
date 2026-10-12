@@ -1,0 +1,6 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [OneJev1.5-0.8B](https://huggingface.co/OmniJev/OneJev1.5-0.8B/tree/696c957c5daae03267792619fcae8092c0f97fcd) | 0.3 | 42.71 | [scores.json](https://huggingface.co/datasets/OmniJev/onejev-decision-index-results/blob/92539a492b10f5006e658d4d19fbc804eef3ed4c/runs/onejev1.5-0.8b/scores.json) | [`decision_index_engine:QevEngine`](https://github.com/OmniJev/OneJev/blob/a3e6693cb045908ea6c5ed54d0970b69f6c676d6/benchmarks/decision_index_engine.py) @ `a3e6693`, bf16 weights, float32 label head, `max_branch_tokens=131072`, `fork_token_budget=32000`; runner and scorer `9eb2dbe` | 3x H200, one process per GPU over 3 shards, one request at a time | 131,072 tokens per question branch; none reached, nothing truncated, none unsupported |
+| [OneJev1.5-9B](https://huggingface.co/OmniJev/OneJev1.5-9B/tree/d3418d8a029f7532bc188657d580155b2588ceb7) | 0.3 | 59.03 | [scores.json](https://huggingface.co/datasets/OmniJev/onejev-decision-index-results/blob/92539a492b10f5006e658d4d19fbc804eef3ed4c/runs/onejev1.5-9b/scores.json) | same engine and settings @ `a3e6693`; runner and scorer `9eb2dbe` | 3x H200, one process per GPU over 3 shards, one request at a time | same |
