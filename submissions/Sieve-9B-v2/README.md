@@ -1,9 +1,12 @@
-# Sieve-9B-Plus evaluation harness
+# Sieve-9B-v2 evaluation harness
 
-Sieve-9B-Plus (`sthanika-ai/Sieve-9B-Plus` at `4207758b912a29d1c856b98c551fc2c7af2cb025`) is a LoRA adapter plus a
+Sieve-9B-v2 (`sthanika-ai/Sieve-9B-v2` at `02d213693cc79d0fc02095cc1b07c959b8b4486d`) is a LoRA adapter plus a
 pointer head on `Qwen/Qwen3.5-9B` (`c2022362`). It reads the state once and scores every supplied option directly; it
 generates nothing. The engine is `sieve.decision_index_engine:SieveEngine` from
 [github.com/sthanika-ai/Sieve](https://github.com/sthanika-ai/Sieve) at `e632700ddc2f25336bf9beace1ef32765db3e6df`.
+
+The model was first published as Sieve-9B-Plus. Only the name changed: the weights are the ones that were run,
+and the published run files keep the old name (`runs/Sieve-9B-Plus/` in the results dataset).
 
 ## Run
 
@@ -16,8 +19,8 @@ pip install --no-build-isolation causal-conv1d==1.7.0
 pip install --no-deps triton==3.7.1
 pip install --no-deps "sieve-decisions @ git+https://github.com/sthanika-ai/Sieve@e632700ddc2f25336bf9beace1ef32765db3e6df"
 pip install --no-deps "decision-index @ git+https://github.com/apolinario/decision-index@62d2f51"
-hf download sthanika-ai/Sieve-9B-Plus --revision 4207758b912a29d1c856b98c551fc2c7af2cb025 --local-dir Sieve-9B-Plus
-python -m decision_index pipeline --engine sieve.decision_index_engine:SieveEngine --option model=Sieve-9B-Plus --out runs/Sieve-9B-Plus
+hf download sthanika-ai/Sieve-9B-v2 --revision 02d213693cc79d0fc02095cc1b07c959b8b4486d --local-dir Sieve-9B-v2
+python -m decision_index pipeline --engine sieve.decision_index_engine:SieveEngine --option model=Sieve-9B-v2 --out runs/Sieve-9B-v2
 ```
 
 The backbone is downloaded at its pinned revision on first use, and about 20 GB of GPU memory is needed.
