@@ -1,16 +1,18 @@
-# Sieve-2B-Plus evaluation harness
+# Sieve-2B-v2 evaluation harness
 
-Sieve-2B-Plus (`sthanika-ai/Sieve-2B-Plus` at `ce762346cd0dd6581532b4e9bb19ca1bccd25b8c`) is a LoRA adapter (r 64, α 128, on the attention, MLP and Gated DeltaNet projections) plus a scalar scorer head on `Qwen/Qwen3.5-2B-Base` at `b1485b2f`, truncated to the base model's first 16 of 24 blocks: **1.47B parameters run** (45.9M trained). The engine, `sieve_engine:SieveEngine`, ships in the model repo.
+Sieve-2B-v2 (`sthanika-ai/Sieve-2B-v2` at `b28bd2a6d284a0ce712bed7f6f098e714d3181d2`) is a LoRA adapter (r 64, α 128, on the attention, MLP and Gated DeltaNet projections) plus a scalar scorer head on `Qwen/Qwen3.5-2B-Base` at `b1485b2f`, truncated to the base model's first 16 of 24 blocks: **1.47B parameters run** (45.9M trained). The engine, `sieve_engine:SieveEngine`, ships in the model repo.
+
+The model was first published as Sieve-2B-Plus. Only the name changed: the weights and engine are the ones that were run, and the published run files keep the old name (`runs/Sieve-2B-Plus/` in the results dataset).
 
 ## Run
 
 ```sh
 pip install "torch==2.8.0" "transformers==5.17.0" "peft==0.21.0" safetensors huggingface_hub
 pip install flash-linear-attention==0.5.2 causal-conv1d==1.7.0   # fast kernels; the run used them
-hf download sthanika-ai/Sieve-2B-Plus --revision ce762346cd0dd6581532b4e9bb19ca1bccd25b8c --local-dir Sieve-2B-Plus
-PYTHONPATH=Sieve-2B-Plus python -m decision_index run --edition 0.3 --engine sieve_engine:SieveEngine \
-    --option sieve_dir=Sieve-2B-Plus --option max_batch_tokens=49152 --option mem_fraction=0.16 --out runs/Sieve-2B-Plus
-python -m decision_index score --edition 0.3 --results runs/Sieve-2B-Plus/results.jsonl
+hf download sthanika-ai/Sieve-2B-v2 --revision b28bd2a6d284a0ce712bed7f6f098e714d3181d2 --local-dir Sieve-2B-v2
+PYTHONPATH=Sieve-2B-v2 python -m decision_index run --edition 0.3 --engine sieve_engine:SieveEngine \
+    --option sieve_dir=Sieve-2B-v2 --option max_batch_tokens=49152 --option mem_fraction=0.16 --out runs/Sieve-2B-v2
+python -m decision_index score --edition 0.3 --results runs/Sieve-2B-v2/results.jsonl
 ```
 
 The base model downloads on first use; about 14 GB of GPU memory is needed at peak. `mem_fraction=0.16` caps the process at about 12.7 GiB on an 80 GB card (use about 0.134 for the same cap on a 96 GB card). For the fastest single-request path, drop both options.
