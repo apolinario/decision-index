@@ -1,21 +1,22 @@
 # Sieve-31B evaluation harness
 
-Sieve-31B (`sthanika-ai/Sieve-31B` at `29de6dd7e489ee01f05e35590494adf9400685a2`) is a LoRA adapter (rank 128) on `google/gemma-4-31B-it` (`842da37`).
+Sieve-31B (`sthanika-ai/Sieve-31B` at `14db2e44d5d1596ca613abdbb516fd60e5839714`) is a LoRA adapter (rank 128) on `google/gemma-4-31B-it` (`842da37`).
 It reads the prompt once and returns a probability for every supplied option. It generates nothing and has no thinking
-mode. The engine is `sieve31b.engine:Sieve31BEngine`, which is part of the model repo.
+mode. The engine is `sieve.decision_index_engine:SieveEngine` from [github.com/sthanika-ai/Sieve](https://github.com/sthanika-ai/Sieve) at `304abb2`:
+the engine below (`sieve31b.engine:Sieve31BEngine`, then in the model repo), moved there unchanged.
 
 ## Run
 
 ```sh
 pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu128
 pip install transformers==5.17.0 peft==0.21.0 accelerate==1.15.0 huggingface_hub==1.32.0 "numpy<2" jinja2 httpx
-pip install --no-deps decider-ai==1.6.0
+pip install --no-deps decider-ai==1.6.0 "sieve-decisions @ git+https://github.com/sthanika-ai/Sieve@304abb2c5c5c22bffda0bf7c0d39d1d8aa59af01"
 pip install --no-deps "decision-index @ git+https://github.com/apolinario/decision-index@62d2f51"
-hf download sthanika-ai/Sieve-31B --revision 29de6dd7e489ee01f05e35590494adf9400685a2 --local-dir Sieve-31B
-PYTHONPATH=Sieve-31B python -m decision_index pipeline --engine sieve31b.engine:Sieve31BEngine --out runs/Sieve-31B
+hf download sthanika-ai/Sieve-31B --revision 14db2e44d5d1596ca613abdbb516fd60e5839714 --local-dir Sieve-31B
+python -m decision_index pipeline --engine sieve.decision_index_engine:SieveEngine --option model=Sieve-31B --out runs/Sieve-31B
 ```
 
-- **Defaults:** the engine needs no options. It loads the base model at its pinned revision and the adapter from the
+- **Defaults:** besides `model`, the engine needs no options. It loads the base model at its pinned revision and the adapter from the
   downloaded folder.
 - **Memory:** the GPU held about 83 GB during our run, including PyTorch's cache, so it fits one 96 GB RTX PRO 6000.
 - **Smaller GPUs:** `--option split='{"0": "40GiB", "1": "40GiB"}'` spreads the model over two GPUs.
