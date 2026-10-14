@@ -48,4 +48,5 @@ python -m decision_index run --engine http --option base_url=http://127.0.0.1:87
 ## Training data overlap
 
 Training rows were checked against the Decision Index 0.3 public suite before training: a row was rejected if it is an exact
-copy of a suite item or shares at least half of its normalized text with one.
+copy of a suite item or shares at least half of its normalized text with one. No benchmark test split was used for
+training.
