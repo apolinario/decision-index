@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Wald-Q4B v2.1](https://huggingface.co/org2ai/Wald-4B/tree/5fbae66abfca1fe8c60c5a0877d12593e6dd1854) | 0.3 | 60.05 | [scores.json](https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results/blob/8deab0b1cf157b8a590ce7298e21b2dd44ee04dc/runs/wald-q4b-v21-056A0-auto07/scores.json) | Engine API adapter `evaluation/v2/code/di03_native_auto_engine.py` from [org2ai/Wald-4B](https://huggingface.co/org2ai/Wald-4B/tree/5fbae66abfca1fe8c60c5a0877d12593e6dd1854) @ `5fbae66` (native option-letter reader, frozen calibration `a0f72cd2`, Auto 0.7, think budget 512, `repeat_state_plain`) against vLLM 0.30.0 BF16; same reader packaged as `/v1/systemone` (`wald-serve-native-vision`); runner and scorer `62d2f51` | 6 × NVIDIA RTX PRO 6000 96 GB, one replica per GPU, 128 concurrent requests each | 131,072-token context; any option count (> 26: knockout); no truncation; 0 unsupported |
