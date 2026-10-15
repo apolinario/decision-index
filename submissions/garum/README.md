@@ -39,6 +39,8 @@ python -m decision_index run --engine garum_engine:GarumEngine \
 
 - **Shards:** the full public suite ran as 8 row shards (row i to shard i mod 8), each on one GPU: 3 on NVIDIA H100 80GB HBM3
   (shards 0, 1 and 7) and 5 on NVIDIA RTX PRO 6000 Blackwell (shards 2 to 6).
+- **Mixed hardware:** bf16 results differ slightly between the two GPU types. For Garas, re-scoring its RTX shards on H100 flipped
+  0.85% of 120,556 scored decisions and left the index unchanged at the kit's 0.01 precision; we have not repeated that check for garum.
 - **Model files:** the runner's `adapter` option pointed at a local copy of the model repository's files (adapter, head and code);
   `environment.json` records the engine files' md5s, which match the repository.
 - **Runner:** each shard used the unchanged kit runner with resume.
