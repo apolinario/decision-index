@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [jev-brain · Gemma-4-31B](https://github.com/wcole3/jev-brain/tree/di-0.3-gemma-4-31b-r2) (`google/gemma-4-31B-it` @ `842da37`, bf16, stock weights; no training) | 0.3 | 61.69 | [scores.json](https://huggingface.co/datasets/wcole3/jev-brain-decision-index/blob/abac14810b6b6e6621f7327e289b21f2d87e9ebf/runs/jev-brain-gemma-4-31b/scores.json) | the kit's `http` engine (`model=jev-latest`), unmodified runner (kit `87d4650`, then `9eb2dbe` for the resumed rows), against the jev-brain `/v1/systemone` gateway, tag `di-0.3-gemma-4-31b-r2` (`8c79f44`), `make fetch up PROFILE=gemma-4-31b` (vLLM 0.30.0, bf16, layout `header`, one option order) | One NVIDIA RTX PRO 6000 Blackwell 96 GB; one server, 4 kit runners | Up to 65,536 tokens per decision request and 255 options per question; longer requests get HTTP 422 (recorded as `unsupported`), nothing is truncated; no public request reaches either limit |
