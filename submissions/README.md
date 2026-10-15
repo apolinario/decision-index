@@ -1,0 +1,3 @@
+# Submissions
+
+- **vision** · jev-vision-27b · model [`e12ex2/jev-vision-27b`](https://huggingface.co/e12ex2/jev-vision-27b) @ `483df76` · results [`e12ex2/jev-vision-27b-results`](https://huggingface.co/datasets/e12ex2/jev-vision-27b-results/tree/44be286ca6fb6efdc869b17e775a9047c9a33712/runs/vision-jev-vision-27b) `runs/vision-jev-vision-27b/` · public vision index 73.06, 12,210/12,210 answered · engine `decide` (`protocol=decisions`) against the model's `/v1/decisions` server, `--perms 1`, bf16 · kit `f5a6e4f` · 1× H100 80GB · native resolution capped at 1,638,400 px · details: [jev-vision-27b-vision/README.md](jev-vision-27b-vision/README.md)
