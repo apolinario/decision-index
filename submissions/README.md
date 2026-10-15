@@ -1,0 +1,17 @@
+# Decision Index submissions
+
+| Model | Model revision | Public 0.3 results | Engine / inference revision | Hardware and settings |
+| --- | --- | --- | --- | --- |
+| [JEV Ettin 400M](https://huggingface.co/Elfsong/jev-ettin-400m-20261013-v0) (395,834,369 parameters) | `fa19b65df304893b43390780f4ab4eac5a23d221` | [scores.json](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/blob/a4022fffc96d13d07760ff16eeccbfca0ae7c046/runs/jev-ettin-20261013-v0/scores.json): **14.11**, complete | `jev_encoder.engine:EncoderEngine`; [code](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/tree/a4022fffc96d13d07760ff16eeccbfca0ae7c046/inference) at `a4022fffc96d13d07760ff16eeccbfca0ae7c046` | 1× H100 80GB; FP32 weights, BF16 autocast; ModernBERT SDPA; temperature 1.0304359197616577 |
+| [JEV FLAN-T5 encoder 342M](https://huggingface.co/Elfsong/jev-flan-t5-large-20261013-v0) (342,283,777 parameters) | `3bc31906e49c63a5cec737b1626feb9b2ad6d0d8` | [scores.json](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/blob/a4022fffc96d13d07760ff16eeccbfca0ae7c046/runs/jev-t5-20261013-v0/scores.json): **18.61**, complete | `jev_encoder.engine:EncoderEngine`; [code](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/tree/a4022fffc96d13d07760ff16eeccbfca0ae7c046/inference) at `a4022fffc96d13d07760ff16eeccbfca0ae7c046` | 1× H100 80GB; FP32 weights, BF16 autocast; T5 encoder eager attention; temperature 1.1947622299194336 |
+
+Both models, the inference package and original compact result files are publicly downloadable.
+The selected checkpoint is at each model repository root; the T5 final_checkpoint directory is not the evaluated checkpoint.
+
+Shared inference settings: one process, one sequential request at a time, at most two questions from the same request per forward pass, four CPU threads, fixed rendering across benchmarks, no generation or quantization. Capacity: 7,999 tokens per serialized question and 512 choices; no truncation or option filtering. Unsupported requests are preserved (11 Ettin / 528 T5 among scoreable requests). Both runs have zero runtime errors and all 140,178 scoreable requests completed.
+
+The official runner/scorer commit is `f8552a13b643d39f61185f5951bb5fed16bedf51`, edition 0.3. Environment: Python 3.11.2, PyTorch 2.7.1+cu126, Transformers 4.57.1; full dependencies, pinned downloads, temperatures and reproduction commands are in the [inference README](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/blob/a4022fffc96d13d07760ff16eeccbfca0ae7c046/inference/README.md). Both full suite hashes pass. Original prediction bytes are preserved inside gzip files.
+
+Published code matches the evaluated core implementation byte for byte; calibration helpers are extracted unchanged to remove training CLI imports. The [Ettin validation](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/blob/a4022fffc96d13d07760ff16eeccbfca0ae7c046/inference/validation-ettin.json) and [T5 validation](https://huggingface.co/datasets/Elfsong/jev-decision-index-20261013-v0/blob/a4022fffc96d13d07760ff16eeccbfca0ae7c046/inference/validation-t5.json) each cover 100 deterministic sample requests across all 43 reported benchmarks. All answers and probabilities match the recorded run exactly.
+
+Scores above are the public component only. Official private evaluations, latency eligibility and Full scores remain for the maintainers.
