@@ -40,9 +40,3 @@ That is the fastest path the code supports: one sequential client, no order ense
 ## Suite
 
 Edition 0.3, kit `62d2f51`. Row files used by this run: selected rows `d3cd4a0c…`, added rows `b0c5865f…`, GSM8K rows `8cef105d…` (`frozen_corpus_sha256` `d3cd4a0c1128d34af25d719f0c2db9187e1f8f2e0dc38dfacba9312ec92b3907`).
-
-## Training data disclosure
-
-- The second stage trained on the public train splits of the datasets behind 14 suite benchmarks: VAST, iSarcasmEval, When2Call, HellaSwag, WinoGrande, RAGTruth, ContractNLI, New Yorker caption contest, Humicroedit, ANLI, GSM8K, BANKING77, CLINC150 and Amazon ESCI. The first stage also included the GSM8K, BANKING77 and CLINC150 train splits.
-- Version 2.4.0 additionally trained on same-format decision data drawn from different datasets/domains than the Decision Index benchmarks (new-domain items in the API-Bank, CLINC, GSM8K, HellaSwag, NLI4CT, VAST and POP909 formats).
-- Rows overlapping Decision Index 0.3 evaluation items (13-gram and exact-line matching) were removed before training. No evaluation items were used for training or model selection.
