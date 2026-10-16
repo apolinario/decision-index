@@ -1,0 +1,69 @@
+{
+  "engine": "jebadiah_engine:JebadiahEngine",
+  "engine_options": {
+    "model": "frontier-infra/jebadiah-27b-v2-1",
+    "revision": "e38b48b82bcda8943d0958072c042c5867284838",
+    "prefix_cache": true,
+    "max_batch": 64,
+    "cuda_alloc_conf": "expandable_segments:True",
+    "batch_tokens": 32768,
+    "repeat_payload": true,
+    "reverse_avg_below": 0.7
+  },
+  "model_source": {
+    "kind": "merged",
+    "adapter_repo": "frontier-infra/jebadiah-27b-v2-1",
+    "adapter_revision": "e38b48b82bcda8943d0958072c042c5867284838",
+    "base_model": "Qwen/Qwen3.5-9B-Base",
+    "base_revision": "68c46c4b3498877f3ef123c856ecfde50c39f404",
+    "inference_code": {
+      "ainode_prompt_verbatim.py": "61e81179cbe39fc02607cda64770e02a433356ff1ef0020bea893d610cb9e8f9",
+      "jebadiah_prompt.py": "c0e74561a33c664e958faf0ed769239649944687c613460aa49823d711464b38",
+      "jebadiah_model.py": "97567c45146e8f31c53491e07f9d3cffad8ef9163290565981ae6797a3c70f33"
+    },
+    "inference_code_source": "https://huggingface.co/frontier-infra/jebadiah-27b-v2-1/tree/e38b48b82bcda8943d0958072c042c5867284838/scripts",
+    "prompt_source_sha256": "d2660ebec28bd3f1704235bda88d24a397c1c62475e740519cb8ef2d08f25fdd",
+    "prompt_source_commit": "e5c089386e0239c9eb270eeb490d181722b8da5b",
+    "chat_template_sha256": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+    "chat_template_sha256_expected": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+    "temperatures": {
+      "choice": 1.0608,
+      "noul": 1.0405,
+      "score": 0.6524
+    },
+    "fp32_candidate_logits": true,
+    "declared_context_tokens": 262144,
+    "declared_max_options": 588,
+    "ainode_label_alphabet": 68,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "attn": "sdpa",
+    "delta_rule_kernel": "transformers default (flash-linear-attention when installed, else the torch reference)",
+    "versions": {
+      "torch": "2.8.0+cu128",
+      "transformers": "5.17.0",
+      "python": "3.11.13"
+    },
+    "model_repo": "frontier-infra/jebadiah-27b-v2-1",
+    "model_revision": "e38b48b82bcda8943d0958072c042c5867284838",
+    "inference_variants": {
+      "reverse_avg": true,
+      "repeat_payload": true,
+      "reverse_avg_below": 0.7
+    }
+  },
+  "device": "cuda",
+  "torch": "2.8.0+cu128",
+  "platform": "Linux-6.12.103-127.188.amzn2023.x86_64-x86_64-with-glibc2.35",
+  "machine": "x86_64",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "loaded_seconds": 41.399944050004706,
+  "frozen_corpus_sha256": "1f92d9723b24ca5483474bf324d0ed8e5d542770f89694a579244c45a59cb7fe",
+  "rows_path": [
+    "/tmp/suite-0.3/selected-rows.jsonl.gz",
+    "/tmp/suite-0.3/added-rows.jsonl.gz",
+    "/tmp/suite-0.3/gsm8k-rows.jsonl.gz"
+  ],
+  "runner_sha256": "f4c9f36c4c557f537f1d8184db7bf00c5a84d9f4f0aa67f8c06198cead25818d",
+  "latency": "In-process wall time of one request: AINode rendering, tokenization and one label-token logit read per question (questions batched by padded token budget, no prefix cache), device-synchronized; excludes model loading."
+}
