@@ -1,4 +1,4 @@
-# CoCo-Decision-2.4-4B 2.4.0
+# CoCo-Decision-2.4-4B
 
 [corners-ai/CoCo-Decision-2.4-4B](https://huggingface.co/corners-ai/CoCo-Decision-2.4-4B) is a decision model built on `Qwen/Qwen3.5-4B` with LoRA stages merged into the published text-only bf16 weights. It is a separate repository from [corners-ai/CoCo-Decision-4B](https://huggingface.co/corners-ai/CoCo-Decision-4B) (versions 1.0.0 through 2.3.0), which stays available unchanged. The later stages were trained on public train splits of Decision Index source datasets; version 2.4.0 additionally trained on same-format decision data drawn from domains disjoint from the Decision Index benchmarks. It is read out in one forward pass per question from a readout head over the option-letter tokens, with bidirectional full attention and no generation.
 
