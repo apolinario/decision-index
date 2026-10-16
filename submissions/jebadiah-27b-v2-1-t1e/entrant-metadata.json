@@ -1,0 +1,48 @@
+{
+  "_note": "Draft for the maintainer, in the shape of the Space's data/methodology.json entrants.entrants records (the lab's entrant_metadata.py is not public). Values are what this run loaded; the maintainer's own run on the RTX PRO 6000 is authoritative.",
+  "engine": "jebadiah-27b-v2-1-t1e",
+  "name": "Jebadiah 27B v2.1 (T1e inference recipe)",
+  "variant": null,
+  "kind": "merged LoRA",
+  "technique": "autoregressive",
+  "technique_name": "autoregressive",
+  "served_params": 26895998464,
+  "served_params_detail": "25,624,600,064 language-model parameters plus the 1,271,398,400-parameter untied lm_head, loaded as Qwen3_5ForCausalLM. The 460,730,096 vision parameters and 424,699,392 multi-token-prediction parameters in the checkpoint are not loaded. The rank-16 LoRA has 116,727,808 parameters in 496 merged linear pairs and adds none at serve time. Counts were read from pinned safetensors headers.",
+  "params_from_name": false,
+  "params_estimated": false,
+  "trained_params": 116727808,
+  "base_model": "Qwen/Qwen3.8-27B",
+  "base_revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+  "base_chain": [
+    "Qwen/Qwen3.8-27B"
+  ],
+  "weights_repo": "frontier-infra/jebadiah-27b-v2-1",
+  "weights_revision": "e38b48b82bcda8943d0958072c042c5867284838",
+  "served_checkpoint": "frontier-infra/jebadiah-27b-v2-1",
+  "model_url": "https://huggingface.co/frontier-infra/jebadiah-27b-v2-1",
+  "code_url": "https://github.com/getainode/jebadiah/tree/decision-index-t1e/eval/decision-index",
+  "training_code_url": "https://github.com/getainode/jebadiah",
+  "serving_code_url": "https://github.com/getainode/ainode",
+  "org_url": "https://huggingface.co/frontier-infra",
+  "license": "Apache-2.0 (weights and base)",
+  "readout": "One forward pass per question with the request payload repeated once in the prompt, thinking off; fp32 candidate-label logits and the shipped v2.1 per-type temperatures. When the top answer's probability is below 0.7, a second pass reads the same question with the options in reverse order and the two distributions are averaged; the trigger is the model's own confidence, never correctness. No generation and no abstention.",
+  "declared_capacity": {
+    "context_tokens": 262144,
+    "max_options": 588,
+    "question_types": [
+      "choice",
+      "noul"
+    ],
+    "max_options_detail": "the single-token label alphabet at the answer boundary of the Qwen3.8 tokenizer: A..Z, then the 562 two-letter uppercase strings that are one token there (AINode's own alphabet is 68 labels; wider questions use the published extended alphabet). The suite's widest question has 255 options, so no request is refused for width."
+  },
+  "engine_adapter": "submissions/jebadiah-27b-v2-1-t1e/jebadiah_engine.py:JebadiahEngine",
+  "replaces": "jebadiah-v2.1",
+  "kind_detail": "A rank-16 LoRA (116,727,808 trained parameters) merged into full bf16 weights; the repository ships the merged weights and no adapter files. Same checkpoint as the jebadiah-v2.1 row; only the inference recipe differs.",
+  "engine_commit": "getainode/jebadiah 678f6e2cc2bb1b51f34407d00255b5e13109ce3f (tag decision-index-t1e)",
+  "inference_settings": "--engine jebadiah_engine:JebadiahEngine --option model=frontier-infra/jebadiah-27b-v2-1 --option revision=e38b48b82bcda8943d0958072c042c5867284838 --option prefix_cache=true --option max_batch=64 --option batch_tokens=32768 --option cuda_alloc_conf=expandable_segments:True --option repeat_payload=true --option reverse_avg_below=0.7",
+  "latency_ms_self_measured": {
+    "median": 291.2,
+    "p95": 3095.8,
+    "mean": 975.6
+  }
+}
