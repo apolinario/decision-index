@@ -1,0 +1,3 @@
+# Submissions
+
+- **vision** · Herbert v0.5 · model [`leinenterprises/Herbert_v0.5`](https://huggingface.co/leinenterprises/Herbert_v0.5) @ `9b5cb88` · results [`e12ex2/herbert-results`](https://huggingface.co/datasets/e12ex2/herbert-results/tree/main/runs/vision-herbert-v0.5) `runs/vision-herbert-v0.5/` · public vision index 75.69, 12,210/12,210 answered · engine `decide` (`protocol=decisions`) against the model's `/v1/decisions` server, `--perms 1`, bf16 · kit `f5a6e4f` · 1× H100 80GB · native resolution capped at 1,638,400 px · details: [herbert-v0.5-vision/README.md](herbert-v0.5-vision/README.md)
