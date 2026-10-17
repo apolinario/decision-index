@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Track | Public index | Results | Engine and settings | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Saina Helm 2 v2](https://huggingface.co/run-saina/saina-helm-2-0.8b/tree/723490269872074d677c491f449a32cffe919c84) (updates Saina Helm 2.0) | text | **39.26** | [scores.json](https://huggingface.co/datasets/run-saina/saina-decision-index-results/blob/59e195b932e30262be97a12897f7877e2ff6aab9/runs/723490269872074d677c491f449a32cffe919c84/scores.json) | `saina_decision_index:SainaEngine` @ [`a08c484`](https://github.com/run-saina/saina-decision-index/tree/a08c484b7a2c78c0e0f0a09fbeeb66ee39011910) (saina 0.3.2, `saina.jev.evaluate`, the System One adapter behind api.saina.run); kit `9eb2dbe2a358004c8782c66e40a83ac07b953fec`, unmodified runner (sha256 `f4c9f36c…`) and scorer; bf16 weights, one forward pass over the shared context, option probabilities read from the answer head, nothing generated; causal-conv1d kernel `kernels-community/mamba-ssm@20b2508a` | 1× NVIDIA GeForce RTX 3090, one request at a time | none; 140,178 of 140,178 `ok`, 0 unsupported, nothing truncated (context limit 262,144 tokens, up to 588 options) |
