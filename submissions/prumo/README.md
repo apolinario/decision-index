@@ -21,11 +21,12 @@ never looks at benchmark names, item ids or answer tables, and the response form
 | Request time, 1 CPU thread (Apple M2), one request at a time | median 0.18 ms · mean 5.1 ms · p80 0.62 ms · p99 133 ms · max 404 ms |
 | Results | [runs/prumo](https://huggingface.co/datasets/tardellirs/decision-index-results/tree/a54aa7e6569d705db24aa1bf439f49754db8dcfe/runs/prumo) (compact: no payloads, no suite text) |
 | Code | revision `b445c46` |
+| **Size for the chart** | **700** hand-written constants (**0 learned parameters**) |
 
 **Size.** Prumo has **0 learned parameters**. It has no weights, no embeddings and no corpus statistics, only about
 700 hand-written constants: chess piece-square tables, stop-word lists, BM25 `k1`/`b` and a few thresholds, all listed
 in the card. The size chart plots `log10(size)` and only models with a positive size, so a 0 does not appear on it.
-If it helps, please plot Prumo at **700** (its hand-set constants). Otherwise 0 is the honest count.
+Please plot Prumo at **700**, its hand-set constants.
 
 **How to run** (kit `9eb2dbe`, edition 0.3, one pass, engine defaults):
 
