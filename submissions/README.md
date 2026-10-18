@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Decision Index 0.3 (public) | Results | Engine and settings | Hardware | Declared limits |
+|---|---:|---|---|---|---|
+| nari-decision-4b v3.2 ([`blackmallangcow/nari-decision-4b`](https://huggingface.co/blackmallangcow/nari-decision-4b/tree/94bc1e67cff0e38bced5f46f3015ae770f3a720e) at revision `94bc1e67cff0e38bced5f46f3015ae770f3a720e`, tag `v3.2`; open weights, Apache-2.0; text, Korean + English) | **44.80** | [full run and scores](https://huggingface.co/datasets/blackmallangcow/nari-decision-index/blob/3a41618062c422a5247c6e5567de05ec1432bde2/runs/nari-decision-4b-v32/scores.json) | `nari_engine:NariDecisionEngine` (`code/nari_engine.py` in the results repo) calling the model's `decide()` once per request; kit `f5a6e4fd85fed05e77878dfc4966d0568bfb45ec` (edition 0.3), unmodified runner and scorer, one request at a time; bf16, CUDA graphs ≤ 2,048 tokens and eager beyond | 1× NVIDIA A100 80GB PCIe | 65,536 input tokens (state, questions and options in the chat-formatted input); ≤ 255 options per question; refused, never truncated: 30 requests unsupported, all among the 442 excluded rows (none scored) |
