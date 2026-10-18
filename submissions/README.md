@@ -1,0 +1,7 @@
+# Submissions
+
+Public-suite runs submitted for review. Each run is complete (`scores.json` has `"complete": true`) and untouched.
+
+| Model | Model repo | Results dataset | Engine / commit | Hardware | Inference settings | Notes |
+|---|---|---|---|---|---|---|
+| Jegue 0.1 (Decision Index 0.3: 54.13) | [fdemelo/jegue](https://huggingface.co/fdemelo/jegue) | [fdemelo/jegue-0.1-results](https://huggingface.co/datasets/fdemelo/jegue-0.1-results) (`runs/jegue-0.1/scores.json`) | `decision_engine_dense:DenseSlotEngine`, `code/` of the model repo (commit `7d076d5`), kit commit `9eb2dbe` | 1x RTX 5090 32 GB, torch 2.8.0+cu128, CUDA 12.8 | Qwen/Qwen3.5-9B bf16, LoRA merged, temperature head `feat`, prefix cache on, context limit 32,768 tokens, no thinking, one answer slot per question | 140,178 requests, none failed or truncated; prompts over 32,768 tokens would be unsupported (none occurred). Median latency 46.6 ms, mean 132.4 ms, p95 320.4 ms on our hardware. In `environment.json` the local directory name of the weights was replaced with `/models/jegue-0.1/weights`; `results.jsonl` and the scores are untouched. The model was trained on public train/dev splits of upstream datasets plus synthetic examples. Every training example was screened against all public-suite rows (exact state match and 8-word-window overlap), and no public-suite row was used for training. Information about the public suite's distributions (unlabeled inputs and class proportions of some benchmarks) informed the design of the training; no public-suite labels or answers were used. |
