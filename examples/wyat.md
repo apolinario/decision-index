@@ -6,11 +6,19 @@ and `questions` directly to `model.predict`, preserving question IDs and option
 order. Choice returns every native probability and its native selected key;
 Noul returns the native probability of true.
 
-Use Python 3.12 or newer. Obtain the selected `teilomillet/wyat-1-800m` release
-from the author, including its `model/` and `runtime/` directories, and install
-the runtime dependencies. The native loader verifies every artifact file.
-Use the bundled runtime, whose exact source hashes are recorded in the run's
-`environment.json`.
+Use Python 3.12 or newer and the public
+[selected Wyat-1-800M snapshot](https://huggingface.co/teilomillet/wyat-1-800m/tree/9b112c5850eef2b47e4e456a2a16151f83d16209),
+including its `model/` and `runtime/` directories. The native loader verifies
+every artifact file. Use the bundled runtime, whose exact source hashes are
+recorded in the run's `environment.json`.
+
+Install the kit and runtime dependencies in a CUDA environment. The release's
+pinned CPU requirements use Torch 2.14.1; the public evaluation used Python
+3.12.13, Torch 2.12.1+cu130, CUDA 13.0, Transformers 5.18.0, Tokenizers 0.23.2,
+Safetensors 0.8.0 and Hugging Face Hub 1.33.0. Use a CUDA-enabled Torch build
+instead of the CPU pin. This run used the reference causal-convolution and
+gated-delta kernels, with no optional `causal_conv1d` or
+`flash-linear-attention` package installed.
 
 The selected release contains a task-specific API-Bank renderer. The kit forbids
 per-benchmark prompt adaptations, so prepare a **separate inference artifact**
@@ -24,6 +32,15 @@ this uniformly rendered inference identity.
 From the kit repository root:
 
 ```sh
+python - <<'PY'
+from huggingface_hub import snapshot_download
+
+snapshot_download(
+    repo_id="teilomillet/wyat-1-800m",
+    revision="9b112c5850eef2b47e4e456a2a16151f83d16209",
+    local_dir="/path/to/wyat-release",
+)
+PY
 export PYTHONPATH=/path/to/wyat-release/runtime:.
 python examples/prepare_wyat.py --source /path/to/wyat-release/model \
   --out /path/to/wyat-release/model-verbatim
