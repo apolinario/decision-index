@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| **vision** — [AutoTrust-JEV-27B v1.1](https://huggingface.co/autotrust/AutoTrust-JEV-27B-v1.1/tree/ae156900e9f338e423042b89e25d0fd8093064d4) (`autotrust/AutoTrust-JEV-27B-v1.1` @ `ae15690`) | 0.3 vision | 74.33 (public vision index) | [vision-scores.json](https://huggingface.co/datasets/autotrust/jev-decision-index-results/blob/086ec7a0a804eae0f9e27a0fdd7e6501e8cf4777/runs/autotrust-jev-27b-v1.1-vision/vision-scores.json) | `jev_vllm_vision_engine:JevVllmVision` (subclass of the kit's `vllm-vl`; model prompt and code read-out; vLLM 0.31.0 + StartLux prompt-bidirectional plugin) ([submissions/autotrust-jev-27b-v1.1-vision](autotrust-jev-27b-v1.1-vision/README.md)); kit `f5a6e4f` | 1 × NVIDIA B200 | Native resolution capped at 1.6 MP (no lower author cap); up to 8 images and 255 options per request; context 65,536 tokens; no truncation; 0 unsupported |
