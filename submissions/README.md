@@ -1,0 +1,1 @@
+H2O-Lightning-31B (https://huggingface.co/h2oai/h2o-lightning-31b/tree/v1.0.7): text 66.69, vision 76.59. Results: https://huggingface.co/datasets/h2oai/h2o-lightning-31b-decision-index/tree/v1.0.7/runs. Kit f8552a1, http engine (text) and decide engine (vision) against the model's run_decision_index.sh server, default settings. 1x RTX PRO 6000.
