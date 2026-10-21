@@ -32,7 +32,8 @@ class KieveEngine(Engine):
 
     def __init__(self, checkpoint=None, config=None, model=None, revision=None,
                  device=None, temperature=None, variant=None, max_state=None,
-                 max_question=None, max_pair=None, max_options=None, **options):
+                 max_question=None, max_pair=None, max_options=None,
+                 autocast=None, **options):
         super().__init__(**options)
         os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
         import torch
@@ -101,6 +102,9 @@ class KieveEngine(Engine):
         to_device(self.model, self.device)
         self.model.eval()
         self.temperature = float(temperature if temperature is not None else ckpt.get("temperature", 1.0))
+        # mixed precision for the forward: the option scorers encode every
+        # (question, option) pair, so the run is compute bound
+        self.autocast_dtype = autocast or options.get("dtype")
 
         self.collate = Collate(
             tokenizer,
@@ -163,9 +167,9 @@ class KieveEngine(Engine):
         rows = [(self.Case("req", text(state) if state not in ("", None) else "", qs, "request"), q) for q in qs]
         batch = self.collate(rows).to(self.device)
         with torch.no_grad():
-            out = self.run_model(self.model, batch, self.variant)
-        logits = (out["logits"] / self.temperature).detach().cpu().numpy()
-        noul_p = torch.sigmoid(out["noul_logit"] / self.temperature).detach().cpu().numpy()
+            out = self.run_model(self.model, batch, self.variant, autocast=self.autocast_dtype)
+        logits = (out["logits"] / self.temperature).detach().float().cpu().numpy()
+        noul_p = torch.sigmoid(out["noul_logit"] / self.temperature).detach().float().cpu().numpy()
 
         answers, raw = {}, {}
         for i, (key, q, keys) in enumerate(parsed):
