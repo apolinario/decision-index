@@ -4,8 +4,10 @@ Self-run Decision Index 0.3 public score **61.60** as scored (raw 70.74, breadth
 below counted as wrong, it is **61.60** (that item was already answered wrong). The run is complete: 140,620 requests run, 140,178 scored after the official 442 exclusions,
 140,178 answered, 0 unsupported, 0 errors. This is not the private Full score or a maintainer-verified rank.
 
-- Model: https://huggingface.co/plantwaterer/allec/tree/72b8cca185ce7f0e3cbb7e2b965f9d4937aa2d8a, a full fine-tune of google/gemma-4-31B-it with a
-  calibrated Bayesian last-layer head (the head's output is the answer). Code is mirrored at https://github.com/treewaterer/allec.
+- Model: https://huggingface.co/plantwaterer/allec/tree/ee1d4b9572058f66ac92d57e22482bf9dbe00ad8, a full fine-tune of google/gemma-4-31B-it with a
+  calibrated last-layer head whose output is the answer: temperature-scaled option-letter logits on choice questions, plus a
+  Bayesian last-layer residual on yes / no questions. (Model card corrected at this commit; weights and code are unchanged
+  from 72b8cca.) Code is mirrored at https://github.com/treewaterer/allec.
 - Results: https://huggingface.co/datasets/plantwaterer/allec-decision-index/tree/8d8a1f3aad3016e63c61d3bb8d31b370b21a0bb6/runs/allec (run files as
   written by the kit's runner and scorer, unmodified).
 - Kit: apolinario/decision-index @ 9eb2dbe2a358004c8782c66e40a83ac07b953fec, unchanged runner and scorer.
