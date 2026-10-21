@@ -1,7 +1,17 @@
 import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
+
+
+def sha256_file(path: Path | str) -> str:
+    """sha256 of a file, portable across Python versions."""
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def dumps(x):
@@ -11,8 +21,11 @@ def dumps(x):
 def sha256_file(path, gunzip=False):
     path = Path(path)
     opener = gzip.open if gunzip else open
+    h = hashlib.sha256()
     with opener(path, "rb") as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def open_text(path):
