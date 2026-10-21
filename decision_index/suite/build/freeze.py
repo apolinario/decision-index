@@ -4,7 +4,7 @@ import hashlib
 import json
 
 from decision_index.suite.build.layout import DATASETS, NAMES, REFERENCE_MODEL, STATIC_ORDER
-from decision_index.suite.io import dumps, read_jsonl
+from decision_index.suite.io import dumps, read_jsonl, sha256_file
 
 SEED = 20260919
 CASE_CAPS = {22: 2000, 31: 5000, 10: 2500, 23: 5000, 44: 5000, 37: 5000}
@@ -88,7 +88,7 @@ def freeze(layout, out_dir, log=print):
         assert not budget or req <= budget
         if n in CASE_CAPS:
             assert len(chosen) == min(CASE_CAPS[n], len(counts))
-        entry = dict(catalog_id=n, dataset=DATASETS[n], benchmark_origin=provenance(n), available_cases=len(counts), selected_cases=len(chosen), requests=req, fields=fields, request_cap=budget, case_cap=CASE_CAPS.get(n), selected_group_ids=sorted(chosen), sources=[{"path": layout.rel(p), "sha256": hashlib.file_digest(p.open("rb"), "sha256").hexdigest()} for p in paths])
+        entry = dict(catalog_id=n, dataset=DATASETS[n], benchmark_origin=provenance(n), available_cases=len(counts), selected_cases=len(chosen), requests=req, fields=fields, request_cap=budget, case_cap=CASE_CAPS.get(n), selected_group_ids=sorted(chosen), sources=[{"path": layout.rel(p), "sha256": sha256_file(p)} for p in paths])
         inventory.append(entry)
         log(json.dumps({"event": "pool_frozen", **{k: v for k, v in entry.items() if k not in ("selected_group_ids", "sources")}}))
     proxy = 0
@@ -104,6 +104,6 @@ def freeze(layout, out_dir, log=print):
                 totalfields += len(r["questions"])
                 r["_evaluation"] = dict(run_id=f'{n}:{p.stem}:{r["id"]}', catalog_id=n, dataset=name, group_id=gid(r), track=p.stem, source_path=layout.rel(p), payload_sha256=h, proxy_tokens=estimate, benchmark_origin=provenance(n))
                 sf.write(dumps(r) + "\n")
-    manifest = dict(model=REFERENCE_MODEL, seed=SEED, created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), selection="Deterministic hash sample without replacement; ESCI proportional locale × relevance; request-budget datasets retain complete linked groups; no outcome-based selection.", benchmarks=inventory, static_benchmarks=len(inventory), selected_cases=sum(i["selected_cases"] for i in inventory), requests=sum(i["requests"] for i in inventory), fields=totalfields, selected_rows_sha256=hashlib.file_digest(rows_path.open("rb"), "sha256").hexdigest(), estimated_usd=proxy * 1.925745 * 0.042 / 1e6)
+    manifest = dict(model=REFERENCE_MODEL, seed=SEED, created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), selection="Deterministic hash sample without replacement; ESCI proportional locale × relevance; request-budget datasets retain complete linked groups; no outcome-based selection.", benchmarks=inventory, static_benchmarks=len(inventory), selected_cases=sum(i["selected_cases"] for i in inventory), requests=sum(i["requests"] for i in inventory), fields=totalfields, selected_rows_sha256=sha256_file(rows_path), estimated_usd=proxy * 1.925745 * 0.042 / 1e6)
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
     return manifest

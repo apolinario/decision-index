@@ -73,9 +73,31 @@ class KieveEngine(Engine):
         ckpt = torch.load(checkpoint, map_location=self.device, weights_only=False)
         mc = model_config(str(fixed.get("config_class", "tiny")))
         mc.vocab_size = vocab_size
+        state = ckpt.get("model_state", {})
+        # The backbone geometry is read back from the checkpoint: published
+        # checkpoints were trained with different class geometries, and
+        # building the wrong one would silently load nothing.
+        try:
+            from kieve.model import model_config_from_state
+            mc = model_config_from_state(state, base=mc)
+            mc.vocab_size = vocab_size
+        except Exception as e:  # pragma: no cover - older kieve releases
+            print(f"kieve engine: could not infer geometry from checkpoint ({e})")
+        # Checkpoints trained with the enhanced operator stack need it rebuilt
+        # too: the operator parameters have different names.
+        enhanced = any("scale_weights" in k for k in state)
+        # LoRA-adapted checkpoints store the backbone weights inside the
+        # adapter wrapper, so the encoder has to be wrapped the same way.
+        lora_rank = int(p.get("lora_rank", 0) or 0)
         self.model = build_model(mc, vocab_size, variant=self.variant,
-                                 use_ops=bool(fixed.get("use_ops", True)))
-        self.model.load_state_dict(ckpt["model_state"], strict=False)
+                                 use_ops=bool(fixed.get("use_ops", True)),
+                                 lora_rank=lora_rank,
+                                 lora_scale=float(p.get("lora_scale", 10.0)),
+                                 enhanced=enhanced)
+        missing, unexpected = self.model.load_state_dict(state, strict=False)
+        if missing or unexpected:
+            print(f"kieve engine: loaded with {len(missing)} missing and "
+                  f"{len(unexpected)} unexpected tensors")
         to_device(self.model, self.device)
         self.model.eval()
         self.temperature = float(temperature if temperature is not None else ckpt.get("temperature", 1.0))
