@@ -12,8 +12,6 @@ used the pre-converted INT8 (W8A8) weights in `int8/` with the CUDA runtime in [
 
 Results: [`sky7350/Mica-v0.5-4B-decision-index`](https://huggingface.co/datasets/sky7350/Mica-v0.5-4B-decision-index/tree/152d4e8b147715b4e495d91cc4194570b2527a0a/runs/mica-v0.5-4b)
 @ `152d4e8` (`results.jsonl.gz`, `scores.json`, `index.json`, `benchmark-summary.json`, `environment.json`, `status.json`).
-The results dataset is gated because the result rows carry the suite payloads: request access on the dataset page and
-it is granted to the maintainers.
 
 ## Run
 
