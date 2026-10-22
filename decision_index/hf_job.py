@@ -29,7 +29,7 @@ def install_command(results_repo, git_url=None, extras="transformers"):
 
 
 def job_command(results_repo, engine, engine_args, suite_dataset, run_name, extra_run_args, git_url=None):
-    install = install_command(results_repo, git_url)
+    install = install_command(results_repo, git_url, "transformers,gliclass" if engine == "gliclass" else "transformers")
     run = " ".join(["python -m decision_index pipeline", "--engine", shlex.quote(engine), *[shlex.quote(a) for a in engine_args], "--suite-dataset", shlex.quote(suite_dataset), "--out", shlex.quote("/tmp/runs/" + run_name), "--upload", shlex.quote(results_repo), "--upload-path", shlex.quote("runs/" + run_name), *[shlex.quote(a) for a in extra_run_args]])
     return "set -euo pipefail; export HF_HUB_DISABLE_XET=1; pip install -q -U huggingface_hub && " + install + " && " + run
 

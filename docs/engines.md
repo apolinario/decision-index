@@ -27,6 +27,23 @@ Verified: the one-pass scores equal naive per-option scoring within 1e-5 (float3
 
 Options: `--model`, `--option revision=...`, `--option device=cuda|mps|cpu`, `--option dtype=bfloat16|float16|float32` (defaults: bfloat16 on CUDA, float32 elsewhere), `--option attn=sdpa|eager`, `--option max_tokens=N`, `--option cache_prefix=false`, `--option chat_template=false`.
 
+## `gliclass`
+
+In-process [GLiClass](https://github.com/Knowledgator/GLiClass) zero-shot classifiers (`pip install -e ".[gliclass]"`). For each question:
+
+1. Render the state as text: a string as-is, a JSON object as `key: value` lines (a list of strings as `key:` then `- item` lines), a list as `- item` lines.
+2. Run one GLiClass classification: the state is the text, the question's `instructions` are the task prompt, and every option is a label (its description by default). `noul` questions use their `criteria`, or yes/no when there are none.
+3. Probabilities are the softmax over the option logits; the choice is the argmax. For `noul` the answer is the probability of `true`.
+
+Inputs longer than `max_length` tokens (capped by the encoder's position table when it has absolute positions), and bi-encoder labels longer than the label encoder's limit, raise `Unsupported`; nothing is truncated and no option is dropped. Out-of-memory on one question is also `Unsupported`. With `batch_size > 1`, the questions of one request are run in padded batches of up to `batch_size` questions and `batch_tokens` padded tokens, falling back to one question at a time on out-of-memory.
+
+```sh
+python -m decision_index pipeline --engine gliclass --model knowledgator/gliclass-v4-edge \
+    --option dtype=bfloat16 --option max_length=16384 --option batch_size=8 --out runs/gliclass-v4-edge
+```
+
+Options: `--model`, `--option tokenizer=...` (defaults to the model repo), `--option device=cuda:0|cpu`, `--option dtype=bfloat16|float16|float32` (default float32), `--option max_length=N` (default 1024), `--option labels=description|key|key_description`, `--option activation=softmax|sigmoid` (sigmoid scores normalized to sum to 1), `--option max_options=N` (declared option limit), `--option batch_size=N` (default 1), `--option batch_tokens=N` (default 65536).
+
 ## `random`
 
 Uniform choice over the options with a fixed seed. A sanity check for the pipeline, not a model.

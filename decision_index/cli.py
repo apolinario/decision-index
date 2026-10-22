@@ -173,8 +173,8 @@ def cmd_vision(args):
 
 
 def add_engine_args(p):
-    p.add_argument("--engine", required=True, help="engine name (http, transformers, random) or module:Class")
-    p.add_argument("--model", help="model id for the transformers engine")
+    p.add_argument("--engine", required=True, help="engine name (http, transformers, gliclass, random) or module:Class")
+    p.add_argument("--model", help="model id for the transformers or gliclass engine")
     p.add_argument("--option", action="append", help="engine option key=value (JSON values accepted), repeatable")
 
 

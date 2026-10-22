@@ -21,6 +21,10 @@ transformers = [
   "accelerate>=1.0",
   "safetensors>=0.4",
 ]
+gliclass = [
+  "torch>=2.4",
+  "gliclass>=0.1.20",
+]
 rebuild = [
   "pyarrow>=20",
   "pandas>=2.0",
