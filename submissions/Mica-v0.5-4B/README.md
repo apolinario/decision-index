@@ -1,6 +1,6 @@
 # Mica v0.5 4B
 
-[sky7350/Mica-v0.5-4B](https://huggingface.co/sky7350/Mica-v0.5-4B) is a fine-tune of Qwen3.5-4B for typed decisions. It reads
+[sky7350/Mica-v0.5-4B](https://huggingface.co/sky7350/Mica-v0.5-4B) is a LoRA fine-tune of Qwen3.5-4B for typed decisions. It reads
 the state and the questions in one prefill and returns a probability for every option; it generates nothing. The run
 used the pre-converted INT8 (W8A8) weights in `int8/` with the CUDA runtime in [akivet/Mica](https://github.com/akivet/Mica).
 
