@@ -7,6 +7,7 @@ import mmap
 import pickle
 import struct
 
+from decision_index.suite.io import sha256_file
 from decision_index.scoring.metrics import chess_score, consensus_score, forecast_score, router_score
 from decision_index.suite.build.layout import dump_ascii, git_revision, sha256, write_requests
 
@@ -51,7 +52,7 @@ def chessbench(layout):
     source = layout.downloads / "chessbench-test-action-value.bag"
     repo = layout.repos / "searchless_chess"
     revision = git_revision(repo)
-    checksum = hashlib.file_digest(source.open("rb"), "sha256").hexdigest()
+    checksum = hashlib.sha256(source.open("rb").read()).hexdigest()
     by_fen = collections.defaultdict(dict)
     record_count = duplicate_count = 0
     for record in bag_records(source):
@@ -87,7 +88,7 @@ def chessbench(layout):
             ties += len(accepted) > 1
             histogram[len(moves)] += 1
     output.with_suffix(".partial").replace(output)
-    audit = {"source_records": record_count, "source_positions": len(by_fen), "duplicate_move_records": duplicate_count, "eligible_positions": count, "positions_with_tied_best_moves": ties, "source_sha256": checksum, "source_revision": revision, "exclusions": exclusions, "legal_move_counts": dict(histogram), "sampling": "none; full eligible official test positions", "primary_metrics": ["best-move accuracy accepting all exact reference ties", "mean reference value regret"], "reference": "https://github.com/google-deepmind/searchless_chess", "output_sha256": hashlib.file_digest(output.open("rb"), "sha256").hexdigest()}
+    audit = {"source_records": record_count, "source_positions": len(by_fen), "duplicate_move_records": duplicate_count, "eligible_positions": count, "positions_with_tied_best_moves": ties, "source_sha256": checksum, "source_revision": revision, "exclusions": exclusions, "legal_move_counts": dict(histogram), "sampling": "none; full eligible official test positions", "primary_metrics": ["best-move accuracy accepting all exact reference ties", "mean reference value regret"], "reference": "https://github.com/google-deepmind/searchless_chess", "output_sha256": sha256_file(output)}
     (layout.suite / "chessbench-adaptation.json").write_text(json.dumps(audit, indent=2) + "\n")
     return {k: v for k, v in audit.items() if k not in {"exclusions", "legal_move_counts"}}
 
@@ -114,7 +115,7 @@ def habermas(layout):
         key = (row["round_id"], tuple(sorted(row["rankings.candidate_ids"] or [])))
         groups[key].append(row)
     with source.open("rb") as f:
-        checksum = hashlib.file_digest(f, "sha256").hexdigest()
+        checksum = sha256_file(source)
     revision = git_revision(repo)
     excluded = []
     rows = []

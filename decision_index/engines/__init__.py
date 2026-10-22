@@ -4,6 +4,8 @@ REGISTRY = {
     "http": "decision_index.engines.http:HttpSystemOne",
     "transformers": "decision_index.engines.transformers_engine:TransformersEngine",
     "random": "decision_index.engines.base:RandomEngine",
+    "kieve": "decision_index.engines.kieve:KieveEngine",
+    "kieve_llm": "decision_index.engines.kieve_llm:KieveLLMEngine",
     "vllm-vl": "decision_index.vision.engines:VllmVisionChat",
     "decide": "decision_index.vision.engines:HttpDecide",
     "openai-vlm": "decision_index.vision.engines:OpenAIVision",
