@@ -1,0 +1,6 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [DecisionNode Edge](https://huggingface.co/bynn-intelligence-com/decisionnode-edge/tree/7706b508ecc443dd6d7e97440406349c90e826fa) (**vision**) | vision 0.3 | 59.13 | [vision-scores.json](https://huggingface.co/datasets/bynn-intelligence-com/decisionnode-edge-decision-index/blob/69f0d176da6ac542d3ac673afccbe4d72339af53/runs/decisionnode-edge-vision/vision-scores.json) | the model's own `/v1/systemone` server (`python -m decisionnode_edge serve`, runtime 0.9.2 in the model repository) with the kit's `decide` engine (`protocol=decisions`, `path=/v1/systemone`), 1.6 MP cap, `--workers 1`; kit `25c6ec7` | 1× RTX PRO 6000 Blackwell | none |
+| [DecisionNode Edge Mini](https://huggingface.co/bynn-intelligence-com/decisionnode-edge-mini/tree/0e77dfdcfd7417a4e22d229d7ad6f8e34ac4ff13) (**vision**) | vision 0.3 | 49.10 | [vision-scores.json](https://huggingface.co/datasets/bynn-intelligence-com/decisionnode-edge-decision-index/blob/69f0d176da6ac542d3ac673afccbe4d72339af53/runs/decisionnode-edge-mini-vision/vision-scores.json) | as above | 1× RTX PRO 6000 Blackwell | none |
