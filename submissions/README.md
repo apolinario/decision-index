@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Sieve-31B-v2](https://huggingface.co/sthanika-ai/Sieve-31B-v2/tree/2c0d64310ac944b350a9e19f1f54dcd9a5bed3eb) | 0.3 | 69.97 | [scores.json](https://huggingface.co/datasets/sthanika-ai/Sieve-31B-v2-decision-index-results/blob/182b7961e36de373c082a08069126c743319b6dc/runs/Sieve-31B-v2/scores.json) | [`sieve.decision_index_engine:SieveEngine`](https://github.com/sthanika-ai/Sieve/blob/3ff9195c902ee1882e3e4bcfcb5bc733b8fcbb7f/sieve/decision_index_engine.py) @ `3ff9195`; kit `62d2f51` (0.3) | Run: 2× NVIDIA A100 80GB PCIe (batched evaluator, same prompts/readout/bidirectional global attention as the engine; probabilities at T=1 re-read at T 8.5495). Engine latency/parity checked on 1× RTX PRO 6000 Server, one request at a time | 255 options per question; 32,768 tokens per row (state + one question); no truncation (none reached: 0 unsupported) |
