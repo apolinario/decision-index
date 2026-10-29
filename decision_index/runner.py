@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from decision_index import constants as C
-from decision_index.engines import NativeAbstention, Unsupported, load_engine, validate
+from decision_index.engines import FatalEngineError, NativeAbstention, Unsupported, load_engine, validate
 from decision_index.suite.io import atomic_json, dumps, read_jsonl
 
 
@@ -42,6 +42,11 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
     event(event="loading", engine=engine_name)
     engine = load_engine(engine_name, **engine_options)
     engine.synchronize()
+    if getattr(engine, "name", None) == "openrouter" and resume and (out / "environment.json").exists() and (out / "results.jsonl").exists():
+        previous_environment = json.loads((out / "environment.json").read_text())
+        if previous_environment.get("model_source") != engine.provenance or previous_environment.get("request_ledger") != engine.runtime()["request_ledger"]:
+            engine.close()
+            raise ValueError("Run directory belongs to a different model or request ledger")
     atomic_json(out / "environment.json", {"engine": engine_name, "engine_options": engine_options, "model_source": engine.provenance, **engine.runtime(), "loaded_seconds": time.perf_counter() - t, "frozen_corpus_sha256": corpus_sha256, "rows_path": [str(p) for p in rows_path] if isinstance(rows_path, (list, tuple)) else str(rows_path), "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "latency": engine.latency})
     if warm:
         engine.warmup()
@@ -65,6 +70,12 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
             e = row["_evaluation"]
             rid = e["run_id"]
             if rid in previous and previous[rid] != "error":
+                if hasattr(engine, "verify_completed_request"):
+                    try:
+                        engine.verify_completed_request(rid, row["state"], row["questions"])
+                    except Exception:
+                        engine.close()
+                        raise
                 continue
             payload = {"state": row["state"], "questions": row["questions"]}
             t = time.perf_counter()
@@ -73,6 +84,8 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
             if not compact:
                 result["payload"] = payload
             try:
+                if hasattr(engine, "set_request_id"):
+                    engine.set_request_id(rid)
                 response, raw = engine(**payload)
                 engine.synchronize()
                 validate(payload["questions"], response)
@@ -89,11 +102,18 @@ def run(engine_name, engine_options, rows_path, out_dir, limit=None, compact=Fal
                 result.update(status="error", error=str(exc), exception=type(exc).__name__, traceback=traceback.format_exc())
             elapsed = (time.perf_counter() - t) * 1000
             result.update(completed_utc=stamp(), total_wall_ms=elapsed, model_request_wall_ms=elapsed)
+            if getattr(engine, "last_request_wall_ms", None) is not None:
+                result["model_request_wall_ms"] = engine.last_request_wall_ms
+                result["response_replayed"] = engine.response_replayed
             logf.write(dumps(result) + "\n")
             logf.flush()
             counts[result["status"]] += 1
             finished += 1
             completed.add(rid)
+            if result.get("exception") == "FatalEngineError":
+                engine.close()
+                event(event="failed", engine=engine_name, completed=len(completed), counts=dict(counts), error=result["error"])
+                raise FatalEngineError(result["error"])
             if finished % 10 == 0:
                 event(event="progress", engine=engine_name, completed=len(completed), counts=dict(counts), elapsed_seconds=round(time.perf_counter() - start, 1))
             if halt_on_device_error and (result.get("exception") in ("OutOfMemoryError", "AcceleratorError") or "device-side assert" in result.get("error", "")):

@@ -10,3 +10,8 @@ __pycache__/
 /hub-upload/
 .pytest_cache/
 .DS_Store
+.env
+/suite-*/
+/models/
+/.venv-*/
+/.tools/

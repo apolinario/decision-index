@@ -1,5 +1,10 @@
 # Decision Index
 
+**Working fork:** [Hosted evaluation guide](docs/openrouter.md) covers only Jev 1.14
+and Mercury Decide on OpenRouter. [Local serving guide](docs/local-models.md)
+covers Ollama Decider v1.1 Q4_K_M, Fastino GLiDE and StartLux Instant Q4_K_M. Upstream suite construction and
+scoring are unchanged.
+
 Reproduction kit for the **Decision Index**, a benchmark for *typed decision engines*: models that take a `state` and a set of typed `questions` (multiple-choice `choice` or yes/no `noul` primitives with explicit `criteria`) and return one answer per question with a probability for every supplied option. It lets anyone rebuild the frozen suite from public sources, run any engine through it with checkpoint/resume, score every benchmark with the leaderboard's own scorers, and compute the index, on a laptop or as one Hugging Face Job.
 
 The live board is **Decision Index 0.4**. Its main ranking is the **Full score**: 60% private tests of the same skills as the public benchmarks and 40% private decision tasks from new domains. The public benchmarks in this kit are still required for every submission, but no longer count toward the Full score. This kit runs and scores the public part, the **public index**: 37 benchmarks in five areas, each chance-corrected (0 = random guessing, 100 = perfect) and coverage-adjusted (unanswered = wrong). The public suite is unchanged from 0.3, which stays the default everywhere in this kit. The private parts are run by the maintainers on submitted models (see [Submitting a model](#submitting-a-model-to-the-leaderboard)). Editions 0.2.1, 0.2 and 0.1 stay reproducible with `--edition 0.2.1`, `--edition 0.2` and `--edition 0.1` ([docs/edition-0.1.md](docs/edition-0.1.md)).

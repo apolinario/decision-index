@@ -2,6 +2,34 @@
 
 ## Edition 0.3
 
+### Working-fork variant: corrected SGD
+
+Our planned local evaluation uses the user-approved **`0.3-corrected-sgd`**
+variant. Upstream commit `2d7791c56b3eb98e4940efc056fba28032cad54e` fixed
+SGD/SGD-X rows leaking future dialogue turns, but the published manifests still
+hash the earlier leaky representation. We retain the corrected builder output;
+the other 36 base normalized datasets match their canonical hashes.
+
+Local validation showed that restoring only legacy SGD histories in memory
+reproduces both canonical base and 0.3-cut hashes. No leaky
+rows are used for inference and no canonical hashes in `editions.py` are changed.
+The corrected cut hash is
+`8224546d592062ffd6dafe73d91c6bc50a13d8057e19a69b33664fcab9372272`.
+
+The locally prepared corpus has a separate verification record, written after
+the added benchmarks and GSM8K hashes passed. These corpus files, validation
+scripts and run artifacts are not distributed with the adapters. Standard
+`suite verify` intentionally rejects this variant's corrected rows; this fork does
+not add a CLI verifier for the variant or claim canonical identity.
+The locally prepared `evaluation-rows.jsonl.gz` applies the official
+edition filtering for later `run --rows` calls. Scoring retains edition 0.3's
+weights, groups, subsets and exclusions. The complete run includes **140,620**
+requests (110,201 base + 30,419 added), of which **140,178** are scoreable, over
+43 benchmarks. This variant must be labelled on results and not represented as
+a byte-identical official submission. Setup does not execute model inference.
+
+### Published edition
+
 Edition 0.3 reads the 0.2.1 files unchanged and adds one: `gsm8k-rows.jsonl.gz`, the 2,638 GSM8K requests (catalog 30) rebuilt so the options no longer give the answer away (issue #32). At read time the old GSM8K rows are skipped and the rebuilt ones are used instead, and ForecastBench (catalog 48) is skipped: it is retired from the index and from the run. That leaves 110,201 requests, 109,759 after the 442 exclusions, plus the 30,419 of the seven benchmarks added in 0.2. `hub/0.3/manifest.json` records the new file under `files`, `retired` and `replaced`.
 
 **How GSM8K is rebuilt (`answer-groups-v1`, seed 20261003).** In 0.2 every distractor was computed from the gold (gold ± 1, ± 2, ± 5, ± 10, × 2, × 10, // 2), so the gold was the one value most other options were a fixed offset from, and it nearly always sat in the middle of the sorted values; rules that never read the problem scored far above chance. In 0.3 each distractor is the gold answer of a different GSM8K test problem of similar size, and no option is computed from the row's own gold:
