@@ -1,0 +1,6 @@
+# Submissions
+
+| Model | Edition | Public index | Results | Engine | Hardware | Settings and limits |
+|---|---|---:|---|---|---|---|
+| [Arcbright Elf 1 12B](https://huggingface.co/arcbright/elf-1-12b/tree/1018696022ae3fdd9cb8a93e3e972f69c11184c1) | 0.3 | 58.35 | [scores.json](https://huggingface.co/datasets/arcbright/elf-decision-index/blob/72faa9abe0fb75036b459b8f1b5e87cddba9458e/runs/elf-1-12b/scores.json) | kit `9eb2dbe`, `http` engine against the repo's `/v1/systemone` server (`serve/`, vLLM 0.30.0) | 1x RTX PRO 6000 96 GB | repo `decision_config.json` (bf16); 40,960 tokens per request, longer refused with HTTP 422, never truncated; 255 options, 10 score levels |
+| [Arcbright Elf 1 31B](https://huggingface.co/arcbright/elf-1-31b/tree/8c7799280c8c04a3802af1feeb3a1ad40d6c4eeb) | 0.3 | 61.08 | [scores.json](https://huggingface.co/datasets/arcbright/elf-decision-index/blob/72faa9abe0fb75036b459b8f1b5e87cddba9458e/runs/elf-1-31b/scores.json) | kit `9eb2dbe`, `http` engine against the repo's `/v1/systemone` server (`serve/`, vLLM 0.30.0) | 1x RTX PRO 6000 96 GB | repo `decision_config.json` (FP8, vLLM online quantization of the bf16 weights); 32,768 tokens per request, longer refused with HTTP 422, never truncated; 255 options, 10 score levels |
