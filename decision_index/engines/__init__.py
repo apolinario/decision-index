@@ -1,6 +1,11 @@
-from decision_index.engines.base import Engine, NativeAbstention, RandomEngine, Unsupported, validate
+from decision_index.engines.base import Engine, FatalEngineError, NativeAbstention, RandomEngine, Unsupported, validate
 
 REGISTRY = {
+    "ollama-decider": "decision_index.engines.local_http:OllamaDecider",
+    "pplx-decider": "decision_index.engines.local_http:LocalDecider",
+    "glide": "decision_index.engines.local_http:LocalGlide",
+    "startlux": "decision_index.engines.local_http:LocalStartLux",
+    "openrouter": "decision_index.engines.openrouter:OpenRouterDecisions",
     "http": "decision_index.engines.http:HttpSystemOne",
     "transformers": "decision_index.engines.transformers_engine:TransformersEngine",
     "random": "decision_index.engines.base:RandomEngine",

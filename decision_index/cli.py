@@ -173,8 +173,8 @@ def cmd_vision(args):
 
 
 def add_engine_args(p):
-    p.add_argument("--engine", required=True, help="engine name (http, transformers, random) or module:Class")
-    p.add_argument("--model", help="model id for the transformers engine")
+    p.add_argument("--engine", required=True, help="engine name (http, openrouter, ollama-decider, pplx-decider, glide, startlux, transformers, random) or module:Class")
+    p.add_argument("--model", help="model ID or engine-specific profile (OpenRouter: jev or mercury; local engines use fixed models)")
     p.add_argument("--option", action="append", help="engine option key=value (JSON values accepted), repeatable")
 
 

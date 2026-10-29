@@ -7,6 +7,10 @@ class Unsupported(ValueError):
     pass
 
 
+class FatalEngineError(RuntimeError):
+    """Stop a run after recording the current failure; do not submit more requests."""
+
+
 class NativeAbstention(Exception):
     def __init__(self, raw):
         self.raw = raw
