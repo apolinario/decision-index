@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Darwin-27B-RSI-Decision](https://huggingface.co/FINAL-Bench/Darwin-27B-RSI-Decision/tree/b125c60b853c133c622d706f214c3b2db4df8f96) (full weights on [FINAL-Bench/Darwin-27B-RSI](https://huggingface.co/FINAL-Bench/Darwin-27B-RSI), bf16) | 0.3 | 68.77 | [scores.json](https://huggingface.co/datasets/FINAL-Bench/Darwin-27B-RSI-Decision-decision-index/blob/b1dc6f4713cbf36854e7310a609486dda435a29f/runs/darwin-27b-rsi-decision/scores.json) | kit `http` engine (`/v1/systemone`) -> `decision_server.py` in the model repo, defaults (one forward pass per question, batch 8, max length 32768); kit runner and scorer `f8552a1`. Details: [submissions/Darwin-27B-RSI-Decision](Darwin-27B-RSI-Decision/README.md) | 1x NVIDIA B200, one server process, 8 runner processes | none (longer than 32,768 tokens would be refused, never truncated); 0 unsupported |
