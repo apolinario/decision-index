@@ -12,7 +12,7 @@
 - Complete results: https://huggingface.co/datasets/agentscope-ai/Piccolo_decision_index_results/tree/6286b9df2276abbd93fb61e0acb1c2ea366c5faa
 - Hardware: 1 x NVIDIA H20 GPU, fp8
 
-> The submitted model names are Piccolo. The recorded `NaiveVisionEngine` and the published `VisionEngine` refer to the same engine.
+> `Blink` is the internal name for Piccolo in the original run records. The recorded `NaiveVisionEngine` and the published `VisionEngine` refer to the same engine.
 
 
 ## Vision
@@ -27,7 +27,8 @@
 - Hardware: 1 x NVIDIA H20 GPU, bf16
 - Declared context limit (all three models): 32,768 tokens.
 
-> The submitted model names are Piccolo. The recorded `NaiveVisionEngine` and the published `VisionEngine` refer to the same engine.
+> `Blink` is the internal name for Piccolo in the original run records.
+
 
 ## Run
 
