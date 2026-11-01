@@ -1,0 +1,1 @@
+H2O-Lightning-74B-Bolt v1.0 (https://huggingface.co/h2oai/h2o-lightning-74b-bolt/tree/v1.0): text 65.51, vision 68.96. Results: https://huggingface.co/datasets/h2oai/h2o-lightning-74b-bolt-decision-index/tree/v1.0. Kit f8552a1, http engine for text and decide engine for vision, against serve.sh with PROFILE=di and its defaults, one server per RTX PRO 6000 96GB.
