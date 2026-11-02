@@ -1,0 +1,1 @@
+H2O-Lightning-E4B v1.0 (https://huggingface.co/h2oai/h2o-lightning-e4b/tree/v1.0): text 59.37, vision 59.83. Results: https://huggingface.co/datasets/h2oai/h2o-lightning-e4b-decision-index/tree/v1.0. Kit f8552a1, http engine for text and decide engine for vision, against serve.sh with PROFILE=di and its defaults, one server per NVIDIA L40S 48GB.
