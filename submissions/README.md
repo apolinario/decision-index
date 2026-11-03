@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Boards | Model revision | Public results | Engine and toolkit | Hardware and settings |
+|---|---|---|---|---|---|
+| [Dexy-Decision-9B-V2](https://huggingface.co/Patrick-18/Dexy-Decision-9B-V2) | Text and Vision | `4f434e2b5fd9f0addfe3233489571c2dc8ce7a19` | [Text: 63.20](https://huggingface.co/datasets/Patrick-18/Dexy-Decision-9B-V2-decision-index/blob/be8dfb364317968ca356cbb7d516317a8cee1d0c/runs/dexy-text/scores.json); [Vision: 68.92](https://huggingface.co/datasets/Patrick-18/Dexy-Decision-9B-V2-decision-index/blob/be8dfb364317968ca356cbb7d516317a8cee1d0c/runs/dexy-vision/vision-scores.json) | SystemOne HTTP adapter; Decision Index toolkit `25c6ec7b6b5f44a216c63c3a700de3a9c6d6699d` | One RTX 5090; vLLM `0.32.1rc1.dev117+gdf3bd094a`, BF16, 32,768-token context, primarily four HTTP requests in flight; complete public text/vision runs. [Deployment, settings and reproduction](https://huggingface.co/datasets/Patrick-18/Dexy-Decision-9B-V2-decision-index/tree/be8dfb364317968ca356cbb7d516317a8cee1d0c). |
