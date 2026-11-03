@@ -1,15 +1,15 @@
 # Orion Compass
 
-[Orion Compass](https://huggingface.co/SubstrateAILab/orion-compass/tree/46f8d15dd15d25c397a5f102c4f60598a94b95aa) is a decision model by Substrate AI, fine-tuned from google/gemma-4-31B-it and released under Apache-2.0. It returns one probability for every option of a question about a state, read in a single forward pass. It does not generate text.
+[Orion Compass](https://huggingface.co/SubstrateAILab/orion-compass/tree/47e965e015cde4934cd968e6fb73ded95a1b6a5c) is a decision model by Substrate AI, fine-tuned from google/gemma-4-31B-it and released under Apache-2.0. It returns one probability for every option of a question about a state, read in a single forward pass. It does not generate text.
 
 | | Orion Compass |
 |---|---:|
-| Decision Index 0.3, public index | **65.90** |
+| Decision Index 0.3, public index | **67.83** |
 | Requests | 140,620 `ok` (140,178 scoreable), 0 unsupported, 0 errors |
-| Request time, one request at a time per GPU (scoring run) | median 102 · mean 429 · p80 406 ms |
+| Request time, one request at a time per GPU (scoring run) | median 103 · mean 431 · p80 409 ms |
 | Hardware | 3× NVIDIA RTX PRO 6000 Blackwell Server Edition, one shard each |
-| Model | [`SubstrateAILab/orion-compass`](https://huggingface.co/SubstrateAILab/orion-compass/tree/46f8d15dd15d25c397a5f102c4f60598a94b95aa): private, access on request |
-| Results | [runs/orion-compass-flexdm](https://huggingface.co/datasets/SubstrateAILab/orion-compass-decision-index/tree/55605b9f29c6de5d79a0c842ac391b9bd219738a/runs/orion-compass-flexdm) (compact: no suite text) |
+| Model | [`SubstrateAILab/orion-compass`](https://huggingface.co/SubstrateAILab/orion-compass/tree/47e965e015cde4934cd968e6fb73ded95a1b6a5c): private, access on request |
+| Results | [runs/orion-compass-flexdm](https://huggingface.co/datasets/SubstrateAILab/orion-compass-decision-index/tree/a96e927a91e34dac357945d56258935ff2267603/runs/orion-compass-flexdm) (compact: no suite text) |
 
 ## Engine
 
@@ -44,7 +44,7 @@ Up to 131,072 tokens per request and 255 options per question. A longer request 
 
 ## Reproduce
 
-The kit at `9eb2dbe`, FlexDM v1.0 on the Python path, and the options above. Each process reads one shard of the suite:
+The kit at `25c6ec7`, FlexDM v1.0 on the Python path, and the options above. Each process reads one shard of the suite:
 
 ```bash
 python3 -m decision_index run --engine jevlab.vllm_reader:VllmReader <options above> \
