@@ -19,7 +19,7 @@ To run, first clone the code and create a virtual environment:
 ```bash
 git clone https://github.com/agentscope-ai/Piccolo.git
 cd Piccolo
-git checkout 0b35b631b5e4a9e4a96b059f96ad1c095ffa0253
+git checkout 3664d978a73431ecfa4a3512146d3b7daa93c476
 cd inference/piccolo_inference_sglang
 uv venv --python 3.12 .venv
 source .venv/bin/activate
