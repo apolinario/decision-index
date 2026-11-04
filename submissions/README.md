@@ -1,0 +1,3 @@
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| GLiDE 2B ([`fastino/GLiDE-2B`](https://huggingface.co/fastino/GLiDE-2B) @ `abae01e`) | 0.3 | 60.64 | [`runs/glide-2b`](https://huggingface.co/datasets/fastino/GLiDE-2B-decision-index/tree/54568d9a5987415acfee0d330a7f66a9f9c14f8f/runs/glide-2b) | stock `http` engine against the repo's `/v1/systemone` server (`python -m glide.server`); kit `25c6ec7` | NVIDIA RTX PRO 6000, bf16, one request at a time | none: 140,178 of 140,178 scored requests answered; no requests refused, no options removed |
