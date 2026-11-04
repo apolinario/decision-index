@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [KnowLine-31B-Gen1.5](https://huggingface.co/PelaAI/KnowLine-31B-Gen1.5) | 0.3 | 70.50 | [scores.json](https://huggingface.co/datasets/PelaAI/KnowLine-31B-Gen1.5-decision-index/blob/d22d773d8ba3a02bb94047871d67ec1e7a743306/runs/KnowLine-31B-Gen1.5/scores.json) | `http` against `knowline_server.py` + `knowline_layout.py` from [PelaAI/KnowLine-31B-Gen1.5](https://huggingface.co/PelaAI/KnowLine-31B-Gen1.5/tree/8e56aa1b236a6dd1064dcfd22ba1e5e360e4c140) @ `8e56aa1`, behind SGLang 0.5.21 (bf16), `chat` style, temperature 1 (score questions / 0.6944 via `temperatures.json`), read twice up to 3,000 tokens, question header for longer text-only requests whose prompts fit 32,768 tokens; 132,376 rows carried over from the KnowLine-31B-Gen1 run (byte-identical prompts), 8,244 re-run; runner and scorer `62d2f51` | 4× NVIDIA H20 96 GB, one server per GPU; 4 client shards in parallel per server for the carried rows, 1 to 3 for the re-run | 64 questions per request, 255 options per question; no truncation; 0 unsupported |
