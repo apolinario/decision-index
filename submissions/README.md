@@ -1,0 +1,5 @@
+# Submissions
+
+| Board | Model | Hub repo | Results | Engine and options | Kit commit | Hardware | Resolution | Declared limits |
+|---|---|---|---|---|---|---|---|---|
+| **vision** | LatentMesh Blitz 2B v1 Vision | [LatentMesh-Labs/latentmesh-blitz-2b-v1-vision](https://huggingface.co/LatentMesh-Labs/latentmesh-blitz-2b-v1-vision/tree/ce07ffaf9fab83c68844e5f09838ae47e3d3e5c0) (gated; maintainer access on request) | [runs/latentmesh-blitz-2b-v1-vision/](https://huggingface.co/datasets/LatentMesh-Labs/decision-index-results/tree/126d29415e2ba0f9a4e3073fa0ade4825576041b/runs/latentmesh-blitz-2b-v1-vision) | [vision.vision_engine:Engine](https://huggingface.co/LatentMesh-Labs/latentmesh-blitz-2b-v1-vision/blob/ce07ffaf9fab83c68844e5f09838ae47e3d3e5c0/vision/vision_engine.py), `batch_tokens=32768`; rank-64 adapter, vision tower frozen | f8552a1 | 1 x NVIDIA RTX PRO 6000 Blackwell Server Edition, bf16; scores batched, latency one request at a time | native up to 1.6 MP per image | choice questions with 2 to 20 options, answered by a letter; tested with 1 and 2 images and up to 12 options per request |
