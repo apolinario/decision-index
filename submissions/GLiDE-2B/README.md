@@ -6,7 +6,7 @@
 
 ## Results
 
-- Dataset: [`fastino/GLiDE-2B-decision-index`](https://huggingface.co/datasets/fastino/GLiDE-2B-decision-index/tree/54568d9a5987415acfee0d330a7f66a9f9c14f8f/runs/glide-2b) @ `54568d9`, private
+- Dataset: [`fastino/GLiDE-2B-decision-index`](https://huggingface.co/datasets/fastino/GLiDE-2B-decision-index/tree/54568d9a5987415acfee0d330a7f66a9f9c14f8f/runs/glide-2b) @ `54568d9`
 - Contents of `runs/glide-2b/`: `results.jsonl.gz`, `scores.json`, `index.json`, `benchmark-summary.json`, `environment.json`, `status.json`. The kit's `upload_run` uploaded them; the results file is unmodified.
 - Rescoring with the kit at `25c6ec7` (`score --edition 0.3`) gives 60.64, with all 43 benchmark entries identical.
 
