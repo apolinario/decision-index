@@ -1,0 +1,3 @@
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| Lumma-fev-31B-v2 | 0.3 | 61.97 | [results](https://huggingface.co/datasets/rohitsali/lumma-fev-31b-v2-decision-index/tree/v1.0/runs/lumma-fev-31b-v2) | stock `http` engine at f8552a1, served with AutoJev server.py (branch lora-gemma4) | 4x NVIDIA H100 NVL 94 GB (vast.ai), 4 servers | inputs over 8,192 tokens refused (HTTP 422), not truncated; 371 requests ended as errors (ToolRet 315, POP909-CL 48, BRIGHT 6, API-Bank 2) |
