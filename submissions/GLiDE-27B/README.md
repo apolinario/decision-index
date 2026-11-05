@@ -1,6 +1,7 @@
-# GLiDE V1.2.1 Loop
+# GLiDE 27B
 
-- Model: [`fastino/GLiDE-V1.2.1-Loop`](https://huggingface.co/fastino/GLiDE-V1.2.1-Loop) @ `f86708f3708ee546161f2c9b60655226b5bb5d9f` (private; access for the maintainers)
+- Model: [`fastino/GLiDE-27B`](https://huggingface.co/fastino/GLiDE-27B) @ `f86708f3708ee546161f2c9b60655226b5bb5d9f`
+- Renamed from `fastino/GLiDE-V1.2.1-Loop` (GLiDE V1.2.1 Loop) after this run; same repo, same commit. The run and its results keep the earlier name.
 - Edition: 0.3, full public suite. `scores.json` has `"complete": true`: 140,178 of 140,178 scored requests answered.
 - Decision Index: **72.49** (raw index 79.17)
 
