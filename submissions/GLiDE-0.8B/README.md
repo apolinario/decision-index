@@ -1,6 +1,6 @@
 # GLiDE 0.8B
 
-- Model: [`fastino/GLiDE-0.8B`](https://huggingface.co/fastino/GLiDE-0.8B) @ `d4130bfc133178767f9a9e3f789305dd98725db5` (private; access for the maintainers)
+- Model: [`fastino/GLiDE-0.8B`](https://huggingface.co/fastino/GLiDE-0.8B) @ `d4130bfc133178767f9a9e3f789305dd98725db5`
 - Edition: 0.3, full public suite. `scores.json` has `"complete": true`: 140,178 of 140,178 scored requests answered.
 - Decision Index: **54.32** (raw index 66.29)
 
