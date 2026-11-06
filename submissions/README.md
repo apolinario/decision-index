@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Inference settings | Declared limits |
+|---|---|---:|---|---|---|---|---|
+| karpo-decision-31B ([`MachinePulseAI/karpo-decision-31B`](https://huggingface.co/MachinePulseAI/karpo-decision-31B/tree/8fbe6f7552951ebf18bbbc58a1b0356367b6ece7) @ `8fbe6f7`) | 0.3 | 75.05 | [`runs/karpo-decision-31B`](https://huggingface.co/datasets/MachinePulseAI/karpo-decision-31B-decision-index/tree/5592492efb68b13a32caa9c637973adac14b6191/runs/karpo-decision-31B) | `karpo_decision.serve.engine:DecisionIndexEngine` from [`machinepulse-ai/karpo-decision`](https://github.com/machinepulse-ai/karpo-decision/tree/a6fa38bf4e8de9dbdb9491fb461b9b320a2e2118) @ `a6fa38b`; kit `25c6ec7`, unmodified runner and scorer | 1x NVIDIA RTX PRO 6000 Blackwell | BF16; `view=joint`, `max_length=32768`; temperatures from `decision_config.json` | a question that does not fit in 32,768 tokens with its state is `Unsupported`, never truncated: 403 requests, 11 of them scored |
