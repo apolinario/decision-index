@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Model repository / fixed revision | Public results | Engine / code version | Hardware and inference settings | Declared limits |
+|---|---|---|---|---|---|
+| Jev-Style-2B-Decision-v4.2 (BF16) | [Weights and inference code](https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4.2/tree/e1f30e8e2ae4a415c6cb4e8ec03779bbb3a19f42) | [Public 0.3 run: 46.74](https://huggingface.co/datasets/chaoliangUNSW/decision-index-results-v4.2/tree/d9b4e77a61a906b50cb129e15e25d5a0581c4b93/runs/jev-style-2b-decision-v4.2); [scores.json](https://huggingface.co/datasets/chaoliangUNSW/decision-index-results-v4.2/blob/d9b4e77a61a906b50cb129e15e25d5a0581c4b93/runs/jev-style-2b-decision-v4.2/scores.json), complete | `macjev.eval.di_v4:V4TextEngine` at `e1f30e8e2ae4a415c6cb4e8ec03779bbb3a19f42` | One RTX 4090; 3 disjoint `sha256(group_id)` shards with identical weights; `device=cuda`, `precision=bf16`, `fast=true`, `cuda_graphs=true`, `batch_tokens=8192`; global temperature `0.8813575635811984` | 32,768 total tokens, at most 255 options; no truncation or option filtering |
