@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Inference settings | Declared limits |
+|---|---|---:|---|---|---|---|---|
+| chinese-decision-pointer-4b ([`quincyqiang/chinese-decision-pointer-4b`](https://huggingface.co/quincyqiang/chinese-decision-pointer-4b/tree/889f23e2655e5cba1208bb17f90526092813f5f2) @ `889f23e`) | 0.3 | 61.69 | [`runs/chinese-decision-pointer-4b`](https://huggingface.co/datasets/quincyqiang/chinese-decision-index-results/tree/0ab81f0fbf37e2a1722748c132f058855e39aba5/runs/chinese-decision-pointer-4b) | `decision.decision_index_engine:ChineseDecisionEngine` (in-process) @ yanqiangmiffy/chinese-decision `c16450b`; kit `25c6ec7`, unmodified runner and scorer | 4 x NVIDIA A800 80GB PCIe (one shard per GPU, one process each) | BF16; pointer readout, one forward pass per request, nothing generated; calibration temperature 1.538 from `decision_config.json`; `debias="reverse"` (original and reversed candidate order, probabilities averaged) | 16,384 tokens per prompt; longer choice questions via seeded group tournament (group 16, keep 2, seed 0), nothing cut; 1 request unsupported (context) |
