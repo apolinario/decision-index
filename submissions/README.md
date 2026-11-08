@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| [Logits Sigma-1](https://huggingface.co/logitshq/Logits-Sigma-1/tree/5ee69b5ace03c6bdd4e3391ac722993baa7c8d2d) by Logits (Gemma 4 31B, Apache-2.0) | 0.3 | 67.1 | [scores.json](https://huggingface.co/datasets/logitshq/logits-sigma-1-decision-index/blob/51fe749c15ab5a61e7c91237c91c6ef80559b4ed/runs/logits-sigma-1-kvfp8/scores.json) | `logits_decision.engine_vllm:VllmEngine` from the model repo's `code/` @ `5ee69b5a`, in-process vLLM 0.33.0, bf16 weights, fp8 KV cache, temperature 1.0, read twice up to 3,000 tokens; runner and scorer `25c6ec7`, suite rebuilt with `9eb2dbe` (see [Logits-Sigma-1](Logits-Sigma-1/README.md)) | 8× NVIDIA H200 141 GB, rows assigned to shards by estimated cost, one engine process per GPU, one request at a time per process | 131,072 prompt tokens per question and 255 options per question; longer requests refused, never truncated; 0 unsupported |
