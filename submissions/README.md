@@ -19,20 +19,21 @@
 
 ## Run
 
-To run, first clone the code and create a virtual environment:
+To run, first clone the code and create separate inference and OCR environments:
 
 ```bash
 git clone https://github.com/agentscope-ai/Piccolo.git
 cd Piccolo
-git checkout bb5d912f22855e3b6bdb3d0319164874197d1d1a
+git checkout 8460c2119382c5f00e97680c881f05d1b6f7c8dc
 cd inference/piccolo_inference_sglang
 uv venv --python 3.12 .venv
 source .venv/bin/activate
-uv pip install --prerelease=allow .
-uv pip install --python .venv/bin/python --prerelease=allow '.[ocr]' \
+uv pip install --python .venv/bin/python --prerelease=allow '.[inference]'
+uv venv --python 3.12 .venv-ocr
+uv pip install --python .venv-ocr/bin/python --prerelease=allow '.[ocr]' \
   --extra-index-url https://www.paddlepaddle.org.cn/packages/stable/cu126/ \
   --index-strategy unsafe-best-match
-uv run --no-sync python -m piccolo_inference_sglang.prepare_ocr_models \
+.venv-ocr/bin/python -m piccolo_inference_sglang.prepare_ocr_models \
   --out "$PWD/ocr_models"
 ```
 
@@ -56,7 +57,7 @@ For the vision set, run
 ```bash
 # start the model server
 PICCOLO_OCR_ENABLED=1 \
-PICCOLO_OCR_PYTHON="$PWD/.venv/bin/python" \
+PICCOLO_OCR_PYTHON="$PWD/.venv-ocr/bin/python" \
 PICCOLO_OCR_MODEL_DIR="$PWD/ocr_models" \
 PYTHON="$PWD/.venv/bin/python" \
   bash scripts/launch_vision.sh /models/piccolo-4B-VL-1107 0 18728 \
