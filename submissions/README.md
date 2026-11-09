@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Inference settings | Declared limits |
+|---|---|---:|---|---|---|---|---|
+| gliclass-v4.1-edge ([`knowledgator/gliclass-v4.1-edge`](https://huggingface.co/knowledgator/gliclass-v4.1-edge/tree/6a05e85cbaa7ab536d6dcd19bcfb3ab3b63d6a4d) @ `6a05e85`) | 0.3 | 51.99 | [`runs/gliclass-v4.1-edge`](https://huggingface.co/datasets/knowledgator/decision-index-results/tree/664d77bce9149d8758d8c8e51bd5ab74e0d4ac43/runs/gliclass-v4.1-edge) | in-process `gliclass` engine (`decision_index/engines/gliclass_engine.py`, added in this PR; the run loaded the same file as `gliclass_engine:GLiClassEngine`), gliclass 0.1.22, transformers 5.22.1, torch 2.15.0+cu132; kit `25c6ec7`, unmodified runner and scorer | 4x NVIDIA H100 80GB (shared with a training job) | uni-encoder, bf16, FlashDeBERTa (`USE_FLASHDEBERTA=1`), `max_length=16384`, `batch_tokens=32768`, `probs=normalize`; labels = option descriptions; one classification pass per question, nothing generated | requests over 16,384 tokens refused as `unsupported`, no truncation: 2 of 140,178 (ToolRet) |

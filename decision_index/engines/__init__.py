@@ -3,6 +3,7 @@ from decision_index.engines.base import Engine, NativeAbstention, RandomEngine, 
 REGISTRY = {
     "http": "decision_index.engines.http:HttpSystemOne",
     "transformers": "decision_index.engines.transformers_engine:TransformersEngine",
+    "gliclass": "decision_index.engines.gliclass_engine:GLiClassEngine",
     "random": "decision_index.engines.base:RandomEngine",
     "vllm-vl": "decision_index.vision.engines:VllmVisionChat",
     "decide": "decision_index.vision.engines:HttpDecide",

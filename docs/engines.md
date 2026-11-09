@@ -27,6 +27,23 @@ Verified: the one-pass scores equal naive per-option scoring within 1e-5 (float3
 
 Options: `--model`, `--option revision=...`, `--option device=cuda|mps|cpu`, `--option dtype=bfloat16|float16|float32` (defaults: bfloat16 on CUDA, float32 elsewhere), `--option attn=sdpa|eager`, `--option max_tokens=N`, `--option cache_prefix=false`, `--option chat_template=false`.
 
+## `gliclass`
+
+In-process [GLiClass](https://github.com/Knowledgator/GLiClass) zero-shot classifiers (`pip install -e ".[gliclass]"`). For each question:
+
+1. Render the state as text: a string as-is, a JSON object as `key: value` lines (a list of strings as `key:` then `- item` lines), a list as `- item` lines.
+2. Run one GLiClass classification: the state is the text, the question's `instructions` are the prompt, and every option is a label (its description, or its key when the description is null; if two descriptions are equal, every label gets a `key: ` prefix). `noul` questions use their `criteria`, or yes/no when there are none.
+3. The per-label sigmoid scores are normalized to sum to 1 (`--option probs=softmax` uses a softmax over the logits instead); the choice is the argmax. For `noul` the answer is the probability of `true`.
+
+All questions of a request run in one padded batch, split only to keep (questions x longest input) under `batch_tokens`. Inputs longer than `max_length` tokens raise `Unsupported`; nothing is truncated and no option is dropped. The engine also refuses to start if the GLiClass pipeline would cap `max_length` below the requested value.
+
+```sh
+USE_FLASHDEBERTA=1 python -m decision_index pipeline --engine gliclass --model knowledgator/gliclass-v4.1-edge \
+    --option max_length=16384 --option batch_tokens=32768 --out runs/gliclass-v4.1-edge
+```
+
+Options: `--model`, `--option device=cuda|cpu`, `--option dtype=bfloat16|float16|float32` (defaults: bfloat16 on CUDA, float32 elsewhere), `--option max_length=N` (default: the model config's `max_length`), `--option batch_size=N` (default 32), `--option batch_tokens=N` (default 65536), `--option probs=normalize|softmax`. `USE_FLASHDEBERTA=1` switches DeBERTa encoders to the FlashDeBERTa backend (`pip install flashdeberta`).
+
 ## `random`
 
 Uniform choice over the options with a fixed seed. A sanity check for the pipeline, not a model.
