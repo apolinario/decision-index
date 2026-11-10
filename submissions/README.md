@@ -1,0 +1,3 @@
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| Nishchay ([`DhruShah1001/Nishchay-1B`](https://huggingface.co/DhruShah1001/Nishchay-1B) @ `92a8f15`) | 0.3 | 51.85 | [`runs/nishchay-1b`](https://huggingface.co/datasets/DhruShah1001/nishchay-1b-decision-index/tree/e7e7d3b3df7953a442251ab34a5dd7836505321c/runs/nishchay-1b) (gated, access on request) | stock `http` engine against the repo's `/v1/systemone` server (`python serve.py`); kit `25c6ec7` | 8 × NVIDIA H100 80GB, bf16, one request at a time per replica | 32,768-token context: 7 ToolRet requests over it refused (HTTP 422, recorded unsupported); 140,171 of 140,178 answered; nothing truncated, no options removed |
