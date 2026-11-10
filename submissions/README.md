@@ -1,0 +1,3 @@
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Declared limits |
+|---|---|---:|---|---|---|---|
+| SearchJev ([`SearchJev/SearchJev-27B`](https://huggingface.co/SearchJev/SearchJev-27B) @ `5a81b57`) | 0.3 | 73.52 | [`runs/searchjev-27b`](https://huggingface.co/datasets/SearchJev/SearchJev-27B-decision-index/tree/9e7b3b0019cb08fa8722eed9f2bfd8706cba03dd/runs/searchjev-27b) (gated, access on request) | stock `http` engine against the repo's `/v1/systemone` server (`python -m searchjev.server`); kit `25c6ec7` | NVIDIA H200, bf16, one request at a time | none: 140,178 of 140,178 scored requests answered; no requests refused, no options removed |
