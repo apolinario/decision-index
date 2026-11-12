@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Inference settings | Declared limits |
+|---|---|---:|---|---|---|---|---|
+| [Starlord-2B-v2.0-preview](https://huggingface.co/xsdfasfgsa/Starlord-2B-v2.0-preview) | 0.3 | **66.93** | [scores.json](https://huggingface.co/datasets/xsdfasfgsa/Starlord-preview-DI-results/resolve/b2cca02194ea71da03cbe241666dcdda245240ca/runs/starlord-2B-v2.0-preview/scores.json); [complete run](https://huggingface.co/datasets/xsdfasfgsa/Starlord-preview-DI-results/tree/b2cca02194ea71da03cbe241666dcdda245240ca/runs/starlord-2B-v2.0-preview) | [`direct_engine:DirectEngine`](https://huggingface.co/xsdfasfgsa/Starlord-2B-v2.0-preview/blob/d8c85c5fb3e7129b0e8ac35a703c3749571381b3/inference/direct_engine.py) @ `d8c85c5fb3e7129b0e8ac35a703c3749571381b3`; kit `25c6ec7b6b5f44a216c63c3a700de3a9c6d6699d` | 8 × NVIDIA H800, independent single-GPU workers | BF16; batch 1 per worker; FP32 softmax; temperature 1.0; no generation, KV cache or TF32 | 131,072 input tokens; 512 choices per question; no truncation; 0 unsupported, 0 errors |
