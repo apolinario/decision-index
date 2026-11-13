@@ -5,10 +5,10 @@ Developed by Bernardo B. Perobeli at Artinos. Public text suite 0.3 submission: 
 ## Pinned artifacts
 
 - [Public model overview](https://huggingface.co/artinos/Nadia-1-Small).
-- [Weights and inference code](https://huggingface.co/artinos/Nadia-1-140M/tree/47bf26321b31b84b00507c9fddcecdd3822bab41), revision `47bf26321b31b84b00507c9fddcecdd3822bab41`. The repository is private; maintainer access still needs to be arranged for private evaluation.
-- [Results](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/tree/cf8b253e14ddb39177776a8b65f72ca78b04e8cd), revision `cf8b253e14ddb39177776a8b65f72ca78b04e8cd`.
-- [scores.json](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/blob/cf8b253e14ddb39177776a8b65f72ca78b04e8cd/runs/nadia-1-small/scores.json), [predictions](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/resolve/cf8b253e14ddb39177776a8b65f72ca78b04e8cd/runs/nadia-1-small/results.jsonl.gz), [environment](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/blob/cf8b253e14ddb39177776a8b65f72ca78b04e8cd/runs/nadia-1-small/environment.json) and [hash manifest](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/blob/cf8b253e14ddb39177776a8b65f72ca78b04e8cd/manifest.json).
-- GitHub code: [betitanx/Nadia-1](https://github.com/betitanx/Nadia-1/tree/06e4319cd8354f3da2d245dfb604dcc430ce7f57), revision `06e4319cd8354f3da2d245dfb604dcc430ce7f57`, also private.
+- [Weights and inference code](https://huggingface.co/artinos/Nadia-1-Small/tree/140898caf921adad51b390226ed48a43bf60c45c), revision 140898caf921adad51b390226ed48a43bf60c45c. The historical checkpoint is public for academic, non-commercial research under its [weight terms](https://huggingface.co/artinos/Nadia-1-Small/blob/140898caf921adad51b390226ed48a43bf60c45c/LICENCA_PESOS.md).
+- [Results](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/tree/7a2b0078165fb622a986d765b365b3cd2d9d945c), revision `7a2b0078165fb622a986d765b365b3cd2d9d945c`.
+- [scores.json](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/blob/7a2b0078165fb622a986d765b365b3cd2d9d945c/runs/nadia-1-small/scores.json), [predictions](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/resolve/7a2b0078165fb622a986d765b365b3cd2d9d945c/runs/nadia-1-small/results.jsonl.gz), [environment](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/blob/7a2b0078165fb622a986d765b365b3cd2d9d945c/runs/nadia-1-small/environment.json) and [hash manifest](https://huggingface.co/datasets/artinos/Nadia-1-Decision-Index/blob/7a2b0078165fb622a986d765b365b3cd2d9d945c/manifest.json).
+- Official distribution: [Hugging Face](https://huggingface.co/artinos/Nadia-1-Small). The former GitHub project repository has been retired; the inference code and engine are included in the pinned model release.
 - Kit revision: `f5a6e4fd85fed05e77878dfc4966d0568bfb45ec`.
 - Engine: `avaliacao.engine_decision_index:NadiaEngine`, included in the model repository.
 - Checkpoint SHA-256: `7ea3e7b6a582a09fcf23439575f8150404c8cf71ac087ddd3dbaab06153dcff1`.
@@ -27,7 +27,7 @@ The model uses a shared head to score explicit options. It does not generate cha
 
 ## Reproduction
 
-Once model access has been granted, download the pinned revision and install `modelo/requirements.txt` in an environment with the CUDA version listed above. Install the evaluation kit at its pinned revision. From the model repository root, run:
+Download the public pinned model revision and install `modelo/requirements.txt` in an environment with the CUDA version listed above. Install the evaluation kit at its pinned revision. From the model repository root, run:
 
 ```bash
 python -m decision_index pipeline --edition 0.3 --engine avaliacao.engine_decision_index:NadiaEngine --option repositorio=. --option dispositivo=cuda --option threads=4 --option lote=8 --suite-dir /path/to/suite-0.3 --out runs/nadia-1-small
