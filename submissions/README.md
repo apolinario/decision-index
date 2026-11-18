@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Public index | Results | Engine and settings | Hardware | Limits |
+|---|---|---|---|---|---|---|
+| [Ivonnet-0.8B](https://huggingface.co/illuin/Ivonnet-0.8B/tree/191693c76a22577657c47cd8d77569bc774946fa) (`illuin/Ivonnet-0.8B` @ `191693c`) | 0.3 text + vision | text 41.27, vision 55.99 | [`runs/ivonnet-text`](https://huggingface.co/datasets/illuin/Ivonnet-0.8B-decision-index/tree/4872174e00def41bfc71b89ba66ea677d790c57a/runs/ivonnet-text), [`runs/ivonnet-vision`](https://huggingface.co/datasets/illuin/Ivonnet-0.8B-decision-index/tree/4872174e00def41bfc71b89ba66ea677d790c57a/runs/ivonnet-vision) | in-process kit engines `decision_model.engine:DecisionModelEngine` / `DecisionModelVisionEngine` from the model repo's `source/`; kit `25c6ec7`, unmodified runner and scorer; bf16, non-causal full attention, fitted temperature 1.4467 from `decision_config.json`, padded batching, images capped at 1.6 MP | 1 × NVIDIA RTX PRO 6000 Blackwell (HF Jobs `rtx-pro-6000`), one process | requests over 32,768 tokens refused as unsupported (none hit); 0 unsupported, 0 errors; no truncation |
