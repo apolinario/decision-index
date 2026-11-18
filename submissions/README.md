@@ -13,4 +13,4 @@ Limits are four images per request, 256 choice candidates, 65,536 input tokens p
 
 The weights match the [original checkpoint](https://huggingface.co/inclusionAI/SingVL_S1_4B/tree/93f15cd61c1cf417d9cb2631f6be2df13510829e). The [serial adapter](https://huggingface.co/inclusionAI/SingVL_S1_4B/tree/b6672ce4fd31aab79aee3f0729fd8738f87361cf) and the [original submission snapshot](https://huggingface.co/datasets/echoxvf/SingVL_S1_4B-DI-results/tree/90ec7e159da6fa21d762f1f75876ea79049d0f4a) document the prior run (Text 69.76 and Vision 73.74949871316771).
 
-[Decision Index reproduction guide](https://huggingface.co/inclusionAI/SingVL_S1_4B/blob/dd9fcbe2412068def01666b1d1a443e412f11214/inference/DECISION_INDEX.md) · [Native adapter](https://huggingface.co/inclusionAI/SingVL_S1_4B/blob/dd9fcbe2412068def01666b1d1a443e412f11214/inference/engine.py)
+[Decision Index reproduction guide](https://huggingface.co/inclusionAI/SingVL_S1_4B/blob/c7a7f32ab027735b7dd2742e5b6cfcacaa43f97a/inference/DECISION_INDEX.md) · [Native adapter](https://huggingface.co/inclusionAI/SingVL_S1_4B/blob/dd9fcbe2412068def01666b1d1a443e412f11214/inference/engine.py)
