@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Public index | Results | Engine and settings | Hardware | Limits |
+|---|---|---|---|---|---|---|
+| [IVE-4B](https://huggingface.co/illuin/IVE-4B/tree/2b5c0a6eb0461dd3ebf8f8b31d16e44b570d5b96) (`illuin/IVE-4B` @ `2b5c0a6`) | 0.3 text + vision | text 58.51, vision 71.90 | [`runs/ive-text`](https://huggingface.co/datasets/illuin/IVE-4B-decision-index/tree/828e32772bb1c77a3924cbab675889adccfc2a29/runs/ive-text), [`runs/ive-vision`](https://huggingface.co/datasets/illuin/IVE-4B-decision-index/tree/828e32772bb1c77a3924cbab675889adccfc2a29/runs/ive-vision) | in-process kit engines `decision_model.engine:DecisionModelEngine` / `DecisionModelVisionEngine` from the model repo's `source/`; kit `25c6ec7`, unmodified runner and scorer; bf16, non-causal full attention, fitted temperature 1.5329 from `decision_config.json`, padded batching, images capped at 1.6 MP | 1 × NVIDIA RTX PRO 6000 Blackwell (HF Jobs `rtx-pro-6000`), one process | requests over 32,768 tokens refused as unsupported (none hit); 0 unsupported, 0 errors; no truncation |
