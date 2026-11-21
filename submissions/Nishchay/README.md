@@ -3,6 +3,7 @@
 - Model: [`DhruShah1001/Nishchay-1B`](https://huggingface.co/DhruShah1001/Nishchay-1B) @ `92a8f15`
   (gated, access on request; a 1B Llama-architecture decoder with per-type decision heads and its own `/v1/systemone`
   server, `serve.py`). Research preview, shared for evaluation on the Decision Index.
+  Not the same model as Nischay-1 (`Ajeet-001/nischay-1`, a Gemma 4 fine-tune, #460).
 - Edition: 0.3, full public suite. `scores.json` has `"complete": true`: 140,171 of 140,178 scored requests answered,
   7 unsupported.
 - Decision Index: **51.85** (raw index 64.44)
@@ -12,8 +13,8 @@
 - Dataset: [`DhruShah1001/nishchay-1b-decision-index`](https://huggingface.co/datasets/DhruShah1001/nishchay-1b-decision-index/tree/e7e7d3b3df7953a442251ab34a5dd7836505321c/runs/nishchay-1b) @ `e7e7d3b`
 - Contents of `runs/nishchay-1b/`: `results.jsonl.gz`, `scores.json`, `index.json`, `benchmark-summary.json`, and
   `shards/shard0..7/environment.json` and `status.json` (one per runner process); the results file is unmodified.
-- Access is gated (manual approval) because the results keep each request's payload, i.e. text of suite sources whose
-  terms do not allow republishing. Access requests from the maintainers are approved.
+- Public. The runner was called with `compact=True`, so rows hold the kit's own fields (`run_id`, `payload_sha256`,
+  `status`, `response`, timings) and no `payload` or `raw_output`, the same format as other compact submissions.
 - Rescoring with the kit at `25c6ec7` (`score --edition 0.3`) gives 51.85.
 
 ## How it was run
