@@ -1,0 +1,5 @@
+# Leaderboard submission
+
+| Model | Tracks | Model and inference | Public results | Engine and settings |
+|---|---|---|---|---|
+| VisionJEV-9B | Vision (0.3) | [model + inference](https://huggingface.co/taoszhang/VisionJEV-9B) | [scores](https://huggingface.co/datasets/taoszhang/VisionJEV-9B-results/blob/main/runs/visionjev-9b-vision/scores.json), [complete run](https://huggingface.co/datasets/taoszhang/VisionJEV-9B-results/tree/main/runs/visionjev-9b-vision) | Native D3 public run on 4 × 8 NVIDIA A800-SXM4-80GB GPUs; BF16 backbone / FP32 readout, SDPA, noncausal full attention, last-token pooling, temperature 1.0; batch size 8, batch-token budget 8192; image pixels 589,824–1,638,400; no OCR or permutation averaging. Reproduction: Decision Index HTTP engine → model repository's d3_server.py at /v1/systemone. [Environment, parameters, revisions, provenance and commands](https://huggingface.co/datasets/taoszhang/VisionJEV-9B-results/blob/main/runs/visionjev-9b-vision/environment.json). |
