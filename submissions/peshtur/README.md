@@ -38,7 +38,7 @@ Complete run of all 12,210 rows of the Decision Index Vision 0.3 public suite, a
 | R-Bench-M | 665 | 33.38 | 20.05 | 0.50 |
 | MMMU-Pro vision | 1,730 | 41.21 | 32.58 | 0.25 |
 
-**Latency (1 x NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB, sequential, live OCR included):** measured over the fixed 547-row sample (`sha1(id) % 20 == 0` of the 10 non-Winoground benchmarks) starting from empty kernel caches, excluding 87.3 s load + warm-up: **median 154.3 ms**, mean 200.7 ms, p80 257.5 ms, p95 544.7 ms, p99 945.5 ms, max 1,210.6 ms (`3 / 547` over 1,000 ms; median OCR 40.2 ms; peak VRAM 12.53 GB). Cross-GPU parity vs the H200 scored run on the 547 rows: `544 / 547` (`99.45%`) identical answers, `index_diff = 0.00`.
+**Latency (1 x NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB, sequential, live OCR included):** measured over the fixed 547-row sample (`sha1(id) % 20 == 0` of the 10 non-Winoground benchmarks) starting from empty kernel caches, excluding 87.3 s load + warm-up: **median 154.3 ms**, mean 200.7 ms, p80 257.5 ms, p95 544.7 ms, p99 945.5 ms, max 1,210.6 ms (`3 / 547` over 1,000 ms; median OCR 40.2 ms; peak VRAM 12,531 MiB (13.1 GB)). Cross-GPU parity vs the H200 scored run on the 547 rows: `544 / 547` (`99.45%`) identical answers, `index_diff = 0.00`.
 
 ## Reproducing
 
