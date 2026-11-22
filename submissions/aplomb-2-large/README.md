@@ -30,6 +30,9 @@ python -m decision_index run --engine aplomb2_large.engine:LargeEngine \
 - Mixing: for a choice question, the mean of the members' option probabilities (its argmax is the answer); for a
   yes/no question, the mean P(true); for a score question, the mean level probabilities. The weights are fixed and
   never depend on the benchmark.
+- Jeffan-27B-1211 was chosen with public-suite results in view: of karpo-decision-31B's equal-weight pairs with six
+  other published entries, scored from their published public-run results (a few three-member and weighted variants
+  as well), the pair with it scored highest, so part of the public score above is selection on the public suite.
 - Size rule: a request whose `proxy_tokens` times its number of questions exceeds 20,000 is answered by
   karpo-decision-31B alone; a request one member declares it cannot read is answered by the other. Nothing is
   truncated and no option is dropped.
