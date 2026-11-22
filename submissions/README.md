@@ -1,0 +1,8 @@
+# Model submissions
+
+| Model | Panel | Public index | Model revision | Results | Engine and hardware |
+| --- | --- | ---: | --- | --- | --- |
+| [singvl_4b 1.2](https://huggingface.co/inclusionAI/SingVL_S1_4B) | Text | 70.95 | [c0846efa](https://huggingface.co/inclusionAI/SingVL_S1_4B/tree/c0846efa6a53bd21537f0f78e262dadcdabf39f7) | [scores.json](https://huggingface.co/datasets/echoxvf/SingVL_S1_4B-DI-results/blob/4cf2a19d25ed0fc57f5af1e6271ab9f7e61d7451/runs/singvl-s1-4b-optmerge-text/scores.json) | BF16 Transformers, `optmerge_engine:D3Engine`, 16 independent PPU-ZW810E workers |
+| [singvl_4b 1.2](https://huggingface.co/inclusionAI/SingVL_S1_4B) | Vision | 77.15763949890196 | [c0846efa](https://huggingface.co/inclusionAI/SingVL_S1_4B/tree/c0846efa6a53bd21537f0f78e262dadcdabf39f7) | [vision-scores.json](https://huggingface.co/datasets/echoxvf/SingVL_S1_4B-DI-results/blob/4cf2a19d25ed0fc57f5af1e6271ab9f7e61d7451/runs/singvl-s1-4b-optmerge-vision/vision-scores.json) | BF16 Transformers, `optmerge_engine:D3Engine`, 16 independent PPU-ZW810E workers |
+
+Both full public runs use the Decision Index 0.3 suite and kit commit `f5a6e4fd85fed05e77878dfc4966d0568bfb45ec`. The native engine uses the frozen Scheme1 v2 template, bidirectional full attention, causal GDN and disabled KV caching. Text subquestions share a 65,536-token padded batch budget. The context limit is 262,144 tokens and the image cap is 1,638,400 pixels per image. The adapter and exact runtime commands are in the pinned results release. [Reproduction guide](https://huggingface.co/datasets/echoxvf/SingVL_S1_4B-DI-results/tree/4cf2a19d25ed0fc57f5af1e6271ab9f7e61d7451/releases/optmerge-20261122)
