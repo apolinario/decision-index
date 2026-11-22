@@ -3,7 +3,7 @@
 Text-only Decision Index submission. Please evaluate this model on the maintainers’ private same-skills and new-domain tests for the Full score.
 
 - [Model and model card](https://huggingface.co/Ainvest-World/Ainvest-Decision-31b-v2.0)
-- [Pinned weights and inference package](https://huggingface.co/Ainvest-World/Ainvest-Decision-31b-v2.0/tree/8e1ed5b2a6a268282010635206f2362cf88e5d12) at `8e1ed5b2a6a268282010635206f2362cf88e5d12`
+- [Pinned weights and inference package](https://huggingface.co/Ainvest-World/Ainvest-Decision-31b-v2.0/tree/010609e29438d1c434d0fcce42c61d4178735001) at `010609e29438d1c434d0fcce42c61d4178735001`
 - [Complete public scores](https://huggingface.co/datasets/Ainvest-World/Ainvest-Decision-31b-v2.0-decision-index-results/blob/4ad6c627ac1e78f3a1c9de44d18a955db6882980/runs/gemma-b4857/scores.json): Public **71.58**, raw **78.19**, `complete: true`
 - [Original complete run](https://huggingface.co/datasets/Ainvest-World/Ainvest-Decision-31b-v2.0-decision-index-results/tree/4ad6c627ac1e78f3a1c9de44d18a955db6882980/runs/gemma-b4857): 140,178 requests / 312,320 subquestions, all successful
 - [Raw result archive](https://huggingface.co/datasets/Ainvest-World/Ainvest-Decision-31b-v2.0-decision-index-results/resolve/4ad6c627ac1e78f3a1c9de44d18a955db6882980/runs/gemma-b4857/results.jsonl.gz)
@@ -22,13 +22,22 @@ Each question is rendered independently with its complete state, instructions, q
 Use Python 3.12/Linux/CUDA. Install a CUDA-compatible PyTorch 2.14.0 build first; FlashAttention may require a matching CUDA toolkit. Validated dependencies include Transformers 5.17.0, FlashAttention 2.8.3.post2 and Triton 3.8.0. BF16 checkpoint size is approximately 62.55 GB.
 
 ```bash
-python -c 'from huggingface_hub import snapshot_download; print(snapshot_download("Ainvest-World/Ainvest-Decision-31b-v2.0", revision="8e1ed5b2a6a268282010635206f2362cf88e5d12"))'
+python -c 'from huggingface_hub import snapshot_download; print(snapshot_download("Ainvest-World/Ainvest-Decision-31b-v2.0", revision="010609e29438d1c434d0fcce42c61d4178735001"))'
 AINVEST_MODEL_DIR=/absolute/path/to/snapshot
 pip install --no-build-isolation -r "$AINVEST_MODEL_DIR/requirements.lock.txt"
 pip install --no-deps "$AINVEST_MODEL_DIR"
 ```
 
 The Python API is `ainvest_decision.engine:AinvestDecisionEngine`; `__call__(state, questions)` returns `(response, raw)`. `choice` answers retain the original option keys and a probability for every option. `noul` returns P(true).
+
+The [lock file](https://huggingface.co/Ainvest-World/Ainvest-Decision-31b-v2.0/blob/010609e29438d1c434d0fcce42c61d4178735001/requirements.lock.txt) pins `accelerate==1.15.0` for loading with `device_map`. A fresh Python 3.12 virtual environment installed the locked dependencies from cached wheels and passed `pip check`. On one NVIDIA H100, the installed CLI loaded the published BF16 checkpoint and answered the packaged example correctly. The same check can be run after installation.
+
+```bash
+smoke_dir="$(mktemp -d)"
+ainvest-decision --model "$AINVEST_MODEL_DIR" --device cuda:0 \
+  --input "$AINVEST_MODEL_DIR/examples/request.jsonl" \
+  --output "$smoke_dir/answers.jsonl"
+```
 
 ## Full public reproduction
 
@@ -38,7 +47,7 @@ Install the official Decision Index kit separately. Build and import the frozen 
 python -m decision_index pipeline --edition 0.3 \
   --engine ainvest_decision.engine:AinvestDecisionEngine \
   --option model=Ainvest-World/Ainvest-Decision-31b-v2.0 \
-  --option revision=8e1ed5b2a6a268282010635206f2362cf88e5d12 \
+  --option revision=010609e29438d1c434d0fcce42c61d4178735001 \
   --option device=cuda:0 --option dtype=bfloat16 \
   --option max_length=262144 \
   --option read_twice=1 --option twice_max_tokens=3000 \
