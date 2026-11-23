@@ -1,6 +1,8 @@
 # DawDun-4B-v1 Decision Index inference
 
-The deployment includes a local HTTP server and a Python engine for the Decision Index kit. The server uses the pinned DawDun-4B-v1 export with its calibrated 255-class readout. The archived public runs used a native 255-class engine. GPU output parity with the archived runs remains to be verified.
+The deployment includes the inference path from the public evaluation, packaged as a Python engine and a local HTTP server. It loads the pinned DawDun-4B-v1 export with its calibrated 255-class readout. The engine preserves the evaluation's one-question encoding, last-token readout, bidirectional full attention, FP32 projection and softmax after per-type temperature scaling.
+
+A CPU comparison against the archived evaluation engine used the same source weights and runtime for two text and two vision requests. All decisions and probabilities matched exactly on those requests. GPU output parity with the archived scores remains to be verified.
 
 This adapter accepts a compatible 255-class inference export. It formats the question as evidence, instructions, and lettered options, then returns a probability per option. A request may contain several questions. Each question gets its own forward pass. The readout uses the final prompt token and the exported per-type temperatures.
 

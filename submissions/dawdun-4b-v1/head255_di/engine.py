@@ -1,4 +1,4 @@
-"""Inference-only engine for the public Decision Index runner."""
+"""Inference-only export of the DawDun public evaluation path."""
 
 from __future__ import annotations
 
@@ -42,14 +42,19 @@ def make_answer(row, probabilities):
 
 
 def noncausal_full_attention(module, args, kwargs):
+    import torch
     from transformers.masking_utils import create_recurrent_attention_mask
 
     if args or kwargs.get("past_key_values") is not None or kwargs.get("use_cache"):
         raise ValueError("this attention path requires an uncached forward")
-    padding = kwargs["attention_mask"]
+    padding = kwargs.get("attention_mask")
+    if isinstance(padding, dict):
+        return args, kwargs
     embeddings = kwargs.get("inputs_embeds")
     if embeddings is None:
         embeddings = module.embed_tokens(kwargs["input_ids"])
+    if padding is None:
+        padding = torch.ones(embeddings.shape[:2], device=embeddings.device, dtype=torch.bool)
     kwargs["attention_mask"] = {
         "full_attention": padding[:, None, None, :].bool(),
         "linear_attention": create_recurrent_attention_mask(
@@ -99,7 +104,7 @@ def read_head_config(ckpt):
 class Head255Engine(Engine):
     """One forward per question and one probability per supplied choice."""
 
-    name = "head255-4b"
+    name = "DawDun-4B-v1"
     latency = "In-process wall time for the whole request on a single device."
 
     def __init__(self, model, *, revision=None, device="cuda", context_tokens=None,
@@ -136,7 +141,7 @@ class Head255Engine(Engine):
         self.backbone = Qwen3_5Model.from_pretrained(
             ckpt, dtype=torch.bfloat16 if bf16 else torch.float32,
             attn_implementation="sdpa", **placement
-        ).eval()
+        ).eval().requires_grad_(False)
         if getattr(self.backbone.config, "jev_prompt_attention", None) != "bidirectional":
             raise ValueError("model bundle is missing the bidirectional prompt attention setting")
         if len(tokenizer) > self.backbone.get_input_embeddings().num_embeddings:
@@ -147,15 +152,18 @@ class Head255Engine(Engine):
         if not 1 <= self.context_tokens <= text_config.max_position_embeddings:
             raise ValueError("context exceeds the checkpoint's native limit")
         weight_file = ckpt / "readout.safetensors"
-        self.weight = load_file(str(weight_file))["weight"].to(self.device, dtype=torch.float32)
-        if self.weight.shape != (MAX_OPTIONS, text_config.hidden_size):
-            raise ValueError("invalid 255-class readout shape")
+        self.readout = torch.nn.Linear(
+            text_config.hidden_size, MAX_OPTIONS, bias=False, device=self.device, dtype=torch.float32
+        )
+        self.readout.load_state_dict(load_file(str(weight_file)))
+        self.readout.eval().requires_grad_(False)
         self.provenance = {
             "model": source,
             "revision": resolved_revision,
             "readout_sha256": sha256(weight_file.read_bytes()).hexdigest(),
             "temperatures": self.temperatures,
             "protocol": "single-question-head255-v1",
+            "readout_path": "public-evaluation",
         }
 
     def _open_images(self, refs):
@@ -171,7 +179,7 @@ class Head255Engine(Engine):
                 raise Unsupported("unable to read a supplied image") from exc
         return images
 
-    def _forward(self, row, pictures):
+    def _encode(self, row, pictures):
         torch = self.torch
         tokenizer = self.processor.tokenizer
         try:
@@ -189,7 +197,7 @@ class Head255Engine(Engine):
                     raise ValueError("processed image exceeds the declared pixel budget")
             else:
                 ids = tokenizer.encode(rendered, add_special_tokens=False)
-                inputs = {"input_ids": torch.tensor([ids], dtype=torch.long),
+                inputs = {"input_ids": torch.tensor([ids]),
                           "attention_mask": torch.ones((1, len(ids)), dtype=torch.long)}
                 pixels, image_tokens = [], None
         except ValueError as exc:
@@ -197,15 +205,26 @@ class Head255Engine(Engine):
         length = inputs["input_ids"].shape[-1]
         if length > self.context_tokens:
             raise Unsupported(f"expanded prompt has {length} tokens, capacity is {self.context_tokens}")
-        args = {key: value.to(self.device) for key, value in inputs.items() if torch.is_tensor(value)}
-        hidden = self.backbone(**args, use_cache=False, return_dict=True).last_hidden_state[:, -1]
-        with torch.autocast(device_type=self.device.type, enabled=False):
-            logits = torch.nn.functional.linear(hidden.float(), self.weight)[0, :len(row["options"])]
-        if row["type"] == "noul":
-            logits = logits.flip(0)
-        temperature = torch.tensor(self.temperatures[row["type"]], dtype=torch.float32, device=self.device)
-        probs = (logits / temperature).softmax(-1).cpu().tolist()
-        return probs, length, pixels, image_tokens
+        inputs["decision_positions"] = torch.tensor([length - 1])
+        inputs["decision_temperature"] = torch.tensor([self.temperatures[row["type"]]])
+        inputs["decision_noul"] = torch.tensor([row["type"] == "noul"])
+        encoded = {key: value.to(self.device) for key, value in inputs.items() if torch.is_tensor(value)}
+        return encoded, length, pixels, image_tokens
+
+    def _forward(self, encoded, option_count):
+        torch = self.torch
+        inputs = dict(encoded)
+        positions = inputs.pop("decision_positions")
+        rows = torch.zeros_like(positions)
+        temperatures = inputs.pop("decision_temperature")
+        noul = inputs.pop("decision_noul")
+        hidden = self.backbone(**inputs, use_cache=False, return_dict=True).last_hidden_state
+        with torch.autocast(device_type=hidden.device.type, enabled=False):
+            logits = torch.nn.functional.linear(hidden[rows, positions].float(), self.readout.weight.float())
+        value = logits[0, :option_count]
+        if noul[0]:
+            value = value.flip(0)
+        return (value / temperatures[0]).softmax(-1).cpu().tolist()
 
     def __call__(self, state, questions, images=(), prompt=None):
         if prompt and set(prompt) - {"options_in_image", "readout"}:
@@ -218,7 +237,8 @@ class Head255Engine(Engine):
                     row = render_question(state, spec, len(pictures))
                 except ValueError as exc:
                     raise Unsupported(str(exc)) from exc
-                odds, length, pixels, image_tokens = self._forward(row, pictures)
+                encoded, length, pixels, image_tokens = self._encode(row, pictures)
+                odds = self._forward(encoded, len(row["options"]))
                 answers[key] = make_answer(row, odds)
                 tokens += length
         response = {"model": self.name, "answers": answers,
@@ -242,6 +262,6 @@ class Head255Engine(Engine):
 
     def close(self):
         del self.backbone
-        del self.weight
+        del self.readout
         if self.device.type == "cuda":
             self.torch.cuda.empty_cache()
