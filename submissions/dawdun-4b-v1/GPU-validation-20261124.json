@@ -1,0 +1,63 @@
+{
+  "model_repo": "Doffe/DawDun-4B-v1",
+  "model_revision": "157143ee296358abb9557e4bf04c2e2d15a7951d",
+  "inference_repo": "Doffe/DawDun-4B-v1-Decision-Index",
+  "inference_revision": "77390c12c8234e44bd8705d15d45770a0a68783f",
+  "device": "NVIDIA H800",
+  "gpu": "5",
+  "torch": "2.6.0+cu124",
+  "transformers": "5.20.1",
+  "memory_fraction": 0.28,
+  "peak_allocated_bytes": 10139597824,
+  "text": {
+    "reference": {
+      "requests": 76,
+      "questions": 110,
+      "changed_answers": 0,
+      "token_count_mismatches": 0,
+      "max_absolute_probability_difference": 0.0,
+      "exact_probability_requests": 76
+    },
+    "archive": {
+      "requests": 76,
+      "questions": 110,
+      "changed_answers": 0,
+      "token_count_mismatches": 0,
+      "max_absolute_probability_difference": 0.017237544059753418,
+      "exact_probability_requests": 40
+    }
+  },
+  "vision": {
+    "reference": {
+      "requests": 22,
+      "questions": 22,
+      "changed_answers": 0,
+      "token_count_mismatches": 0,
+      "max_absolute_probability_difference": 0.0,
+      "exact_probability_requests": 22
+    },
+    "archive": {
+      "requests": 22,
+      "questions": 22,
+      "changed_answers": 0,
+      "token_count_mismatches": 0,
+      "max_absolute_probability_difference": 0.0,
+      "exact_probability_requests": 22
+    }
+  },
+  "endpoints": [
+    {
+      "endpoint": "/v1/systemone",
+      "max_absolute_probability_difference": 0.0,
+      "changed_answers": 0,
+      "input_tokens_equal": true
+    },
+    {
+      "endpoint": "/v1/decisions",
+      "max_absolute_probability_difference": 0.0,
+      "changed_answers": 0,
+      "input_tokens_equal": true
+    }
+  ],
+  "differences": []
+}

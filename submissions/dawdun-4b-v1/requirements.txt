@@ -1,0 +1,7 @@
+decision-index @ git+https://github.com/apolinario/decision-index.git@25c6ec7b6b5f44a216c63c3a700de3a9c6d6699d
+torch>=2.6.0
+torchvision>=0.21.0
+transformers==5.20.1
+accelerate
+safetensors
+Pillow
