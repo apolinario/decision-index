@@ -1,10 +1,8 @@
 # Sieve-9B-v3 evaluation harness
 
-Sieve-9B-v3 is a proprietary decision model by Sthānika AI, a full fine-tune of `Qwen/Qwen3.5-9B`, stored as a bf16
-model plus `head.pt`. Its weights are not public:
-they are in the private repository `sthanika-ai/Sieve-9B-v3-eval`, to which we have invited the maintainers'
-Hugging Face account (`multimodalart`), under an evaluation licence. Customers use the model through the Sieve platform
-API.
+Sieve-9B-v3 is an open-weights decision model by Sthānika AI, a full fine-tune of `Qwen/Qwen3.5-9B`, stored as a bf16
+model plus `head.pt`. Its weights are public under Apache-2.0:
+[`sthanika-ai/Sieve-9B-v3`](https://huggingface.co/sthanika-ai/Sieve-9B-v3).
 
 The engine is `sieve.decision_index_engine:SieveEngine` from the open-source `sieve` package 0.5.1
 ([github.com/sthanika-ai/Sieve](https://github.com/sthanika-ai/Sieve) at
@@ -20,7 +18,7 @@ pip install -r https://raw.githubusercontent.com/sthanika-ai/Sieve/223b92a5e5b5b
 pip install ninja packaging wheel setuptools && pip install --no-build-isolation causal-conv1d==1.7.0   # recommended
 pip install --no-deps "sieve-decisions @ git+https://github.com/sthanika-ai/Sieve@223b92a5e5b5b1e1def38e1d53625a7244f6b569"
 pip install --no-deps "decision-index @ git+https://github.com/apolinario/decision-index@25c6ec7"
-hf download sthanika-ai/Sieve-9B-v3-eval --revision d372c05aa5a628b42ebca109de77f003bfaf80b5 --local-dir Sieve-9B-v3
+hf download sthanika-ai/Sieve-9B-v3 --revision 9b9612522a0fd94f49dd556f1744deded4a09c92 --local-dir Sieve-9B-v3
 python -m decision_index run --engine sieve.decision_index_engine:SieveEngine --option model=Sieve-9B-v3 --out runs/Sieve-9B-v3
 ```
 
@@ -37,8 +35,8 @@ requests over all 43 benchmarks, 1,606 questions, probability difference 0.0).
 ## The submitted run
 
 The complete public run (`runs/Sieve-9B-v3/` in
-[sthanika-ai/Sieve-9B-v3-eval-results](https://huggingface.co/datasets/sthanika-ai/Sieve-9B-v3-eval-results/tree/089745f78f8733615304148bbbf0841b124fc090)) used the same files (checksums in the model
-repository's `SHA256SUMS`; `head.pt` sha256 `67753ed7…`) with our in-process letter engine
+[sthanika-ai/Sieve-9B-v3-decision-index-results](https://huggingface.co/datasets/sthanika-ai/Sieve-9B-v3-decision-index-results/tree/d03026b960241402f9bce41e373509d6e6dc31a9)) used the same files (checksums in the model
+repository's `provenance.json`; `head.pt` sha256 `67753ed7…`) with our in-process letter engine
 (`sieve.letters_engine:LettersEngine`), which computes what the exact mode above computes: bf16, eager, one request at a
 time per process, the suite in ten shards on 10× NVIDIA A100-SXM4-40GB. Public index **67.60**; all 140,178 scoreable requests `ok`, nothing unsupported or truncated.
 
