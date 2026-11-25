@@ -30,7 +30,7 @@ To run, first clone the code and create separate inference and OCR environments:
 ```bash
 git clone https://github.com/agentscope-ai/Piccolo.git
 cd Piccolo
-git checkout 044ac71e82bb079dee1ce2f464ca95ba086dc16b
+git checkout 39450cf7a954a4af32cb8ddd4a31f1075091cfdc
 cd inference/piccolo_inference_sglang
 export PLUGIN_ROOT="$PWD"
 uv venv --python 3.12 .venv
