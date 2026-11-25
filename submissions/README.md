@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Inference settings | Declared limits |
+|---|---|---:|---|---|---|---|---|
+| Domr-Decide-Loop-4B-v1 ([`runelab-ai/Domr-Decide-Loop-4B-v1`](https://huggingface.co/runelab-ai/Domr-Decide-Loop-4B-v1/tree/8cbac72f960b91d4e5e3d9668fdd630c87ac6e1d) @ `8cbac72f`) | 0.3 | 63.89 | [`runs/domr-decide-loop-4b-v1/scores.json`](https://huggingface.co/datasets/runelab-ai/Domr-Decide-Loop-4B-v1-decision-index-0.3/blob/5dc1b3ed21a001cf92c5a84bb88d73e207f00ad3/runs/domr-decide-loop-4b-v1/scores.json) (`140,178 / 140,178`, `complete: true`) | `domr_di_engine:DomrEngine` (`sha256: 8d43bc6d`, bundled in model repo), kit `25c6ec7` | NVIDIA RTX PRO 6000 Blackwell 96GB / MIG 24GB (`torch==2.14.0+cu130`, `transformers==5.17.0`, `flash-linear-attention==0.5.2`) | BF16, `mode="separate"`, `fast=False`, parameter-free two-band damped fixed-point loop `([12-15], [16-23])`, `eta=0.35`, `R=2`, clean GDN state per pass, `temperatures={"choice": 1.0, "noul": 1.0, "score": 1.0}` | Text/JSON only; max 32,768 tokens per question (no truncation); 2 to 255 options per choice question |
