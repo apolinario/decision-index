@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Boards / public index | Results | Inference code | Reproduction hardware | Inference settings |
+| --- | --- | --- | --- | --- | --- |
+| [Tanager-27B](https://huggingface.co/Hellen123456/Tanager-27B/tree/491fa245dcdd80f135bbab87d29c29f38c185480) | Text 69.75, Vision 81.88 (Public 0.3, both complete) | [Text](https://huggingface.co/datasets/Hellen123456/Tanager-27B-Results/blob/8015efeabe4be113d4206c43a51a732f5c1f1da7/runs/text/scores.json), [Vision](https://huggingface.co/datasets/Hellen123456/Tanager-27B-Results/blob/8015efeabe4be113d4206c43a51a732f5c1f1da7/runs/vision/vision-scores.json), [Results dataset](https://huggingface.co/datasets/Hellen123456/Tanager-27B-Results/tree/8015efeabe4be113d4206c43a51a732f5c1f1da7) | [D3 inference](https://huggingface.co/Hellen123456/Tanager-27B/tree/491fa245dcdd80f135bbab87d29c29f38c185480/inference), [Reproduction](https://huggingface.co/datasets/Hellen123456/Tanager-27B-Results/blob/8015efeabe4be113d4206c43a51a732f5c1f1da7/README.md#reproduce-on-nvidia-a800) | NVIDIA A800 | BF16 backbone, FP32 readout, 589,824–1,638,400 pixels per image. |
