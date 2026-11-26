@@ -1,0 +1,5 @@
+# Model submissions
+
+| Model | Boards / public index | Results | Inference code | Reproduction hardware | Inference settings |
+| --- | --- | --- | --- | --- | --- |
+| [Cairn-27B](https://huggingface.co/Jack123236/Cairn-27B/tree/f85884de9a76cbdc6c448e1233d272354ce245b8) | Text 70.23, Vision 82.91 (Public 0.3, both complete) | [Text](https://huggingface.co/datasets/Jack123236/Cairn-27B-Results/blob/280aa45bbedf19c6ce836e60b114adee5ce3bfbf/runs/text/scores.json), [Vision](https://huggingface.co/datasets/Jack123236/Cairn-27B-Results/blob/280aa45bbedf19c6ce836e60b114adee5ce3bfbf/runs/vision/vision-scores.json), [Results dataset](https://huggingface.co/datasets/Jack123236/Cairn-27B-Results/tree/280aa45bbedf19c6ce836e60b114adee5ce3bfbf) | [D3 inference](https://huggingface.co/Jack123236/Cairn-27B/tree/f85884de9a76cbdc6c448e1233d272354ce245b8/inference), [Reproduction](https://huggingface.co/datasets/Jack123236/Cairn-27B-Results/blob/280aa45bbedf19c6ce836e60b114adee5ce3bfbf/README.md#reproduce-on-nvidia-a800) | NVIDIA A800 | BF16 backbone, FP32 readout, 589,824–1,638,400 pixels per image. |
