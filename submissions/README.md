@@ -11,8 +11,8 @@ requirements.
 
 ```text
 Model: Zoellent xjyh-jev-1.3
-Weights: https://huggingface.co/haibin16/xjyh-jev-1.3
-Results: https://huggingface.co/datasets/haibin16/decision-index-results/tree/main/runs/xjyh-jev-1.3
+Weights: https://huggingface.co/Zoellent/xjyh-jev-1.3
+Results: https://huggingface.co/datasets/Zoellent/decision-index-results/tree/main/runs/xjyh-jev-1.3
 Kit: decision_index 0.3
 Engine: decision_index.http, model=xjyh-jev-1.3, endpoint=/v1/systemone (StartLux-Prism v1.0.1, Q8_0 GGUF sha256 57779897aee8721f3349f4bcc9202065748f989cf619015b0bfee2682bb0b86e)
 Hardware: 8 x NVIDIA H100 80GB (one Prism replica per GPU)
@@ -26,6 +26,6 @@ Public index: decision_index=57.36, raw_index=67.62, breadth_skill=56.72 (editio
 The results dataset is private by default (as produced by the kit's `hf-job`); access for
 review can be granted on request.
 
-Note: weights and results currently live under the personal namespace `haibin16` and will be
-moved to `Zoellent/xjyh-jev-1.3` and `Zoellent/decision-index-results` once the `Zoellent`
-organization is created; the old URLs keep redirecting after the move.
+Note: weights and results live under the `Zoellent` organization
+(`Zoellent/xjyh-jev-1.3`, `Zoellent/decision-index-results`); the previous `haibin16`
+URLs redirect to the new locations.
