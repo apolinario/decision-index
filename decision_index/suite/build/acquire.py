@@ -75,21 +75,28 @@ NEEDS = {
 }
 
 
+# Git for Windows ships with core.autocrlf=true, which rewrites LF -> CRLF on
+# checkout. Files pinned by SHA-256 (e.g. RAGTruth's response.jsonl) then fail
+# verification even though the repository content is untouched. Override the
+# setting per invocation so the working tree always matches the blob bytes.
+GIT = ["git", "-c", "core.autocrlf=false", "-c", "core.eol=lf", "-c", "core.safecrlf=false"]
+
+
 def git_fetch(dest, url, revision, sparse=None, log=print):
     dest = Path(dest)
     if (dest / ".git").exists():
-        head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=dest, text=True).strip()
+        head = subprocess.check_output([*GIT, "rev-parse", "HEAD"], cwd=dest, text=True).strip()
         if head == revision:
             return
     dest.mkdir(parents=True, exist_ok=True)
     if not (dest / ".git").exists():
-        subprocess.run(["git", "init", "-q"], cwd=dest, check=True)
-        subprocess.run(["git", "remote", "add", "origin", url], cwd=dest, check=True)
+        subprocess.run([*GIT, "init", "-q"], cwd=dest, check=True)
+        subprocess.run([*GIT, "remote", "add", "origin", url], cwd=dest, check=True)
     if sparse:
-        subprocess.run(["git", "sparse-checkout", "set", "--no-cone", *sparse, "LICENSE*", "README*", "*.md", "*.txt", "*.py"], cwd=dest, check=True)
+        subprocess.run([*GIT, "sparse-checkout", "set", "--no-cone", *sparse, "LICENSE*", "README*", "*.md", "*.txt", "*.py"], cwd=dest, check=True)
     log(f"fetching {url} @ {revision[:10]}")
-    subprocess.run(["git", "fetch", "-q", "--depth", "1", "origin", revision], cwd=dest, check=True)
-    subprocess.run(["git", "checkout", "-q", "FETCH_HEAD"], cwd=dest, check=True)
+    subprocess.run([*GIT, "fetch", "-q", "--depth", "1", "origin", revision], cwd=dest, check=True)
+    subprocess.run([*GIT, "checkout", "-q", "FETCH_HEAD"], cwd=dest, check=True)
 
 
 def http_fetch(dest, url, expected_sha, log=print):
