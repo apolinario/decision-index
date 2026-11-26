@@ -1,0 +1,5 @@
+# Submissions
+
+| Board | Model | Hub repo | Results | Engine and options | Kit commit | Hardware | Resolution | Declared limits |
+|---|---|---|---|---|---|---|---|---|
+| **vision** | Trio-Spark-Vision-0.3 | [Model](https://huggingface.co/MachineFi/Trio-Spark-Vision-0.3/tree/912ac283ea30fd1b42fd821ca5d4d2e8625371a3); revision `912ac283ea30fd1b42fd821ca5d4d2e8625371a3` | [Complete run](https://huggingface.co/datasets/MachineFi/Trio-Spark-Vision-0.3-Results/tree/fef782594936760ebc480a4b209b338fdb05c724/runs/trio-spark-vision-0.3) | `trio_spark_vision:TrioSparkVisionEngine`; `repo=MachineFi/Trio-Spark-Vision-0.3`; `revision=912ac283ea30fd1b42fd821ca5d4d2e8625371a3`; `ocr_device=gpu:0`; `max_pixels=1638400`; `temperature=1.09`; `chunk=256` | `25c6ec7b6b5f44a216c63c3a700de3a9c6d6699d` | Single NVIDIA H200 141GB; BF16 backbone + FP32 26-way head + live GPU `PP-OCRv5_mobile` | Native up to 1,638,400 pixels per image (aspect kept, LANCZOS); lower processor caps lifted (`max_image_pixels=1,638,400`, `max_image_tokens=3,200`) | Up to 26 options (`A`–`Z`); single `choice` question per request; no image-count cap; `CC-BY-NC-4.0` |
