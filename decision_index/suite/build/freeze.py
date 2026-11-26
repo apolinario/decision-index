@@ -76,7 +76,7 @@ def freeze(layout, out_dir, log=print):
         req = fields = 0
         for p in paths:
             dst = active / p.name
-            with dst.open("w", encoding="utf-8") as f:
+            with dst.open("w", encoding="utf-8", newline="\n") as f:
                 for r in read_jsonl(p):
                     if gid(r) not in chosen:
                         continue
@@ -94,7 +94,7 @@ def freeze(layout, out_dir, log=print):
     proxy = 0
     totalfields = 0
     rows_path = out_dir / "selected-rows.jsonl"
-    with rows_path.open("w", encoding="utf-8") as sf:
+    with rows_path.open("w", encoding="utf-8", newline="\n") as sf:
         for n, name, p in selected_paths:
             for r in read_jsonl(p):
                 payload = {"model": REFERENCE_MODEL, "state": r["state"], "questions": r["questions"]}
