@@ -1,0 +1,5 @@
+# Submissions
+
+| Model | Edition | Decision Index | Complete results | Engine / commit | Hardware | Inference settings | Declared limits |
+|---|---|---:|---|---|---|---|---|
+| Adjudex-0.8B v7 ([`newsbang/adjudex-0.8b-v7`](https://huggingface.co/newsbang/adjudex-0.8b-v7/tree/0244b9e053a05a5f759ee054518c2d42255912b9) @ `0244b9e`) | 0.3 | 54.77 | [`runs/adjudex-0.8b-v7`](https://huggingface.co/datasets/newsbang/decision-index-results/tree/c90e1ac40493f0baa19ec58fc663609b814703e5/runs/adjudex-0.8b-v7) | kit engine `http` against the model repo's `/v1/systemone` server (`source/`, `python -m autojev.server`, the Perplexity Decider v1.1 server with the `block_bidirectional` attention mask added to `model.py`), model `jev-latest`; kit `25c6ec7`, unmodified runner and scorer | NVIDIA A800 80GB | BF16; one forward pass per question, nothing generated; calibration temperature from `decision_config.json`; default server settings | question branches over 8,192 tokens are rejected (HTTP 422, no truncation): 345 requests, 30 of them scored |
